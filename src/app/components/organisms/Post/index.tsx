@@ -15,7 +15,7 @@ import './custom-image.css'
 import './anchor.css'
 
 import { TilProps } from '../../../hooks/useAllPosts'
-import { H1, H2, H3, H4, H5, H6, Img, Ol, P, Ul } from '../../atoms/MdxComponents'
+import { H1, H2, H3, H4, H5, H6, Img, Li, P } from '../../atoms/MdxComponents'
 import SEO from '../../atoms/SEO'
 import CommentSection from '../../molecules/CommentSection'
 
@@ -36,8 +36,7 @@ const components = {
   h5: H5,
   h6: H6,
   p: P,
-  ul: Ul,
-  ol: Ol,
+  li: Li,
   img: Img
 }
 

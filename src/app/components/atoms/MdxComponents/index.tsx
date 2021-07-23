@@ -128,55 +128,22 @@ export const P: React.FC = ({
   )
 }
 
-const useOLStyles = makeStyles((theme) => ({
+const useLiStyles = makeStyles((theme) => ({
   root: {
-    listStyle: 'none',
-    marginTop: theme.spacing(0.5),
-    counterReset: 'cupcake',
-    '& li': {
-      paddingTop: theme.spacing(0.5),
-      paddingBottom: theme.spacing(0.5),
-      counterIncrement: 'cupcake'
-    },
-    '& li:before': {
-      content: 'counters(cupcake, ".") ". "'
-    }
+    marginTop: theme.spacing(1)
   }
 }))
 
-export const Ol: React.FC = ({
+export const Li: React.FC = ({
   children
 }) => {
-  const classes = useOLStyles()
+  const classes = useLiStyles()
   return (
-    <ol className={classes.root}>
-      <Typography variant="body2" color="textSecondary">
-        {children}
-      </Typography>
-    </ol>
-  )
-}
-
-const useULStyles = makeStyles((theme) => ({
-  root: {
-    marginTop: theme.spacing(0.5),
-    paddingTop: theme.spacing(0),
-    '& li': {
-      paddingBottom: theme.spacing(0.5)
-    }
-  }
-}))
-
-export const Ul: React.FC = ({
-  children
-}) => {
-  const classes = useULStyles()
-  return (
-    <ul className={classes.root}>
-      <Typography variant="body2" color="textSecondary">
-        {children}
-      </Typography>
-    </ul>
+      <li className={classes.root}>
+        <Typography variant="body2" color="textSecondary">
+          {children}
+        </Typography>
+      </li>
   )
 }
 
