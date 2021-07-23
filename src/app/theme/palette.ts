@@ -146,7 +146,7 @@ export const palette = {
   },
   text: {
     primary: color._dark['400'],
-    secondary: color._dark['300']
+    secondary: color._dark['400']
   },
   ...color
 }
