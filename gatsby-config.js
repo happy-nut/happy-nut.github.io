@@ -3,7 +3,7 @@
 module.exports = {
   siteMetadata: {
     title: 'Happynut\'s Portilog',
-    description: 'TIL(Today I Learned)이 로깅되면서 만들어지는 데일리 포트폴리오',
+    description: 'TIL을 Logging해서 Portfolio를 증분 빌드해보자',
     author: 'Hyungsun Song <happynut.dev@gmail.com>',
     siteUrl: 'https://happy-nut.github.io/'
   },
