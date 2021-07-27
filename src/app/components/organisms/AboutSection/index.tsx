@@ -141,7 +141,7 @@ const AboutSection: React.FC = () => {
 
   const profileQuery = useStaticQuery(graphql`
     query {
-      fileName: file(relativePath: { eq: "profile.jpeg" }) {
+      fileName: file(relativePath: { eq: "profile.png" }) {
         childImageSharp {
           fluid(maxWidth: 700, maxHeight: 700) {
             ...GatsbyImageSharpFluid

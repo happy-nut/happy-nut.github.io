@@ -2,7 +2,7 @@ import React from 'react'
 import { Helmet } from 'react-helmet'
 
 import { useSiteMetadata } from '../../../hooks/useSiteMetadata'
-import defaultOgImage from './defaultOgImage.jpeg'
+import defaultOgImage from './defaultOgImage.png'
 
 export interface SEOProps {
   lang?: string
