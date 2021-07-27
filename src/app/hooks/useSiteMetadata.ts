@@ -9,6 +9,7 @@ export const useSiteMetadata = (): Record<string, string> => {
             author
             title
             description
+            siteUrl
           }
         }
       }

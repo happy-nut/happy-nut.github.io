@@ -14,12 +14,11 @@ import './custom-blockquote.css'
 import './custom-image.css'
 import './anchor.css'
 
-import { TilProps } from '../../../hooks/useAllPosts'
 import { H1, H2, H3, H4, H5, H6, Img, Li, P } from '../../atoms/MdxComponents'
-import SEO from '../../atoms/SEO'
 import CommentSection from '../../molecules/CommentSection'
 
 import { Divider } from '@material-ui/core'
+import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles({
   paper: {
@@ -40,8 +39,15 @@ const components = {
   img: Img
 }
 
+export interface PostProps {
+  mdxContent: string
+  createdAt: Date
+  modifiedAt: Date
+}
+
+// TODO: 제목도 따로 받도록 해서 날짜랑 이쁘게 정렬하자.
 // TODO(poqw): Use path to make hash tags.
-const Post: React.FC<Omit<TilProps, 'toc'>> = ({ body, name }) => {
+const Post: React.FC<PostProps> = ({ mdxContent, createdAt, modifiedAt }) => {
   const classes = useStyles()
 
   useEffect(() => {
@@ -54,9 +60,11 @@ const Post: React.FC<Omit<TilProps, 'toc'>> = ({ body, name }) => {
 
   return (
     <Box id="post" className={classes.paper} pb={12}>
-      <SEO title={name} />
+      <Box display="flex" justifyContent="flex-end">
+        <Typography variant="caption" align="right">마지막 수정 - {modifiedAt.toDateString()}</Typography>
+      </Box>
       <MDXProvider components={components}>
-        <MDXRenderer>{body}</MDXRenderer>
+        <MDXRenderer>{mdxContent}</MDXRenderer>
       </MDXProvider>
       <Box mt={10} mb={4}>
         <Divider />

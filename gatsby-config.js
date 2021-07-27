@@ -2,13 +2,14 @@
 
 module.exports = {
   siteMetadata: {
-    title: 'PORTILOG',
-    description: 'Portfolio + TIL(Today I learned) + Blog for me.',
-    author: 'Hyungsun Song <hssongng@gmail.com>',
+    title: 'Happynut\'s Portilog',
+    description: 'TIL(Today I Learned)이 로깅되면서 만들어지는 데일리 포트폴리오',
+    author: 'Hyungsun Song <happynut.dev@gmail.com>',
     siteUrl: 'https://happy-nut.github.io/'
   },
   plugins: [
     {
+      // SEO related.
       resolve: 'gatsby-plugin-google-gtag',
       options: {
         trackingIds: [

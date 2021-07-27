@@ -5,6 +5,7 @@ import { RouteComponentProps } from '@reach/router'
 import { Link } from 'gatsby'
 import { PageContext } from 'gatsby/internal'
 import React from 'react'
+import _ from 'lodash'
 
 import LogoIcon from '../../../../assets/images/logo.svg'
 import SEO from '../../components/atoms/SEO'
@@ -25,12 +26,12 @@ interface Props extends RouteComponentProps {
 }
 
 const TilPage: React.FC<Props> = ({ pageContext }) => {
-  const { name, body, toc } = pageContext
+  const { name, body, toc, images, createdAt, modifiedAt } = pageContext
   const classes = useStyles()
 
   return (
     <>
-      <SEO title={name} />
+      <SEO title={name} ogImage={_.first(images)} />
       <TilTemplate
         logo={
           <Box>
@@ -42,7 +43,7 @@ const TilPage: React.FC<Props> = ({ pageContext }) => {
         }
         header={<TilHeader />}
         sidebar={<TilSidebar />}
-        post={<Post body={body} name={name} />}
+        post={<Post mdxContent={body}  createdAt={new Date(createdAt)} modifiedAt={new Date(modifiedAt)}/>}
         toc={<TableOfContents items={toc.items} />}
       />
     </>
