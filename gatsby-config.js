@@ -39,14 +39,6 @@ module.exports = {
     // External plugins.
     'gatsby-plugin-typescript',
     'gatsby-plugin-sitemap',
-    {
-      resolve: 'gatsby-plugin-robots-txt',
-      options: {
-        host: 'https://happy-nut.github.io/',
-        sitemap: 'https://happy-nut.github.io/sitemap.xml',
-        policy: [{ userAgent: '*', allow: '/' }]
-      }
-    },
     'gatsby-plugin-material-ui',
     'gatsby-plugin-react-helmet',
     {

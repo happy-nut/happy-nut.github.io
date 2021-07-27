@@ -1,0 +1,4 @@
+User-agent: *
+
+ALLOW: /
+sitemap: https://happy-nut.github.io/sitemap.xml
