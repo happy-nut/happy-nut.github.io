@@ -31,7 +31,7 @@ const TilPage: React.FC<Props> = ({ pageContext }) => {
 
   return (
     <>
-      <SEO title={name} ogImage={_.first(images)} />
+      <SEO description={name} ogImage={_.first(images)} />
       <TilTemplate
         logo={
           <Box>
