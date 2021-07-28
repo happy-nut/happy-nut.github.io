@@ -79,7 +79,7 @@ const SEO: React.FC<SEOProps> = ({ lang = 'ko', meta = [], title, description = 
         },
       ].concat(meta)}
     >
-      <title>{metaTitle}</title>
+      <title>{title}</title>
     </Helmet>
   )
 }
