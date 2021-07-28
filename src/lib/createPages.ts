@@ -45,6 +45,9 @@ export async function createPages ({ actions, graphql }: CreatePagesArgs): Promi
     const postPaths = node.slug.split('/')
     const postName = postPaths[postPaths.length - 1]
     const matchedFile = _.first(filesMap[node.slug])
+    if (!matchedFile) {
+      console.error(`매칭되는 파일을 찾지 못함: ${node.slug}`)
+    }
 
     createPage({
       path: `/${TIL_DIR_NAME}/${node.slug}`,
