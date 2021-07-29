@@ -381,7 +381,7 @@ public class ProductService ... {
 
 ### 디미터 법칙과 묻지 말고 시켜라를 사용하기
 
-* [디미터 법칙](../../methodology/clean-code/the-law-of-demeter.md)
+* [디미터 법칙](../../methodology/clean-code/the-law-of-demeter)
 * 묻지 말고 시켜라: 객체 에게 할 일을 알려줘야 한다. 클라 객체는 자신이 갖고 있는 상태에 기반해 서버에게 무엇을 할 지 시켜야 하지, 서버 객체의 정보를 요구해선 안된다.
 
 위 두 가지 원칙을 애그리게잇에 반드시 지키려고 노력하자.
