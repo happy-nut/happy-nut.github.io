@@ -17,8 +17,8 @@
 ### CalendarEntry 인스턴스 생성하기
 
 먼저 테스트를 보자. [여기서](https://github.com/VaughnVernon/IDDD_Samples/blob/05d95572f2ad6b85357b216d7d617b27359a360d/iddd_collaboration/src/test/java/com/saasovation/collaboration/domain/model/calendar/CalendarTest.java#L154-L180) 찾아볼 수 있다. 코드에서
-[`calendarEntryAggregate`](https://github.com/VaughnVernon/IDDD_Samples/blob/05d95572f2ad6b85357b216d7d617b27359a360d/iddd_collaboration/src/test/java/com/saasovation/collaboration/domain/model/calendar/CalendarTest.java#L346-L364) 를 따라가보면 알겠지만, `scheduleCalendarEntry()`는 매개변수가 9개가 필요한데,
-[`CalendarEntry`](https://github.com/VaughnVernon/IDDD_Samples/blob/05d95572f2ad6b85357b216d7d617b27359a360d/iddd_collaboration/src/main/java/com/saasovation/collaboration/domain/model/calendar/CalendarEntry.java#L185-L195) 는 생성자의 매개변수가 11개가 필요하다.
+[calendarEntryAggregate](https://github.com/VaughnVernon/IDDD_Samples/blob/05d95572f2ad6b85357b216d7d617b27359a360d/iddd_collaboration/src/test/java/com/saasovation/collaboration/domain/model/calendar/CalendarTest.java#L346-L364) 를 따라가보면 알겠지만, `scheduleCalendarEntry()`는 매개변수가 9개가 필요한데,
+[CalendarEntry](https://github.com/VaughnVernon/IDDD_Samples/blob/05d95572f2ad6b85357b216d7d617b27359a360d/iddd_collaboration/src/main/java/com/saasovation/collaboration/domain/model/calendar/CalendarEntry.java#L185-L195) 는 생성자의 매개변수가 11개가 필요하다.
 클라이언트가 빠진 2개의 매개변수(`aTenant`, `aCalendarId`)를 전달하지 않는다는 것은 그만큼 생성하는 데 부담이 줄어드는 것을 의미하므로 장점이 된다.
 
 이제 구현을 보자. [여기서](https://github.com/VaughnVernon/IDDD_Samples/blob/05d95572f2ad6b85357b216d7d617b27359a360d/iddd_collaboration/src/main/java/com/saasovation/collaboration/domain/model/calendar/Calendar.java#L99-L123) 찾아볼 수 있다.
@@ -33,7 +33,7 @@
 
 ### Discussion 인스턴스 생성하기
 
-애그리게잇 루트인 `Forum`의 [`startDiscussion()`](https://github.com/VaughnVernon/IDDD_Samples/blob/05d95572f2ad6b85357b216d7d617b27359a360d/iddd_collaboration/src/main/java/com/saasovation/collaboration/domain/model/forum/Forum.java#L145-L173) 팩토리 메소드를 보자. 
+애그리게잇 루트인 `Forum`의 [startDiscussion()](https://github.com/VaughnVernon/IDDD_Samples/blob/05d95572f2ad6b85357b216d7d617b27359a360d/iddd_collaboration/src/main/java/com/saasovation/collaboration/domain/model/forum/Forum.java#L145-L173) 팩토리 메소드를 보자. 
 이 구현에서는 `Discussion`을 생성할 뿐만 아니라 `Forum` 이 닫혀 잇는 상황이라면 생성을 막아준다.
 
 이 팩토리 메소드가 표현하고 있는 유비쿼터스 언어는 다음과 같다.
@@ -46,7 +46,7 @@
 
 위에서 도메인 서비스를 팩토리로 활용한다고도 했는데 그 경우를 살펴보자.
 
-[`CollaboratorService`](https://github.com/VaughnVernon/IDDD_Samples/blob/05d95572f2ad6b85357b216d7d617b27359a360d/iddd_collaboration/src/main/java/com/saasovation/collaboration/domain/model/collaborator/CollaboratorService.java#L19-L30) 는
+[CollaboratorService](https://github.com/VaughnVernon/IDDD_Samples/blob/05d95572f2ad6b85357b216d7d617b27359a360d/iddd_collaboration/src/main/java/com/saasovation/collaboration/domain/model/collaborator/CollaboratorService.java#L19-L30) 는
 식별자와 애자일 컨텍스트에서 협업 컨텍스트로의 객체 변환을 제공한다. 협업 객체에서는 "사용자"와 "권한"이라는 개념이 빠지고 "저자", "생성자", "중재자", "소유자", "참석자"
 와 같은 개념들이 등장하기 때문에 이에 맞춰 변환할 책임을 이 서비스가 지고 있다.
 
@@ -56,7 +56,7 @@
 도메인의 관심사는 다른 바운디드 컨텍스트에 대한 내용이나 그 번역이 아니므로 당연히 이 구현체는 인프라 계층에 위치한다.
 
 구현체에서 쓰이는 `UserInRoleAdaptor`의 실체 구현체는 [여기서](https://github.com/VaughnVernon/IDDD_Samples/blob/05d95572f2ad6b85357b216d7d617b27359a360d/iddd_collaboration/src/main/java/com/saasovation/collaboration/port/adapter/service/HttpUserInRoleAdapter.java#L23) 찾아볼 수 있다.
-구현 안에서 [`CollaboratorTranslator`](https://github.com/VaughnVernon/IDDD_Samples/blob/05d95572f2ad6b85357b216d7d617b27359a360d/iddd_collaboration/src/main/java/com/saasovation/collaboration/port/adapter/service/CollaboratorTranslator.java#L22)
+구현 안에서 [CollaboratorTranslator](https://github.com/VaughnVernon/IDDD_Samples/blob/05d95572f2ad6b85357b216d7d617b27359a360d/iddd_collaboration/src/main/java/com/saasovation/collaboration/port/adapter/service/CollaboratorTranslator.java#L22)
 를 사용해 Published Language(여기선 JSON) 의 통합 응답을 로컬 모델의 클래스 인스턴스로 변환한다.
 
 클래스 구조가 약간 복잡한데, 책임을 분류하자면 다음과 같다.
