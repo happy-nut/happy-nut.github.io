@@ -72,7 +72,7 @@ unitOfWork.Commit();
 영속성 메커니즘이 암묵적으로나 명시적으로나 객체의 변화를 감지고하고 추적하지 못하는 상황이라면, 영속성 지향의 리포지토리를 사용해야 한다.
 영속성 지향의 리포지토리를 사용하면 우리는 명시적으로 새롭고 변경된 객체를 저장소에 `put()` 해야 하는데, 이전에 주어진 키와 연관된 모든 값을 효과적으로 replace 해야 한다.
 
-그 이유가 Unit Of Work 나 atomic write를 컨트롤할 수 있는 트랜잭션 경계를 지원하지 않기 떄문이라는데, 뭔소린지 모르겠다. 하하
+그 이유가 Unit Of Work 나 atomic write를 컨트롤할 수 있는 트랜잭션 경계를 지원하지 않기 때문이라는데, 뭔소린지 모르겠다. 하하
 
 이 유형의 리포지토리는 그냥 캐시같은 걸 생각하면 될 것 같다. 
 
@@ -157,7 +157,7 @@ public class CoherenceProductRepository implements ProductRepository {
       
       Map<String, Product> productsMap = new HashMap<String, Product>(aProductCollection.saze());
       
-      // 데이터 패브릭에서는 각 `put()`마다 네트워크 요청이 발생하기 떄문에, 로컬 해쉬멥에 모아두고, 아래에서 `putAll()`로 단일 요청을 한다.
+      // 데이터 패브릭에서는 각 `put()`마다 네트워크 요청이 발생하기 때문에, 로컬 해쉬멥에 모아두고, 아래에서 `putAll()`로 단일 요청을 한다.
       for (Product product : aProductCollection) {
         if (tenantId == null) {
           tenantId = product.tenantId();

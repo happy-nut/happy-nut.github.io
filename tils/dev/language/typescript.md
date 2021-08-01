@@ -69,7 +69,7 @@ if (err instanceof HttpError) { ... }
     type NonNullable<T> = T extends null | undefined ? never : T;
     ```
   타입에 `null` 혹은 `undefined`가 포함되어 있지 않으면 컴파일 에러를 발생시켜 좀 더 safe 하게 코드를 작성할 수 있도록 한다.
-- `never` 는 그 어떤 타입도 될 수 없기 떄문에 유니온 연산을 거치면 사라진다.
+- `never` 는 그 어떤 타입도 될 수 없기 때문에 유니온 연산을 거치면 사라진다.
     ```typescript
     T | never ⇒ T
     T & unknown ⇒ T

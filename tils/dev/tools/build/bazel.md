@@ -131,7 +131,7 @@ cc_binary(
 )
 ```
 
-모든 rules는 뉘와 같이 attributes 를 갖는다. rules는 워낙 방대하기 떄문에 [링크](https://docs.bazel.build/versions/master/be/overview.html) 로 설명을 대체한다.
+모든 rules는 뉘와 같이 attributes 를 갖는다. rules는 워낙 방대하기 때문에 [링크](https://docs.bazel.build/versions/master/be/overview.html) 로 설명을 대체한다.
 
 ### BUILD files
 

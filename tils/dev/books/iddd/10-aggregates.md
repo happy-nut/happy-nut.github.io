@@ -256,7 +256,7 @@ public class BacklogItem extends ConcurrencySafeEntity {
 ### 애그리게잇 비용의 예측
 
 `Task`가 `BacklogItem` 하나당 12개가 있고, `EstimationLogEntry`가 `Task` 하나당 12개가 있다면, `BacklogItem`하나당 `EstimationLogEntry`는 144개가 있는 꼴이다.
-모든 예측 요청을 처리할 떄마다 메모리에 적재하기에는 부담스런 크기이다. 
+모든 예측 요청을 처리할 때마다 메모리에 적재하기에는 부담스런 크기이다. 
 
 ### 일반적인 사용 시나리오
 

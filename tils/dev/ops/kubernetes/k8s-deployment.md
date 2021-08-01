@@ -540,7 +540,7 @@ private 하게 등록한 이미지를 사용하기 위해선 당연히 획득권
 
 1. K8s 에 secret을 생성한다.
 2. deployments yaml 파일에 `imagePullSecrets` 필드를 통해 해당 secret 이름을 지정한다.
-3. 매번 이미지 풀링이 필요할 떄마다 해당 필드를 참고하여 인증한뒤, 이미지를 획득한다.
+3. 매번 이미지 풀링이 필요할 때마다 해당 필드를 참고하여 인증한뒤, 이미지를 획득한다.
 
 우선 k8s 에 secret을 생성하려면 다음 명령어를 사용한다. 참고: [링크](https://kubernetes.io/ko/docs/concepts/configuration/secret/#%EB%8F%84%EC%BB%A4-%EC%BB%A8%ED%94%BC%EA%B7%B8-%EC%8B%9C%ED%81%AC%EB%A6%BF)
 

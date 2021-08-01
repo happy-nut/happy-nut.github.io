@@ -215,7 +215,7 @@ Google Cloud Load Balancer와 Nginx, Contour, Istio 등과 같은 많은 Ingress
 [Service 이름].[Namespace 이름].svc.cluster.local
 ```
 
-이게 가능한 이유는 `CoreDNS` 가 (`Pod`의 형태로)Cluster 안에 떠 있기 떄문이다. `kubelet`은 `Pod` 를 생성할 때 `/etc/resolv.conf` 같은 곳에
+이게 가능한 이유는 `CoreDNS` 가 (`Pod`의 형태로)Cluster 안에 떠 있기 때문이다. `kubelet`은 `Pod` 를 생성할 때 `/etc/resolv.conf` 같은 곳에
 `CoreDNS` 의 주소를 적어서 도메인 요청을 받을 경우 `CoreDNS` 에서 질의하도록 한다.
 
 즉, 아래와 같이 조회하는 경우 볼 수 있는 `10.32.0.10` 라는 Cluster IP는 `Pod` 에서도 확인이 되어야 한다.

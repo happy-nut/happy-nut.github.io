@@ -137,7 +137,7 @@ Application 서비스에서 [이렇게](https://github.com/VaughnVernon/IDDD_Sam
 
 ### 당신은 책임을 감당할 수 있는가
 
-외부 바운디드 컨텍스트의 `User`에 관한 정보를 `ProductOwner`와 `TeamMember`에 저장하도록 했다. 이 떄문에 `User` 의 변화를 이벤트를 통해
+외부 바운디드 컨텍스트의 `User`에 관한 정보를 `ProductOwner`와 `TeamMember`에 저장하도록 했다. 이 때문에 `User` 의 변화를 이벤트를 통해
 계속 `ProductOwner`나 `TeamMember`를 동기화시켜주어야 한다.
 
 A를 역할해제 해야 하는데, 관리자가 실수로 B를 해제했다고 해보자.

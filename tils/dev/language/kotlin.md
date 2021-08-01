@@ -651,7 +651,7 @@ delay(1000) // visually confirm that they don't work
 
 ### Thread-local data
 
-코루틴은 단 하나의 스레드에 국한되지 않기 떄문에, Thread-local 변수를 사용하는 것이 까다롭다. `ThreadLocal` 에다가 `asContextElement()` 확장 함수를 달아 이 문제를 해결했다.
+코루틴은 단 하나의 스레드에 국한되지 않기 때문에, Thread-local 변수를 사용하는 것이 까다롭다. `ThreadLocal` 에다가 `asContextElement()` 확장 함수를 달아 이 문제를 해결했다.
 
 ```kotlin
 val threadLocal = ThreadLocal<String?>() // declare thread-local variable
