@@ -15,6 +15,7 @@ import { useSpring, animated } from 'react-spring'
 
 export const useStyles = makeStyles((theme) => ({
   title: {
+    marginTop: theme.spacing(2),
     fontSize: '3rem',
     whiteSpace: 'pre-line',
     wordBreak: 'keep-all',
@@ -26,25 +27,10 @@ export const useStyles = makeStyles((theme) => ({
       fontSize: '1.5rem'
     }
   },
-  subtitle: {
-    marginTop: theme.spacing(2),
-    fontSize: '1.7rem',
-    whiteSpace: 'pre-line',
-    wordBreak: 'keep-all',
-    fontWeight: 'bold',
-    [theme.breakpoints.only('sm')]: {
-      fontSize: '1.3rem',
-      marginTop: theme.spacing(1)
-    },
-    [theme.breakpoints.only('xs')]: {
-      fontSize: '0.9rem',
-      marginTop: theme.spacing(1)
-    }
-  },
   descriptionContainer: {
     marginTop: theme.spacing(2),
     [theme.breakpoints.only('xs')]: {
-      marginTop: theme.spacing(0)
+      marginTop: theme.spacing(1.5)
     }
   },
   description: {
@@ -71,7 +57,9 @@ export const useStyles = makeStyles((theme) => ({
       marginTop: theme.spacing(4)
     },
     [theme.breakpoints.only('xs')]: {
-      marginTop: theme.spacing(2)
+      display: 'flex',
+      justifyContent: 'space-evenly',
+      marginTop: theme.spacing(4)
     }
   },
   iconButton: {
@@ -174,36 +162,31 @@ const AboutSection: React.FC = () => {
         <Grid item md={1}> </Grid>
         <Grid item xs={12} md={5}>
           <Typography variant="h1" className={classes.title}>🧐 So, Who am I?</Typography>
-          <Typography variant="h1" className={classes.subtitle}>
-              저는 ____ 하는 개발자입니다.
-          </Typography>
           <Box className={classes.descriptionContainer}>
             <Box pt={1.5}>
               <Typography variant="h4" className={classes.description}>
-                배움을 좋아
+                밀도 있는 성장을 꿈꾸는 개발자입니다.
               </Typography>
               <Typography variant="body1" className={classes.subDescription}>
-                변태적으로 배울 점들을 수집하고 빠르게 흡수하려고 머리를 굴려요.
+                꾸준히 어제의 나보다 나은 제 자신이 되었으면 합니다.
               </Typography>
             </Box>
             <Box pt={1.5}>
               <Typography variant="h4" className={classes.description}>
-                사람들과 어울리기를 좋아
+                즐겁게 일하고 싶은 개발자입니다.
               </Typography>
               <Typography variant="body1" className={classes.subDescription}>
-                사람들과 어울리면 즐겁고, 즐거우면 일도 잘 되더라구요.
+                능력있는 사람들과 협업하면서 즐거움을 느낄 때 완전한 몰입이 됩니다.
               </Typography>
             </Box>
-            {matches &&
-              <Box pt={1.5}>
-                <Typography variant="h4" className={classes.description}>
-                  요리를 좋아
-                </Typography>
-                <Typography variant="body1" className={classes.subDescription}>
-                  맛있게 먹어주면 그만큼 스트레스가 풀리는 게 없거든요.
-                </Typography>
-              </Box>
-            }
+            <Box pt={1.5}>
+              <Typography variant="h4" className={classes.description}>
+                비즈니스적인 가치를 창출하고자 하는 개발자입니다.
+              </Typography>
+              <Typography variant="body1" className={classes.subDescription}>
+                비즈니스적으로 경쟁력이 있어야 하는 부분에 기술적 탁월함을 부여하는 것이 제 임무입니다.
+              </Typography>
+            </Box>
           </Box>
           <Box className={classes.iconContainer}>
             <IconButton
@@ -229,14 +212,6 @@ const AboutSection: React.FC = () => {
               rel="noreferrer noopener"
             >
               <InstagramIcon fontSize="large" />
-            </IconButton>
-            <IconButton
-              className={classes.iconButton}
-              href="https://www.facebook.com/hssongng"
-              target="_blank"
-              rel="noreferrer noopener"
-            >
-              <FacebookIcon fontSize="large" />
             </IconButton>
             <IconButton
               className={classes.iconButton}

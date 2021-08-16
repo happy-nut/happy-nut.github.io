@@ -29,37 +29,20 @@ export const useStyles = makeStyles((theme) => ({
     fontSize: '1.7rem',
     fontWeight: 'bold',
     marginTop: theme.spacing(4),
+    marginBottom: theme.spacing(10),
     [theme.breakpoints.only('sm')]: {
       fontSize: '1.3rem'
     },
     [theme.breakpoints.only('xs')]: {
+      marginBottom: theme.spacing(0),
       fontSize: '1.1rem'
     }
   },
-  description: {
-    marginTop: theme.spacing(4),
-    marginBottom: theme.spacing(6),
-    fontSize: '1.2rem',
-    whiteSpace: 'pre-line',
-    wordBreak: 'keep-all',
-    [theme.breakpoints.only('sm')]: {
-      fontSize: '1.1rem',
-      marginTop: theme.spacing(3),
-      marginBottom: theme.spacing(4)
-    },
-    [theme.breakpoints.only('xs')]: {
-      display: 'none',
-      fontSize: '1rem',
-      marginTop: theme.spacing(2),
-      marginBottom: theme.spacing(6)
-    }
-  },
   timelineContainer: {
-    paddingTop: theme.spacing(2),
-    paddingBottom: theme.spacing(2),
+    padding: theme.spacing(5),
     height: '60vh',
     [theme.breakpoints.only('xs')]: {
-      height: '70vh'
+      height: '80vh'
     }
   }
 }))
@@ -68,7 +51,7 @@ const initTimeline = (source): void => {
   const options = {
     source,
     // eslint-disable-next-line @typescript-eslint/camelcase
-    initial_zoom: 1,
+    initial_zoom: 3,
     // eslint-disable-next-line @typescript-eslint/camelcase
     start_at_end: true,
     dragging: false,
@@ -103,11 +86,6 @@ const TimelineSection: React.FC = () => {
       <Box display="flex" justifyContent="center">
         <Typography variant="subtitle1" className={classes.subtitle} align='center'>
           저는 이런 경험들을 쌓아왔습니다.
-        </Typography>
-      </Box>
-      <Box display="flex" justifyContent="center">
-        <Typography variant="body1" className={classes.description} align='center'>
-          {'무작정 다양한 경험들을 쌓기보단,\n각 경험으로부터 배울 수 있는 점들을 흘리는 일 없이 오롯이 흡수하는 데 중점을 두려 노력합니다.'}
         </Typography>
       </Box>
       <div className={classes.timelineContainer}>

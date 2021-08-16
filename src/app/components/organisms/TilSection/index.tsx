@@ -92,7 +92,7 @@ const tils = [
   {
     title: 'TDD: Test Driven Development',
     description: '테스트 주도 개발(Test-driven development, TDD)은 매우 짧은 개발 사이클을 반복하는 소프트웨어 개발 프로세스 중 하나이다. 우선 개발자는 바라는 향상 또는 새로운 함수를 정의하는 (초기적 결함을 점검하는) 자동화된 테스트 케이스를 작성한다.',
-    mediaImg: 'https://www.xenonstack.com/images/blog/Test-Driven-Development-in-Java.png'
+    mediaImg: 'https://user-images.githubusercontent.com/52276038/85839087-6f36c980-b7d5-11ea-879c-6e9e37cf34c0.png'
   },
   {
     title: 'Scrum',
