@@ -89,15 +89,36 @@
         "year": "2019",
         "month": "12"
       },
+      "end_date": {
+        "year": "2020",
+        "month": "5"
+      },
       "text": {
         "headline": "Skelter Labs SWE(Lv 4)",
-        "text": "TDD, BDD, DDD, Design doc, Typescript, React, Nestjs, k8s<ul><li>AIQ portal/console & 서버 개발</li><li>STT Billing Recorder 서버 개발</li><li>Scrum 마스터 경험</li></ul>"
+        "text": "TDD, BDD, DDD, Design doc, Typescript, React, Nestjs, k8s<ul><li>AIQ portal/console & 서버 개발</li><li>STT Billing Recorder 서버 개발</li></ul>"
       },
       "media": {
         "url": "https://www.ksvalley.com/data/photos/20190834/art_15662700235499_e71ca9.png",
         "thumbnail": "https://pds.saramin.co.kr/company/logo/202004/10/q8ju7q_5zcu-xpqgb0_logo.png",
         "caption": "Skelter Labs 로고",
         "link": "https://www.skelterlabs.com/ko/",
+        "link_target": "_blank"
+      }
+    },
+    {
+      "start_date": {
+        "year": "2020",
+        "month": "5"
+      },
+      "text": {
+        "headline": "Toss Server Developer",
+        "text": "Spring, Webflux, Redis<ul><li>청소년 카드 서버 개발</li><li>Scrum 마스터 경험</li></ul>"
+      },
+      "media": {
+        "url": "https://static.toss.im/assets/homepage/new tossim/eng_section1_1_home_02.png",
+        "thumbnail": "https://image.zdnet.co.kr/2019/02/01/hjan_nEduvzmKvKlxSva.jpg",
+        "caption": "토스 앱 화면",
+        "link": "https://toss.im/",
         "link_target": "_blank"
       }
     }
