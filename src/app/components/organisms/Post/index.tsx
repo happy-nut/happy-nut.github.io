@@ -12,6 +12,7 @@ import './custom-highlight.css'
 import './custom-codeblock.css'
 import './custom-blockquote.css'
 import './custom-image.css'
+import './custom-table.css'
 import './anchor.css'
 
 import { H1, H2, H3, H4, H5, H6, Img, Li, P } from '../../atoms/MdxComponents'
