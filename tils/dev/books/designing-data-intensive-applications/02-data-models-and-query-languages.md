@@ -1,3 +1,5 @@
+[![](https://dataintensive.net/images/map-ch3.jpg)](https://dataintensive.net/poster.html)
+
 # 2장. 데이터 모델과 질의 언어
 
 ## 관계형 모델과 문서 모델

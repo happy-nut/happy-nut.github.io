@@ -1,3 +1,5 @@
+[![](https://dataintensive.net/images/map-ch3.jpg)](https://dataintensive.net/poster.html)
+
 # 1장. 신뢰할 수 있고 확장 가능하며 유지보수하기 쉬운 애플리케이션
 
 ## 데이터 시스템에 대한 생각

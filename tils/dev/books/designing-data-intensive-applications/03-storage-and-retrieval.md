@@ -1,3 +1,5 @@
+[![](https://dataintensive.net/images/map-ch3.jpg)](https://dataintensive.net/poster.html)
+
 # 3장. 저장소와 검색
 
 데이터베이스가 저장과 검색을 내부적으로 처리하는 방법을 이 장에서 알아본다. 이걸 알아야 하는 이유는, 특정 Workload(작업 부하) 유형에서
