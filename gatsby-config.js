@@ -104,6 +104,12 @@ module.exports = {
         display: 'minimal-ui',
         icon: 'assets/images/logo.png'
       }
+    },
+    {
+      resolve: 'gatsby-plugin-google-adsense',
+      options: {
+        publisherId: 'ca-pub-2079653891316635'
+      },
     }
   ]
 }
