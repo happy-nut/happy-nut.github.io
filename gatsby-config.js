@@ -109,13 +109,21 @@ module.exports = {
       resolve: 'gatsby-plugin-google-adsense',
       options: {
         publisherId: 'ca-pub-2079653891316635'
-      },
+      }
     },
     {
       resolve: `gatsby-plugin-canonical-urls`,
       options: {
         siteUrl: `https://happy-nut.github.io`,
-      },
+      }
     },
+    {
+      resolve: 'gatsby-plugin-robots-txt',
+      options: {
+        host: 'https://happy-nut.github.io',
+        sitemap: 'https://happy-nut.github.io/sitemap/sitemap-index.xml',
+        policy: [{userAgent: '*', allow: '/'}]
+      }
+    }
   ]
 }
