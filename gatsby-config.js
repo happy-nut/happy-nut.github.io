@@ -13,7 +13,7 @@ module.exports = {
       resolve: 'gatsby-plugin-google-gtag',
       options: {
         trackingIds: [
-          'G-FXX58F4MHY',
+          'G-0MT5SWB76H', // Google Analytics.
           'GTM-MCFTH46', // Google Tag Manager.
         ],
         // This object gets passed directly to the gtag config command
