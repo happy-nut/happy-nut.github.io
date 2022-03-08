@@ -1,22 +1,34 @@
-import makeStyles from '@material-ui/core/styles/makeStyles'
+import { styled } from '@mui/material/styles';
 import Img, { GatsbyImageProps } from 'gatsby-image'
 import { withPrefix } from 'gatsby-link'
 import _ from 'lodash'
 import React from 'react'
 
-const useStyles = makeStyles((theme) => ({
-  imageContainer: {
+const PREFIX = 'Image';
+
+const classes = {
+  imageContainer: `${PREFIX}-imageContainer`,
+  root: `${PREFIX}-root`
+};
+
+const StyledImg = styled(Img)((
+  {
+    theme
+  }
+) => ({
+  [`& .${classes.imageContainer}`]: {
     maxWidth: '100%',
     boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
     padding: theme.spacing(1)
   },
-  root: {
+
+  [`& .${classes.root}`]: {
     display: 'flex',
     justifyContent: 'center',
     marginBottom: theme.spacing(1),
     marginTop: theme.spacing(2)
   }
-}))
+}));
 
 interface ImageProps extends Omit<GatsbyImageProps, 'sizes'> {
   alt?: string
@@ -26,7 +38,7 @@ interface ImageProps extends Omit<GatsbyImageProps, 'sizes'> {
 }
 
 const Image: React.FC<ImageProps> = (props) => {
-  const classes = useStyles()
+
 
   if (_.isEmpty(props.srcSet)) { // External linked image.
     return (
@@ -50,7 +62,7 @@ const Image: React.FC<ImageProps> = (props) => {
     }
   }
 
-  return <Img { ...gatsbyImageProps } />
+  return <StyledImg { ...gatsbyImageProps } />;
 }
 
 export default Image

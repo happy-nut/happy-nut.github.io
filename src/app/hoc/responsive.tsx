@@ -1,5 +1,5 @@
-import useTheme from '@material-ui/core/styles/useTheme'
-import useMediaQuery from '@material-ui/core/useMediaQuery'
+import useTheme from '@mui/material/styles/useTheme'
+import useMediaQuery from '@mui/material/useMediaQuery'
 import React from 'react'
 
 export const Mobile: React.FC = ({ children }) => {

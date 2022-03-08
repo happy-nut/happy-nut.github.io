@@ -1,10 +1,16 @@
-import { createMuiTheme } from '@material-ui/core'
-import responsiveFontSizes from '@material-ui/core/styles/responsiveFontSizes'
+import { createTheme } from '@mui/material/styles'
+import responsiveFontSizes from '@mui/material/styles/responsiveFontSizes'
 
 import { overrides } from './overrides'
 import { palette } from './palette'
 import { typography } from './typography'
 
-const theme = createMuiTheme({ overrides, palette, typography })
+const theme = createTheme({
+  components: {
+    ...overrides
+  },
+  palette,
+  typography
+})
 
 export default responsiveFontSizes(theme)

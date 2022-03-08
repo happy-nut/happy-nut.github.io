@@ -1,28 +1,36 @@
-import { Typography } from '@material-ui/core'
-import Box from '@material-ui/core/Box'
-import makeStyles from '@material-ui/core/styles/makeStyles'
+import { Typography } from '@mui/material'
+import { styled } from '@mui/material/styles';
+import Box from '@mui/material/Box'
 import { Link } from 'gatsby'
 import React from 'react'
 
-export const useStyles = makeStyles({
-  copyright: {
+const PREFIX = 'FooterSection';
+
+const classes = {
+  copyright: `${PREFIX}-copyright`
+};
+
+const StyledBox = styled(Box)({
+  [`& .${classes.copyright}`]: {
     color: 'white',
     '& :hover': {
       color: 'white'
     }
   }
-})
+});
+
+export {};
 
 const FooterSection: React.FC = () => {
-  const classes = useStyles()
+
 
   return (
-    <Box height="5vh" display="flex" justifyContent="center" alignItems="center" color="white">
+    <StyledBox height="5vh" display="flex" justifyContent="center" alignItems="center" color="white">
       <Link to="https://happy-nut.github.io" className={classes.copyright}>
         <Typography variant="caption">2020 © happy-nut all rights reserved.</Typography>
       </Link>
-    </Box>
-  )
+    </StyledBox>
+  );
 }
 
 export default FooterSection

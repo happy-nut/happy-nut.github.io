@@ -1,149 +1,146 @@
-import Typography from '@material-ui/core/Typography'
-import makeStyles from '@material-ui/core/styles/makeStyles'
+import Typography from '@mui/material/Typography'
 import React from 'react'
-
-const useH1Styles = makeStyles((theme) => ({
-  root: {
-    marginBottom: theme.spacing(3),
-    marginTop: theme.spacing(4)
-  }
-}))
+import {useTheme} from "@mui/material";
+import {styled} from "@mui/material/styles";
 
 export const H1: React.FC = ({
   children
 }) => {
-  const classes = useH1Styles()
+  const theme = useTheme()
+
   return (
-    <Typography className={classes.root} variant="h1" color="textSecondary">
+    <Typography
+      variant="h1"
+      color="textSecondary"
+      marginBottom={theme.spacing(3)}
+      marginTop={theme.spacing(4)}
+    >
       {children}
     </Typography>
   )
 }
-
-const useH2Styles = makeStyles((theme) => ({
-  root: {
-    marginBottom: theme.spacing(1.5),
-    marginTop: theme.spacing(6)
-  }
-}))
 
 export const H2: React.FC = ({
   children
 }) => {
-  const classes = useH2Styles()
+  const theme = useTheme()
+
   return (
-    <Typography className={classes.root} variant="h2" color="textSecondary">
+    <Typography
+      variant="h2"
+      color="textSecondary"
+      marginBottom={theme.spacing(1.5)}
+      marginTop={theme.spacing(6)}
+    >
       {children}
     </Typography>
   )
 }
-
-const useH3Styles = makeStyles((theme) => ({
-  root: {
-    marginBottom: theme.spacing(0.5),
-    marginTop: theme.spacing(4)
-  }
-}))
 
 export const H3: React.FC = ({
   children
 }) => {
-  const classes = useH3Styles()
+  const theme = useTheme()
+
   return (
-    <Typography className={classes.root} variant="h3" color="textSecondary">
+    <Typography
+      variant="h3"
+      color="textSecondary"
+      marginBottom={theme.spacing(0.5)}
+      marginTop={theme.spacing(4)}
+    >
       {children}
     </Typography>
   )
 }
-
-const useH4Styles = makeStyles((theme) => ({
-  root: {
-    marginBottom: theme.spacing(0.5),
-    marginTop: theme.spacing(3)
-  }
-}))
 
 export const H4: React.FC = ({
   children
 }) => {
-  const classes = useH4Styles()
+  const theme = useTheme()
+
   return (
-    <Typography className={classes.root} variant="h4" color="textSecondary">
+    <Typography
+      variant="h4"
+      color="textSecondary"
+      marginBottom={theme.spacing(0.5)}
+      marginTop={theme.spacing(3)}
+    >
       {children}
     </Typography>
   )
 }
-
-const useH5Styles = makeStyles((theme) => ({
-  root: {
-    marginBottom: theme.spacing(0.5),
-    marginTop: theme.spacing(1.5)
-  }
-}))
 
 export const H5: React.FC = ({
   children
 }) => {
-  const classes = useH5Styles()
+  const theme = useTheme()
+
   return (
-    <Typography className={classes.root} variant="h5" color="textSecondary">
+    <Typography
+      variant="h5"
+      color="textSecondary"
+      marginBottom={theme.spacing(0.5)}
+      marginTop={theme.spacing(1.5)}
+    >
       {children}
     </Typography>
   )
 }
-
-const useH6Styles = makeStyles((theme) => ({
-  root: {
-    marginBottom: theme.spacing(0.5),
-    marginTop: theme.spacing(1)
-  }
-}))
 
 export const H6: React.FC = ({
   children
 }) => {
-  const classes = useH6Styles()
+  const theme = useTheme()
+
   return (
-    <Typography className={classes.root} variant="h6" color="textSecondary">
+    <Typography
+      variant="h6"
+      color="textSecondary"
+      marginBottom={theme.spacing(0.5)}
+      marginTop={theme.spacing(1)}
+    >
       {children}
     </Typography>
   )
 }
-
-const usePStyles = makeStyles((theme) => ({
-  root: {
-    paddingTop: theme.spacing(0.5),
-    paddingBottom: theme.spacing(0.5)
-  }
-}))
 
 export const P: React.FC = ({
   children
 }) => {
-  const classes = usePStyles()
+  const theme = useTheme()
+
   return (
-    <Typography className={classes.root} variant="body1" color="textSecondary">
+    <Typography
+      variant="body1"
+      color="textSecondary"
+      marginBottom={theme.spacing(0.5)}
+      marginTop={theme.spacing(0.5)}
+    >
       {children}
     </Typography>
   )
 }
 
-const useLiStyles = makeStyles((theme) => ({
-  root: {
+const classes = {
+  root: `Li-root`
+};
+
+const LiRoot = styled('li')(({ theme }) => ({
+  [`& .${classes.root}`]: {
     marginTop: theme.spacing(1)
   }
-}))
+}));
 
 export const Li: React.FC = ({
   children
 }) => {
-  const classes = useLiStyles()
   return (
-      <li className={classes.root}>
+      <LiRoot>
         <Typography variant="body2" color="textSecondary">
           {children}
         </Typography>
-      </li>
+      </LiRoot>
   )
 }
 

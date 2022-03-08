@@ -1,20 +1,35 @@
-import { Typography } from '@material-ui/core'
-import Box from '@material-ui/core/Box'
-import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
-import CardMedia from '@material-ui/core/CardMedia'
-import makeStyles from '@material-ui/core/styles/makeStyles'
+import { Typography } from '@mui/material'
+import { styled } from '@mui/material/styles';
+import Box from '@mui/material/Box'
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
+import CardMedia from '@mui/material/CardMedia'
 import React from 'react'
-import { animated, useSpring } from 'react-spring'
+import {useSpring } from 'react-spring'
 
-export const useStyles = makeStyles((theme) => ({
-  root: {
+const PREFIX = 'TilCard';
+
+const classes = {
+  root: `${PREFIX}-root`,
+  title: `${PREFIX}-title`,
+  description: `${PREFIX}-description`,
+  contentContainer: `${PREFIX}-contentContainer`,
+  media: `${PREFIX}-media`
+};
+
+const Root = styled('animated.div')((
+  {
+    theme
+  }
+) => ({
+  [`& .${classes.root}`]: {
     display: 'flex',
     justifyContent: 'space-between',
     height: '30%',
     cursor: 'pointer'
   },
-  title: {
+
+  [`& .${classes.title}`]: {
     '-webkit-line-clamp': 1,
     '-webkit-box-orient': 'vertical',
     overflow: 'hidden',
@@ -23,7 +38,8 @@ export const useStyles = makeStyles((theme) => ({
     whiteSpace: 'pre-line',
     marginBottom: theme.spacing(2)
   },
-  description: {
+
+  [`& .${classes.description}`]: {
     '-webkit-line-clamp': 3,
     '-webkit-box-orient': 'vertical',
     overflow: 'hidden',
@@ -34,14 +50,18 @@ export const useStyles = makeStyles((theme) => ({
       '-webkit-line-clamp': 1
     }
   },
-  contentContainer: {
+
+  [`& .${classes.contentContainer}`]: {
     width: '48%'
   },
-  media: {
+
+  [`& .${classes.media}`]: {
     width: '50%',
     clipPath: 'polygon(15% 0, 100% 0, 100% 100%, 0 100%)'
   }
-}))
+}));
+
+export {};
 
 const calc = (x, y): number[] => {
   return [-(y - window.innerHeight / 2) / 20, (x - window.innerWidth / 2) / 20, 1.05]
@@ -58,20 +78,19 @@ interface Props {
 }
 
 const TilCard: React.FC<Props> = ({ title, description, mediaImg }) => {
-  const classes = useStyles()
+
   const [props, set] = useSpring(() => ({
     xys: [0, 0, 1],
     config: { mass: 1, tension: 400, friction: 4 }
   }))
 
   return (
-    <animated.div
+    <Root
       onMouseMove={({ clientX: x, clientY: y }) => set({ xys: calc(x, y) })}
       onMouseLeave={() => set({ xys: [0, 0, 1] })}
       // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
       // @ts-ignore
-      style={{ transform: props.xys.interpolate(trans) }}
-    >
+      style={{ transform: props.xys.interpolate(trans) }}>
       <Card className={classes.root}>
         <Box display="flex" flexDirection="column" className={classes.contentContainer}>
           <CardContent>
@@ -89,8 +108,8 @@ const TilCard: React.FC<Props> = ({ title, description, mediaImg }) => {
           title={`media: ${title}`}
         />
       </Card>
-    </animated.div>
-  )
+    </Root>
+  );
 }
 
 export default TilCard

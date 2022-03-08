@@ -1,16 +1,41 @@
-import Box from '@material-ui/core/Box'
-import Collapse from '@material-ui/core/Collapse'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import Typography from '@material-ui/core/Typography'
-import makeStyles from '@material-ui/core/styles/makeStyles'
-import ExpandLess from '@material-ui/icons/ExpandLess'
-import ExpandMore from '@material-ui/icons/ExpandMore'
+import Box from '@mui/material/Box'
+import { styled } from '@mui/material/styles';
+import Collapse from '@mui/material/Collapse'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import Typography from '@mui/material/Typography'
+import ExpandLess from '@mui/icons-material/ExpandLess'
+import ExpandMore from '@mui/icons-material/ExpandMore'
 import { Link } from 'gatsby'
 import _ from 'lodash'
 import React from 'react'
 
 import { useSidebarDispatch, useSidebarState } from '../../../store/sidebarStore'
+
+const PREFIX = 'DirectoryList';
+
+const classes = {
+  link: `${PREFIX}-link`,
+  displayName: `${PREFIX}-displayName`
+};
+
+const StyledList = styled(List)((
+  {
+    theme
+  }
+) => ({
+  [`& .${classes.link}`]: {
+    textDecoration: 'none',
+    color: theme.palette._dark[200],
+    '& :hover': {
+      fontWeight: 'bold'
+    }
+  },
+
+  [`& .${classes.displayName}`]: {
+    color: theme.palette._dark[300]
+  }
+}));
 
 export interface Directory {
   displayName: string
@@ -22,21 +47,8 @@ interface Props {
   directory: Directory
 }
 
-const useStyles = makeStyles((theme) => ({
-  link: {
-    textDecoration: 'none',
-    color: theme.palette._dark[200],
-    '& :hover': {
-      fontWeight: 'bold'
-    }
-  },
-  displayName: {
-    color: theme.palette._dark[300]
-  }
-}))
-
 const DirectoryList: React.FC<Props> = ({ directory }) => {
-  const classes = useStyles()
+
   const sidebarState = useSidebarState()
   const sidebarDispatch = useSidebarDispatch()
 
@@ -89,7 +101,7 @@ const DirectoryList: React.FC<Props> = ({ directory }) => {
   }
 
   return (
-    <List>
+    <StyledList>
       <ListItem
         button
         onClick={() => {
@@ -111,8 +123,8 @@ const DirectoryList: React.FC<Props> = ({ directory }) => {
       <Collapse in={sidebarState[directory.displayName]} timeout="auto" unmountOnExit>
         {renderNestedDirectories(directory.children)}
       </Collapse>
-    </List>
-  )
+    </StyledList>
+  );
 }
 
 export default DirectoryList

@@ -1,6 +1,6 @@
-import { PaletteOptions } from '@material-ui/core/styles/createPalette'
+import { PaletteOptions } from '@mui/material/styles/createPalette'
 
-declare module '@material-ui/core/styles/createPalette' {
+declare module '@mui/material/styles/createPalette' {
   interface PaletteOptions {
     _blue: VariantColor
     _green: VariantColor

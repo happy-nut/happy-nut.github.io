@@ -1,8 +1,8 @@
-import AppBar from '@material-ui/core/AppBar'
-import Box from '@material-ui/core/Box'
-import Container from '@material-ui/core/Container'
-import IconButton from '@material-ui/core/IconButton'
-import MenuIcon from '@material-ui/icons/Menu'
+import AppBar from '@mui/material/AppBar'
+import Box from '@mui/material/Box'
+import Container from '@mui/material/Container'
+import IconButton from '@mui/material/IconButton'
+import MenuIcon from '@mui/icons-material/Menu'
 import { Link } from 'gatsby'
 import React from 'react'
 

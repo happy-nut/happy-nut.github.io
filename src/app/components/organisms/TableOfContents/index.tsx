@@ -1,11 +1,23 @@
-import Box from '@material-ui/core/Box'
-import Typography from '@material-ui/core/Typography'
-import makeStyles from '@material-ui/core/styles/makeStyles'
+import Box from '@mui/material/Box'
+import { styled } from '@mui/material/styles';
+import Typography from '@mui/material/Typography'
 import _ from 'lodash'
 import React from 'react'
 
-const useStyles = makeStyles((theme) => ({
-  root: {
+const PREFIX = 'TableOfContents';
+
+const classes = {
+  root: `${PREFIX}-root`,
+  link: `${PREFIX}-link`,
+  title: `${PREFIX}-title`
+};
+
+const StyledBox = styled(Box)((
+  {
+    theme
+  }
+) => ({
+  [`& .${classes.root}`]: {
     maxHeight: 800,
     overflowY: 'auto',
     color: 'gray',
@@ -13,17 +25,19 @@ const useStyles = makeStyles((theme) => ({
       width: 0
     }
   },
-  link: {
+
+  [`& .${classes.link}`]: {
     textDecoration: 'none',
     color: theme.palette._dark[200],
     '& :hover': {
       fontWeight: 'bold'
     }
   },
-  title: {
+
+  [`& .${classes.title}`]: {
     fontSize: '11px'
   }
-}))
+}));
 
 interface TableOfContents {
   url: string
@@ -36,7 +50,7 @@ export interface TableOfContentsProps {
 }
 
 const TableOfContents: React.FC<TableOfContentsProps> = ({ items }) => {
-  const classes = useStyles()
+
   const tableOfContent = items[0]
   if (_.isEmpty(tableOfContent.items)) {
     return null
@@ -47,11 +61,11 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ items }) => {
       if (_.isEmpty(item.items)) {
         return (
           <a className={classes.link} href={item.url} key={item.url}>
-            <Box pl={depth}>
+            <StyledBox pl={depth}>
               <Typography variant="caption" className={classes.title}>{item.title}</Typography>
-            </Box>
+            </StyledBox>
           </a>
-        )
+        );
       }
 
       return (
@@ -64,7 +78,7 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ items }) => {
           {renderNestedToc(item.items, depth + 1)}
         </div>
       )
-    })
+    });
   }
 
   return (

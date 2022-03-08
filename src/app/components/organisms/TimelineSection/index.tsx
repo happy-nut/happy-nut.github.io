@@ -1,14 +1,24 @@
-import { Typography } from '@material-ui/core'
-import Box from '@material-ui/core/Box'
-import makeStyles from '@material-ui/core/styles/makeStyles'
+import { Typography } from '@mui/material'
+import { styled } from '@mui/material/styles';
+import Box from '@mui/material/Box'
 import React, { useEffect, useState } from 'react'
 
 import './timeline/timeline.css'
 
-const TIMELINE_EMBED_ID = 'timeline-embed'
+const PREFIX = 'TimelineSection';
 
-export const useStyles = makeStyles((theme) => ({
-  title: {
+const classes = {
+  title: `${PREFIX}-title`,
+  subtitle: `${PREFIX}-subtitle`,
+  timelineContainer: `${PREFIX}-timelineContainer`
+};
+
+const StyledBox = styled(Box)((
+  {
+    theme
+  }
+) => ({
+  [`& .${classes.title}`]: {
     marginTop: theme.spacing(12),
     fontSize: '3rem',
     whiteSpace: 'pre-line',
@@ -23,7 +33,8 @@ export const useStyles = makeStyles((theme) => ({
       marginTop: theme.spacing(6)
     }
   },
-  subtitle: {
+
+  [`& .${classes.subtitle}`]: {
     whiteSpace: 'pre-line',
     wordBreak: 'keep-all',
     fontSize: '1.7rem',
@@ -38,14 +49,19 @@ export const useStyles = makeStyles((theme) => ({
       fontSize: '1.1rem'
     }
   },
-  timelineContainer: {
+
+  [`& .${classes.timelineContainer}`]: {
     padding: theme.spacing(5),
     height: '60vh',
     [theme.breakpoints.only('xs')]: {
       height: '80vh'
     }
   }
-}))
+}));
+
+const TIMELINE_EMBED_ID = 'timeline-embed'
+
+export {};
 
 const initTimeline = (source): void => {
   const options = {
@@ -65,7 +81,7 @@ const initTimeline = (source): void => {
 }
 
 const TimelineSection: React.FC = () => {
-  const classes = useStyles()
+
   const [timeline, setTimeline] = useState()
 
   useEffect(() => {
@@ -79,7 +95,7 @@ const TimelineSection: React.FC = () => {
   }, [timeline])
 
   return (
-    <Box height="100vh">
+    <StyledBox height="100vh">
       <Box display="flex" justifyContent="center">
         <Typography variant="h1" className={classes.title}>😎 Experiences</Typography>
       </Box>
@@ -91,8 +107,8 @@ const TimelineSection: React.FC = () => {
       <div className={classes.timelineContainer}>
         <div id={TIMELINE_EMBED_ID} />
       </div>
-    </Box>
-  )
+    </StyledBox>
+  );
 }
 
 export default TimelineSection

@@ -1,7 +1,7 @@
-import AppBar from '@material-ui/core/AppBar'
-import Box from '@material-ui/core/Box'
-import Container from '@material-ui/core/Container'
-import makeStyles from '@material-ui/core/styles/makeStyles'
+import AppBar from '@mui/material/AppBar'
+import { styled } from '@mui/material/styles';
+import Box from '@mui/material/Box'
+import Container from '@mui/material/Container'
 import { RouteComponentProps } from '@reach/router'
 import React from 'react'
 import { Parallax, ParallaxLayer } from 'react-spring/renderprops-addons'
@@ -14,17 +14,24 @@ import MainHeader from '../../components/organisms/MainHeader'
 import TilSection from '../../components/organisms/TilSection'
 import TimelineSection from '../../components/organisms/TimelineSection'
 
-export const useStyles = makeStyles({
-  appBar: {
+const PREFIX = 'MainPage';
+
+const classes = {
+  appBar: `${PREFIX}-appBar`
+};
+
+// TODO jss-to-styled codemod: The Fragment root was replaced by div. Change the tag if needed.
+const Root = styled('div')({
+  [`& .${classes.appBar}`]: {
     backgroundColor: '#FAFAFA'
   }
-})
+});
+
+export {};
 
 const MainPage: React.FC<RouteComponentProps> = () => {
-  const classes = useStyles()
-
   return (
-    <>
+    (<Root>
       <SEO />
       <Parallax pages={4} scrolling>
         <AppBar position="static" elevation={0} className={classes.appBar}>
@@ -87,8 +94,8 @@ const MainPage: React.FC<RouteComponentProps> = () => {
           </Container>
         </Box>
       </Parallax>
-    </>
-  )
+    </Root>)
+  );
 }
 
 export default MainPage

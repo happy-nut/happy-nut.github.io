@@ -1,9 +1,9 @@
-import { Typography, useMediaQuery, useTheme } from '@material-ui/core'
-import Box from '@material-ui/core/Box'
-import Button from '@material-ui/core/Button'
-import Grid from '@material-ui/core/Grid'
-import makeStyles from '@material-ui/core/styles/makeStyles'
-import ArrowForwardRoundedIcon from '@material-ui/icons/ArrowForwardRounded'
+import { Typography, useMediaQuery, useTheme } from '@mui/material'
+import { styled } from '@mui/material/styles';
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import Grid from '@mui/material/Grid'
+import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded'
 import { Link } from 'gatsby'
 import _ from 'lodash'
 import React, { useMemo } from 'react'
@@ -11,8 +11,24 @@ import React, { useMemo } from 'react'
 import { useLatestPostPath } from '../../../hooks/useLatestPost'
 import TilCard from '../../molecules/TilCard'
 
-const useStyles = makeStyles((theme) => ({
-  title: {
+const PREFIX = 'TilSection';
+
+const classes = {
+  title: `${PREFIX}-title`,
+  subtitle: `${PREFIX}-subtitle`,
+  descriptionContainer: `${PREFIX}-descriptionContainer`,
+  description: `${PREFIX}-description`,
+  arrowIcon: `${PREFIX}-arrowIcon`,
+  buttonText: `${PREFIX}-buttonText`,
+  button: `${PREFIX}-button`
+};
+
+const StyledBox = styled(Box)((
+  {
+    theme
+  }
+) => ({
+  [`& .${classes.title}`]: {
     fontSize: '3rem',
     whiteSpace: 'pre-line',
     wordBreak: 'keep-all',
@@ -24,7 +40,8 @@ const useStyles = makeStyles((theme) => ({
       fontSize: '2rem'
     }
   },
-  subtitle: {
+
+  [`& .${classes.subtitle}`]: {
     marginTop: theme.spacing(10),
     fontSize: '1.7rem',
     whiteSpace: 'pre-line',
@@ -38,20 +55,24 @@ const useStyles = makeStyles((theme) => ({
       marginTop: theme.spacing(5)
     }
   },
-  descriptionContainer: {
+
+  [`& .${classes.descriptionContainer}`]: {
     [theme.breakpoints.only('xs')]: {
       display: 'none'
     }
   },
-  description: {
+
+  [`& .${classes.description}`]: {
     whiteSpace: 'pre-line',
     wordBreak: 'keep-all'
   },
-  arrowIcon: {
+
+  [`& .${classes.arrowIcon}`]: {
     fontSize: '24px',
     fontWeight: 'bold'
   },
-  buttonText: {
+
+  [`& .${classes.buttonText}`]: {
     marginLeft: theme.spacing(1.5),
     marginRight: theme.spacing(1.5),
     fontSize: '24px',
@@ -60,7 +81,8 @@ const useStyles = makeStyles((theme) => ({
       fontSize: '18px'
     }
   },
-  button: {
+
+  [`& .${classes.button}`]: {
     marginTop: theme.spacing(8),
     boxSizing: 'border-box',
     padding: theme.spacing(1.5),
@@ -80,7 +102,7 @@ const useStyles = makeStyles((theme) => ({
       marginTop: theme.spacing(4)
     }
   }
-}))
+}));
 
 // TODO(poqw): Replace this with recent TIL posts.
 const tils = [
@@ -102,8 +124,6 @@ const tils = [
 ]
 
 const TilSection: React.FC = () => {
-  const classes = useStyles()
-
   const latestPostPath = useLatestPostPath()
   const theme = useTheme()
   const matches = useMediaQuery(theme.breakpoints.down('xs'))
@@ -116,7 +136,7 @@ const TilSection: React.FC = () => {
   }, [matches])
 
   return (
-    <Box display="flex" height="120vh" alignItems="center" color="white">
+    <StyledBox display="flex" height="120vh" alignItems="center" color="white">
       <Grid container alignItems="center">
         <Grid item xs={12} md={5}>
           <Typography variant="h1" className={classes.title}>✏️ Today I Learned</Typography>
@@ -134,7 +154,7 @@ const TilSection: React.FC = () => {
           <Button
             component={Link}
             variant="contained"
-            color="default"
+            color="primary"
             className={classes.button}
             classes={{ startIcon: classes.arrowIcon }}
             startIcon={<ArrowForwardRoundedIcon />}
@@ -164,8 +184,8 @@ const TilSection: React.FC = () => {
           </Box>
         </Grid>
       </Grid>
-    </Box>
-  )
+    </StyledBox>
+  );
 }
 
 export default TilSection

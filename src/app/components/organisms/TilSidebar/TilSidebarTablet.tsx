@@ -1,8 +1,8 @@
-import { IconButton } from '@material-ui/core'
-import Box from '@material-ui/core/Box'
-import Divider from '@material-ui/core/Divider'
-import SwipeableDrawer from '@material-ui/core/SwipeableDrawer'
-import CloseIcon from '@material-ui/icons/Close'
+import { IconButton } from '@mui/material'
+import Box from '@mui/material/Box'
+import Divider from '@mui/material/Divider'
+import SwipeableDrawer from '@mui/material/SwipeableDrawer'
+import CloseIcon from '@mui/icons-material/Close'
 import _ from 'lodash'
 import React from 'react'
 

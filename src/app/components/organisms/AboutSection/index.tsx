@@ -1,20 +1,35 @@
-import { Typography, useMediaQuery, useTheme } from '@material-ui/core'
-import Box from '@material-ui/core/Box'
-import Grid from '@material-ui/core/Grid'
-import IconButton from '@material-ui/core/IconButton'
-import makeStyles from '@material-ui/core/styles/makeStyles'
-import FacebookIcon from '@material-ui/icons/Facebook'
-import GitHubIcon from '@material-ui/icons/GitHub'
-import InstagramIcon from '@material-ui/icons/Instagram'
-import LinkedInIcon from '@material-ui/icons/LinkedIn'
-import MailIcon from '@material-ui/icons/Mail'
+import { Typography, useMediaQuery, useTheme } from '@mui/material'
+import { styled } from '@mui/material/styles';
+import Box from '@mui/material/Box'
+import Grid from '@mui/material/Grid'
+import IconButton from '@mui/material/IconButton'
+import GitHubIcon from '@mui/icons-material/GitHub'
+import InstagramIcon from '@mui/icons-material/Instagram'
+import LinkedInIcon from '@mui/icons-material/LinkedIn'
+import MailIcon from '@mui/icons-material/Mail'
 import { graphql, useStaticQuery } from 'gatsby'
 import Img from 'gatsby-image'
 import React from 'react'
 import { useSpring, animated } from 'react-spring'
 
-export const useStyles = makeStyles((theme) => ({
-  title: {
+const PREFIX = 'AboutSection';
+
+const classes = {
+  title: `${PREFIX}-title`,
+  descriptionContainer: `${PREFIX}-descriptionContainer`,
+  description: `${PREFIX}-description`,
+  subDescription: `${PREFIX}-subDescription`,
+  iconContainer: `${PREFIX}-iconContainer`,
+  iconButton: `${PREFIX}-iconButton`,
+  profileContainer: `${PREFIX}-profileContainer`
+};
+
+const StyledBox = styled(Box)((
+  {
+    theme
+  }
+) => ({
+  [`& .${classes.title}`]: {
     marginTop: theme.spacing(2),
     fontSize: '3rem',
     whiteSpace: 'pre-line',
@@ -27,13 +42,15 @@ export const useStyles = makeStyles((theme) => ({
       fontSize: '1.5rem'
     }
   },
-  descriptionContainer: {
+
+  [`& .${classes.descriptionContainer}`]: {
     marginTop: theme.spacing(2),
     [theme.breakpoints.only('xs')]: {
       marginTop: theme.spacing(1.5)
     }
   },
-  description: {
+
+  [`& .${classes.description}`]: {
     marginTop: theme.spacing(1),
     whiteSpace: 'pre-line',
     wordBreak: 'keep-all',
@@ -42,7 +59,8 @@ export const useStyles = makeStyles((theme) => ({
       marginTop: theme.spacing(0)
     }
   },
-  subDescription: {
+
+  [`& .${classes.subDescription}`]: {
     fontSize: '1rem',
     marginTop: theme.spacing(1),
     whiteSpace: 'pre-line',
@@ -51,7 +69,8 @@ export const useStyles = makeStyles((theme) => ({
       fontSize: '0.8rem'
     }
   },
-  iconContainer: {
+
+  [`& .${classes.iconContainer}`]: {
     marginTop: theme.spacing(6),
     [theme.breakpoints.only('sm')]: {
       marginTop: theme.spacing(4)
@@ -62,7 +81,8 @@ export const useStyles = makeStyles((theme) => ({
       marginTop: theme.spacing(4)
     }
   },
-  iconButton: {
+
+  [`& .${classes.iconButton}`]: {
     marginRight: theme.spacing(2),
     marginTop: theme.spacing(2),
     boxSizing: 'border-box',
@@ -83,7 +103,8 @@ export const useStyles = makeStyles((theme) => ({
       height: 48
     }
   },
-  profileContainer: {
+
+  [`& .${classes.profileContainer}`]: {
     margin: theme.spacing(6),
     maxWidth: 700,
     maxHeight: 700,
@@ -109,7 +130,9 @@ export const useStyles = makeStyles((theme) => ({
       boxShadow: '0px 3px 10px -2px rgba(0, 0, 0, 0.3)'
     }
   }
-}))
+}));
+
+export {};
 
 const calc = (x, y): number[] => {
   return [-(y - window.innerHeight / 2) / 140, (x - window.innerWidth / 2) / 140, 1.05]
@@ -120,7 +143,7 @@ const trans = (x, y, s): string => {
 }
 
 const AboutSection: React.FC = () => {
-  const classes = useStyles()
+
 
   const [props, set] = useSpring(() => ({
     xys: [0, 0, 1],
@@ -143,7 +166,7 @@ const AboutSection: React.FC = () => {
   const matches = useMediaQuery(theme.breakpoints.up('sm'))
 
   return (
-    <Box display="flex" height="90vh" alignItems="center" color="white">
+    <StyledBox display="flex" height="90vh" alignItems="center" color="white">
       <Grid container alignItems="center">
         <Grid item xs={12} md={6}>
           <animated.div
@@ -224,8 +247,8 @@ const AboutSection: React.FC = () => {
           </Box>
         </Grid>
       </Grid>
-    </Box>
-  )
+    </StyledBox>
+  );
 }
 
 export default AboutSection

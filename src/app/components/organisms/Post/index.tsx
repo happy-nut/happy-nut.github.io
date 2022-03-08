@@ -1,5 +1,5 @@
-import Box from '@material-ui/core/Box'
-import makeStyles from '@material-ui/core/styles/makeStyles'
+import Box from '@mui/material/Box'
+import { styled } from '@mui/material/styles';
 import { MDXProvider } from '@mdx-js/react'
 import AnchorJS from 'anchor-js'
 import { MDXRenderer } from 'gatsby-plugin-mdx'
@@ -18,15 +18,21 @@ import './anchor.css'
 import { H1, H2, H3, H4, H5, H6, Img, Li, P } from '../../atoms/MdxComponents'
 import CommentSection from '../../molecules/CommentSection'
 
-import { Divider } from '@material-ui/core'
-import Typography from "@material-ui/core/Typography";
+import { Divider } from '@mui/material'
+import Typography from "@mui/material/Typography";
 
-const useStyles = makeStyles({
-  paper: {
+const PREFIX = 'Post';
+
+const classes = {
+  paper: `${PREFIX}-paper`
+};
+
+const StyledBox = styled(Box)({
+  [`&.${classes.paper}`]: {
     width: '100%',
     minHeight: '100vh'
   }
-})
+});
 
 const components = {
   h1: H1,
@@ -49,7 +55,7 @@ export interface PostProps {
 // TODO: 제목도 따로 받도록 해서 날짜랑 이쁘게 정렬하자.
 // TODO(poqw): Use path to make hash tags.
 const Post: React.FC<PostProps> = ({ mdxContent, createdAt, modifiedAt }) => {
-  const classes = useStyles()
+
 
   useEffect(() => {
     // TODO(poqw): Use slug instead of anchoring directly.
@@ -60,7 +66,7 @@ const Post: React.FC<PostProps> = ({ mdxContent, createdAt, modifiedAt }) => {
   })
 
   return (
-    <Box id="post" className={classes.paper} pb={12}>
+    <StyledBox id="post" className={classes.paper} pb={12}>
       <Box display="flex" justifyContent="flex-end">
         <Typography variant="caption" align="right">마지막 수정 - {modifiedAt.toDateString()}</Typography>
       </Box>
@@ -71,8 +77,8 @@ const Post: React.FC<PostProps> = ({ mdxContent, createdAt, modifiedAt }) => {
         <Divider />
       </Box>
       <CommentSection repo="happy-nut/happy-nut.github.io.comments" />
-    </Box>
-  )
+    </StyledBox>
+  );
 }
 
 export default Post

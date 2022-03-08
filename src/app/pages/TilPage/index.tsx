@@ -1,6 +1,6 @@
-import Box from '@material-ui/core/Box'
-import Typography from '@material-ui/core/Typography'
-import makeStyles from '@material-ui/core/styles/makeStyles'
+import Box from '@mui/material/Box'
+import { styled } from '@mui/material/styles';
+import Typography from '@mui/material/Typography'
 import { RouteComponentProps } from '@reach/router'
 import { Link } from 'gatsby'
 import { PageContext } from 'gatsby/internal'
@@ -15,11 +15,22 @@ import TableOfContents from '../../components/organisms/TableOfContents'
 import TilSidebar from '../../components/organisms/TilSidebar'
 import TilTemplate from './template'
 
-const useStyles = makeStyles((theme) => ({
-  logoText: {
+const PREFIX = 'TilPage';
+
+const classes = {
+  logoText: `${PREFIX}-logoText`
+};
+
+// TODO jss-to-styled codemod: The Fragment root was replaced by div. Change the tag if needed.
+const Root = styled('div')((
+  {
+    theme
+  }
+) => ({
+  [`& .${classes.logoText}`]: {
     color: theme.palette._green['500']
   }
-}))
+}));
 
 interface Props extends RouteComponentProps {
   pageContext: PageContext
@@ -27,10 +38,10 @@ interface Props extends RouteComponentProps {
 
 const TilPage: React.FC<Props> = ({ pageContext }) => {
   const { name, body, toc, images, createdAt, modifiedAt } = pageContext
-  const classes = useStyles()
+
 
   return (
-    <>
+    (<Root>
       <SEO description={name} ogImage={_.first(images)} />
       <TilTemplate
         logo={
@@ -46,8 +57,8 @@ const TilPage: React.FC<Props> = ({ pageContext }) => {
         post={<Post mdxContent={body}  createdAt={new Date(createdAt)} modifiedAt={new Date(modifiedAt)}/>}
         toc={<TableOfContents items={toc.items} />}
       />
-    </>
-  )
+    </Root>)
+  );
 }
 
 export default TilPage

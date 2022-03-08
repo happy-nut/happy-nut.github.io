@@ -1,11 +1,22 @@
-import { Typography } from '@material-ui/core'
-import Box from '@material-ui/core/Box'
-import makeStyles from '@material-ui/core/styles/makeStyles'
+import { Typography } from '@mui/material'
+import { styled } from '@mui/material/styles';
+import Box from '@mui/material/Box'
 import React from 'react'
 import { animated, useTransition } from 'react-spring'
 
-const useStyles = makeStyles((theme) => ({
-  title: {
+const PREFIX = 'LandingSection';
+
+const classes = {
+  title: `${PREFIX}-title`,
+  description: `${PREFIX}-description`
+};
+
+const StyledBox = styled(Box)((
+  {
+    theme
+  }
+) => ({
+  [`& .${classes.title}`]: {
     fontSize: '4rem',
     whiteSpace: 'pre-line',
     wordBreak: 'keep-all',
@@ -18,7 +29,8 @@ const useStyles = makeStyles((theme) => ({
       fontSize: '1.8rem'
     }
   },
-  description: {
+
+  [`& .${classes.description}`]: {
     marginTop: theme.spacing(2),
     fontSize: '1.5rem',
     whiteSpace: 'pre-line',
@@ -31,10 +43,10 @@ const useStyles = makeStyles((theme) => ({
       fontSize: '1rem'
     }
   }
-}))
+}));
 
 const LandingSection: React.FC = () => {
-  const classes = useStyles()
+
   const items = [
     {
       value: '반갑습니다!\n개발🧑‍💻과 요리👨‍🍳를 좋아하는\nhappy-nut🥜 입니다.',
@@ -61,7 +73,7 @@ const LandingSection: React.FC = () => {
   })
 
   return (
-    <Box display="flex" alignItems="center" height="65vh">
+    <StyledBox display="flex" alignItems="center" height="65vh">
       <Box>
         {transitions.map(({ item, props }, index) => (
           <animated.div key={index} style={props}>
@@ -69,8 +81,8 @@ const LandingSection: React.FC = () => {
           </animated.div>
         ))}
       </Box>
-    </Box>
-  )
+    </StyledBox>
+  );
 }
 
 export default LandingSection
