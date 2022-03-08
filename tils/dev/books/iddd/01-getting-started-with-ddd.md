@@ -22,7 +22,7 @@
 
 1. 그냥 냅다 코딩만 한 경우 
 
-```koltin
+```kotlin
 patient.setShotType(ShotTypes.COVID-19)
 patient.setDose(dose)
 patient.setNurse(nurse)
