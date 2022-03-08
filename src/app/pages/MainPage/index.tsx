@@ -14,27 +14,14 @@ import MainHeader from '../../components/organisms/MainHeader'
 import TilSection from '../../components/organisms/TilSection'
 import TimelineSection from '../../components/organisms/TimelineSection'
 
-const PREFIX = 'MainPage';
-
-const classes = {
-  appBar: `${PREFIX}-appBar`
-};
-
-// TODO jss-to-styled codemod: The Fragment root was replaced by div. Change the tag if needed.
-const Root = styled('div')({
-  [`& .${classes.appBar}`]: {
-    backgroundColor: '#FAFAFA'
-  }
-});
-
 export {};
 
 const MainPage: React.FC<RouteComponentProps> = () => {
   return (
-    (<Root>
+    (<>
       <SEO />
       <Parallax pages={4} scrolling>
-        <AppBar position="static" elevation={0} className={classes.appBar}>
+        <AppBar position="static" elevation={0}>
           <Container maxWidth="lg">
             <MainHeader />
           </Container>
@@ -94,7 +81,7 @@ const MainPage: React.FC<RouteComponentProps> = () => {
           </Container>
         </Box>
       </Parallax>
-    </Root>)
+    </>)
   );
 }
 
