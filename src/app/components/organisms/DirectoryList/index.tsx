@@ -19,11 +19,7 @@ const classes = {
   displayName: `${PREFIX}-displayName`
 };
 
-const StyledList = styled(List)((
-  {
-    theme
-  }
-) => ({
+const StyledList = styled(List)(({theme}) => ({
   [`& .${classes.link}`]: {
     textDecoration: 'none',
     color: theme.palette._dark[200],

@@ -1,5 +1,5 @@
-import { Typography, useMediaQuery, useTheme } from '@mui/material'
-import { styled } from '@mui/material/styles';
+import {Typography} from '@mui/material'
+import {styled} from '@mui/material/styles';
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import IconButton from '@mui/material/IconButton'
@@ -7,10 +7,10 @@ import GitHubIcon from '@mui/icons-material/GitHub'
 import InstagramIcon from '@mui/icons-material/Instagram'
 import LinkedInIcon from '@mui/icons-material/LinkedIn'
 import MailIcon from '@mui/icons-material/Mail'
-import { graphql, useStaticQuery } from 'gatsby'
-import Img from 'gatsby-image'
+import {graphql, useStaticQuery} from 'gatsby'
+import {GatsbyImage} from "gatsby-plugin-image";
 import React from 'react'
-import { useSpring, animated } from 'react-spring'
+import {useSpring, animated} from 'react-spring'
 
 const PREFIX = 'AboutSection';
 
@@ -132,8 +132,6 @@ const StyledBox = styled(Box)((
   }
 }));
 
-export {};
-
 const calc = (x, y): number[] => {
   return [-(y - window.innerHeight / 2) / 140, (x - window.innerWidth / 2) / 140, 1.05]
 }
@@ -143,27 +141,19 @@ const trans = (x, y, s): string => {
 }
 
 const AboutSection: React.FC = () => {
-
-
   const [props, set] = useSpring(() => ({
     xys: [0, 0, 1],
-    config: { mass: 1, tension: 250, friction: 40 }
+    config: {mass: 1, tension: 250, friction: 40}
   }))
 
-  const profileQuery = useStaticQuery(graphql`
-    query {
-      fileName: file(relativePath: { eq: "profile.png" }) {
-        childImageSharp {
-          fluid(maxWidth: 700, maxHeight: 700) {
-            ...GatsbyImageSharpFluid
-          }
-        }
+  const profileQuery = useStaticQuery(graphql`{
+    fileName: file(relativePath: {eq: "profile.png"}) {
+      childImageSharp {
+        gatsbyImageData(width: 700, height: 700, layout: CONSTRAINED)
       }
     }
-  `)
-
-  const theme = useTheme()
-  const matches = useMediaQuery(theme.breakpoints.up('sm'))
+  }
+`)
 
   return (
     <StyledBox display="flex" height="90vh" alignItems="center" color="white">
@@ -171,15 +161,15 @@ const AboutSection: React.FC = () => {
         <Grid item xs={12} md={6}>
           <animated.div
             className={classes.profileContainer}
-            onMouseMove={({ clientX: x, clientY: y }) => set({ xys: calc(x, y) })}
-            onMouseLeave={() => set({ xys: [0, 0, 1] })}
+            onMouseMove={({clientX: x, clientY: y}) => set({xys: calc(x, y)})}
+            onMouseLeave={() => set({xys: [0, 0, 1]})}
             style={{
               // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
               // @ts-ignore
               transform: props.xys.interpolate(trans)
             }}
           >
-            <Img fluid={profileQuery.fileName.childImageSharp.fluid} />
+            <GatsbyImage image={profileQuery.fileName.childImageSharp.gatsbyImageData} alt="profile image"/>
           </animated.div>
         </Grid>
         <Grid item md={1}> </Grid>
@@ -218,7 +208,7 @@ const AboutSection: React.FC = () => {
               target="_blank"
               rel="noreferrer noopener"
             >
-              <GitHubIcon fontSize="large" />
+              <GitHubIcon fontSize="large"/>
             </IconButton>
             <IconButton
               className={classes.iconButton}
@@ -226,7 +216,7 @@ const AboutSection: React.FC = () => {
               target="_blank"
               rel="noreferrer noopener"
             >
-              <LinkedInIcon fontSize="large" />
+              <LinkedInIcon fontSize="large"/>
             </IconButton>
             <IconButton
               className={classes.iconButton}
@@ -234,7 +224,7 @@ const AboutSection: React.FC = () => {
               target="_blank"
               rel="noreferrer noopener"
             >
-              <InstagramIcon fontSize="large" />
+              <InstagramIcon fontSize="large"/>
             </IconButton>
             <IconButton
               className={classes.iconButton}
@@ -242,7 +232,7 @@ const AboutSection: React.FC = () => {
               target="_blank"
               rel="noreferrer noopener"
             >
-              <MailIcon fontSize="large" />
+              <MailIcon fontSize="large"/>
             </IconButton>
           </Box>
         </Grid>

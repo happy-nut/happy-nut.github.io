@@ -17,11 +17,7 @@ const classes = {
   media: `${PREFIX}-media`
 };
 
-const Root = styled('animated.div')((
-  {
-    theme
-  }
-) => ({
+const Root = styled('animated.div')(({theme}) => ({
   [`& .${classes.root}`]: {
     display: 'flex',
     justifyContent: 'space-between',

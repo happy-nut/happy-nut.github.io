@@ -7,16 +7,12 @@ import React from 'react'
 const PREFIX = 'Image';
 
 const classes = {
-  imageContainer: `${PREFIX}-imageContainer`,
+  image: `${PREFIX}-imageContainer`,
   root: `${PREFIX}-root`
 };
 
-const StyledImg = styled(Img)((
-  {
-    theme
-  }
-) => ({
-  [`& .${classes.imageContainer}`]: {
+const StyledExternalSrcImageContainer = styled('div')(({theme}) => ({
+  [`& .${classes.image}`]: {
     maxWidth: '100%',
     boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
     padding: theme.spacing(1)
@@ -31,26 +27,24 @@ const StyledImg = styled(Img)((
 }));
 
 interface ImageProps extends Omit<GatsbyImageProps, 'sizes'> {
-  alt?: string
+  alt: string
   sizes: string
   src: string
   srcSet: string[]
 }
 
 const Image: React.FC<ImageProps> = (props) => {
-
-
   if (_.isEmpty(props.srcSet)) { // External linked image.
     return (
-      <div className={classes.root}>
-        <img className={classes.imageContainer} src={props.src} alt={props.alt} />
-      </div>
+      <StyledExternalSrcImageContainer className={classes.root}>
+        <img className={classes.image} src={props.src} alt={props.alt}/>
+      </StyledExternalSrcImageContainer>
     )
   }
 
   const gatsbyImageProps: GatsbyImageProps = {
     alt: props.alt,
-    className: [props.className, classes.imageContainer].join(' '),
+    className: [props.className, classes.image].join(' '),
     style: props.style,
     title: props.title,
     loading: props.loading,
@@ -62,7 +56,7 @@ const Image: React.FC<ImageProps> = (props) => {
     }
   }
 
-  return <StyledImg { ...gatsbyImageProps } />;
+  return <Img { ...gatsbyImageProps } />;
 }
 
 export default Image
