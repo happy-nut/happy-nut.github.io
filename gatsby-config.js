@@ -110,6 +110,12 @@ module.exports = {
       options: {
         publisherId: 'ca-pub-2079653891316635'
       },
-    }
+    },
+    {
+      resolve: `gatsby-plugin-canonical-urls`,
+      options: {
+        siteUrl: `https://happy-nut.github.io`,
+      },
+    },
   ]
 }

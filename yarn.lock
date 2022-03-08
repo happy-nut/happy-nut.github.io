@@ -6819,6 +6819,13 @@ gatsby-parcel-config@^0.0.1:
     "@parcel/transformer-raw" "^2.3.1"
     "@parcel/transformer-react-refresh-wrap" "^2.3.1"
 
+gatsby-plugin-canonical-urls@^4.9.0:
+  version "4.9.0"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-canonical-urls/-/gatsby-plugin-canonical-urls-4.9.0.tgz#41a82d860ded7ae9ea71a3a69f11209acef95b03"
+  integrity sha512-b6XNwM5NpHDmYtYCjsz4ln81HgnWw44XMhxjmbzdoAg8teQcVzw+cfBmcZODK0MZ7uVd1nHc6UibZoTLOUQqpg==
+  dependencies:
+    "@babel/runtime" "^7.15.4"
+
 gatsby-plugin-google-adsense@^1.1.3:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/gatsby-plugin-google-adsense/-/gatsby-plugin-google-adsense-1.1.3.tgz#267e24880a7634d988bb09b920a115a80f826d55"
