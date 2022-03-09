@@ -2,12 +2,87 @@
 
 module.exports = {
   siteMetadata: {
-    title: 'Happynut\'s Portilog',
-    description: 'TIL을 Logging해서 Portfolio를 증분 빌드해보자',
-    author: 'Hyungsun Song <happynut.dev@gmail.com>',
-    siteUrl: 'https://happy-nut.github.io/'
+    siteTitle: '피스타치오는 맛있어',
+    siteTitleAlt: `피스타치오는 맛있어`,
+    siteHeadline: `피스타치오는 맛있어`,
+    siteDescription: `피스타치오는 정말 맛있어`,
+    siteLanguage: `ko`,
+    siteUrl: 'https://happy-nut.github.io/',
+    siteImage: '',
+    author: 'Hyungsun Song <happynut.dev@gmail.com>'
   },
   plugins: [
+    {
+      resolve: `@lekoarts/gatsby-theme-minimal-blog`,
+      options: {
+        showLineNumbers: true,
+        navigation: [
+          {
+            title: `Blog`,
+            slug: `/blog`,
+          },
+          {
+            title: `About`,
+            slug: `/about`,
+          },
+        ],
+        externalLinks: [
+          {
+            name: `Instagram`,
+            url: `https://www.instagram.com/hssongng/`,
+          },
+        ],
+      }
+    },
+    {
+      resolve: `gatsby-plugin-theme-ui`,
+      options: {
+        preset: "@theme-ui/base",
+      },
+    },
+    {
+      resolve: `gatsby-omni-font-loader`,
+      options: {
+        enableListener: true,
+        preconnect: [`https://fonts.gstatic.com`],
+        interval: 300,
+        timeout: 30000,
+        // If you plan on changing the font you'll also need to adjust the Theme UI config to edit the CSS
+        // See: https://github.com/LekoArts/gatsby-themes/tree/main/examples/minimal-blog#changing-your-fonts
+        web: [
+          {
+            name: `IBM Plex Sans`,
+            file: `https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap`,
+          },
+        ],
+      },
+    },
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `피스타치오는 맛있어`,
+        short_name: `피스타치오는 맛있어`,
+        description: `피스타치오는 맛있어`,
+        start_url: `/`,
+        background_color: `#fff`,
+        // This will impact how browsers show your PWA/website
+        // https://css-tricks.com/meta-theme-color-and-trickery/
+        theme_color: '#90B083',
+        display: `standalone`,
+        icons: [
+          {
+            src: `/android-chrome-192x192.png`,
+            sizes: `192x192`,
+            type: `image/png`,
+          },
+          {
+            src: `/android-chrome-512x512.png`,
+            sizes: `512x512`,
+            type: `image/png`,
+          },
+        ],
+      },
+    },
     {
       // SEO related.
       resolve: 'gatsby-plugin-google-gtag',
@@ -35,76 +110,9 @@ module.exports = {
     },
 
     // Local plugins.
-    'gatsby-plugin-global-layout',
+    // 'gatsby-plugin-global-layout',
 
-    // External plugins.
-    'gatsby-plugin-typescript',
     'gatsby-plugin-sitemap',
-    'gatsby-plugin-material-ui',
-    'gatsby-plugin-react-helmet',
-    {
-      resolve: 'gatsby-source-filesystem',
-      options: {
-        name: 'images',
-        path: `${__dirname}/assets/images`
-      }
-    },
-    {
-      resolve: 'gatsby-source-filesystem',
-      options: {
-        name: 'tils',
-        path: `${__dirname}/tils`
-      }
-    },
-    {
-      resolve: 'gatsby-plugin-react-svg',
-      options: {
-        rule: {
-          include: /assets/
-        }
-      }
-    },
-    'gatsby-plugin-image',
-    'gatsby-plugin-sharp',
-    'gatsby-transformer-sharp',
-    {
-      resolve: 'gatsby-plugin-mdx',
-      options: {
-        extensions: ['.mdx', '.md'],
-        gatsbyRemarkPlugins: [
-          {
-            resolve: 'gatsby-remark-images',
-            options: {
-              tracedSVG: true,
-              quality: 90,
-              backgroundColor: 'transparent'
-            }
-          },
-          {
-            resolve: 'gatsby-remark-prismjs',
-            options: {
-              prompt: {
-                user: 'happy-nut',
-                host: 'localhost',
-                global: true
-              }
-            }
-          }
-        ]
-      }
-    },
-    {
-      resolve: 'gatsby-plugin-manifest',
-      options: {
-        name: 'gatsby-starter-default',
-        short_name: 'starter',
-        start_url: '/',
-        background_color: '#2CBBA0',
-        theme_color: '#00A59F',
-        display: 'minimal-ui',
-        icon: 'assets/images/logo.png'
-      }
-    },
     {
       resolve: 'gatsby-plugin-google-adsense',
       options: {
