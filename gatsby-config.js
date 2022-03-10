@@ -8,7 +8,7 @@ module.exports = {
     siteDescription: `피스타치오는 정말 맛있어`,
     siteLanguage: `ko`,
     siteUrl: 'https://happy-nut.github.io/',
-    siteImage: '',
+    siteImage: `/banner.jpeg`,
     author: 'Hyungsun Song <happynut.dev@gmail.com>'
   },
   plugins: [
@@ -108,10 +108,7 @@ module.exports = {
         }
       }
     },
-
-    // Local plugins.
-    // 'gatsby-plugin-global-layout',
-
+    'gatsby-plugin-sharp',
     'gatsby-plugin-sitemap',
     {
       resolve: 'gatsby-plugin-google-adsense',

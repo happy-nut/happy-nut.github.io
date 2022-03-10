@@ -3208,6 +3208,13 @@
   dependencies:
     csstype "^3.0.2"
 
+"@types/theme-ui@^0.6.0":
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/@types/theme-ui/-/theme-ui-0.6.0.tgz#9e3291d9cb6620a1a885c47a882da0a5096fb32e"
+  integrity sha512-5ILl2YLBv+pdrEKiFSeAGJJs/QqCl/ZdUTUWHsLc0B+Kw+/rWK7CA6W8+ryANm6iF3Y5VV3dUvWnA46qFF67vw==
+  dependencies:
+    theme-ui "*"
+
 "@types/tmp@^0.0.33":
   version "0.0.33"
   resolved "https://registry.yarnpkg.com/@types/tmp/-/tmp-0.0.33.tgz#1073c4bc824754ae3d10cfab88ab0237ba964e4d"
@@ -7242,7 +7249,7 @@ gatsby-plugin-robots-txt@^1.7.0:
     "@babel/runtime" "^7.16.7"
     generate-robotstxt "^8.0.3"
 
-gatsby-plugin-sharp@^4.6.0:
+gatsby-plugin-sharp@^4.6.0, gatsby-plugin-sharp@^4.9.1:
   version "4.9.1"
   resolved "https://registry.yarnpkg.com/gatsby-plugin-sharp/-/gatsby-plugin-sharp-4.9.1.tgz#44667f134be1855fe666ed58839bd280527337bd"
   integrity sha512-oHnuxIok0Ct3nktn53XQFX36QXwa4H9hjj5lkxaY3zh0giYJmFAsHyvus6DKzGQ14cTC3AkvaD+rqv4SGdjRcg==
@@ -7256,31 +7263,6 @@ gatsby-plugin-sharp@^4.6.0:
     gatsby-core-utils "^3.9.1"
     gatsby-plugin-utils "^3.3.0"
     gatsby-telemetry "^3.9.1"
-    got "^11.8.3"
-    lodash "^4.17.21"
-    mini-svg-data-uri "^1.4.3"
-    potrace "^2.1.8"
-    probe-image-size "^6.0.0"
-    progress "^2.0.3"
-    semver "^7.3.5"
-    sharp "^0.30.1"
-    svgo "1.3.2"
-    uuid "3.4.0"
-
-gatsby-plugin-sharp@^4.9.0:
-  version "4.9.0"
-  resolved "https://registry.yarnpkg.com/gatsby-plugin-sharp/-/gatsby-plugin-sharp-4.9.0.tgz#c1370d00d55e025d2e5d1d9b3017865ea9d890c7"
-  integrity sha512-65JcqL11kyecTDYl3uZ/SvBI2FRJgSC7JTxzoV1ZOJkNQpn4nRLRUFL5UTijnnwU9+tba3i6gxKtZEAlE94pcA==
-  dependencies:
-    "@babel/runtime" "^7.15.4"
-    async "^3.2.3"
-    bluebird "^3.7.2"
-    debug "^4.3.3"
-    filenamify "^4.3.0"
-    fs-extra "^10.0.0"
-    gatsby-core-utils "^3.9.0"
-    gatsby-plugin-utils "^3.3.0"
-    gatsby-telemetry "^3.9.0"
     got "^11.8.3"
     lodash "^4.17.21"
     mini-svg-data-uri "^1.4.3"
@@ -13340,6 +13322,18 @@ text-table@0.2.0, text-table@^0.2.0:
   resolved "https://registry.yarnpkg.com/text-table/-/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
   integrity sha1-f17oI66AUgfACvLfSoTsP8+lcLQ=
 
+theme-ui@*, theme-ui@^0.13.1:
+  version "0.13.1"
+  resolved "https://registry.yarnpkg.com/theme-ui/-/theme-ui-0.13.1.tgz#33845b52ab97822617a33de59c3e3267dc00398a"
+  integrity sha512-9GGY68GUEHZSwmaCHJ75c2vl0oe90JLarMJgKh59pu38nzc15Ubqg5QqEqp0lLGubKBe4EQZtriatO+V7734SA==
+  dependencies:
+    "@theme-ui/color-modes" "0.13.1"
+    "@theme-ui/components" "0.13.1"
+    "@theme-ui/core" "0.13.1"
+    "@theme-ui/css" "0.13.1"
+    "@theme-ui/mdx" "0.13.1"
+    "@theme-ui/theme-provider" "0.13.1"
+
 theme-ui@^0.11.1:
   version "0.11.3"
   resolved "https://registry.yarnpkg.com/theme-ui/-/theme-ui-0.11.3.tgz#b4941258fc02d6a4f0727f3ac7e709d1285f947c"
@@ -13351,18 +13345,6 @@ theme-ui@^0.11.1:
     "@theme-ui/css" "0.11.3"
     "@theme-ui/mdx" "0.11.3"
     "@theme-ui/theme-provider" "0.11.3"
-
-theme-ui@^0.13.1:
-  version "0.13.1"
-  resolved "https://registry.yarnpkg.com/theme-ui/-/theme-ui-0.13.1.tgz#33845b52ab97822617a33de59c3e3267dc00398a"
-  integrity sha512-9GGY68GUEHZSwmaCHJ75c2vl0oe90JLarMJgKh59pu38nzc15Ubqg5QqEqp0lLGubKBe4EQZtriatO+V7734SA==
-  dependencies:
-    "@theme-ui/color-modes" "0.13.1"
-    "@theme-ui/components" "0.13.1"
-    "@theme-ui/core" "0.13.1"
-    "@theme-ui/css" "0.13.1"
-    "@theme-ui/mdx" "0.13.1"
-    "@theme-ui/theme-provider" "0.13.1"
 
 through@^2.3.6:
   version "2.3.8"

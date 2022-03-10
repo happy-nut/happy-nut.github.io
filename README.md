@@ -1,23 +1,7 @@
-# PORTILOG
+# [피스타치오는 맛있어](happy-nut.github.io)
 
 [![GitHub last commit](https://img.shields.io/github/last-commit/google/skia.svg?style=flat)]()
 [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/tterb/atomic-design-ui/blob/master/LICENSEs)
-
-PORTILOG는 Portfolio + TIL(Today I learned) + Blog 의 합성어입니다.
-
-## TMI
-
-- 반응형을 적당히 고려하였습니다.
-- https://happy-nut.github.io
-
-## TIL
-
-TIL 을 추가하고 싶다면 `tils` 안에 `md` 혹은 `mdx` 파일을 작성합니다. `tils` 안에는 `md` 혹은 `mdx` 파일을 포함한 디렉토리를
-두어도 괜찮습니다. 파일 이름이 곧 사이드바에 보여질 이름이 됩니다.
-
-> Tip: 디렉토리 depth가 너무 깊어지면 디자인이 깨질 염려가 있으므로 depth 4 이하로 유지하는 것을 추천합니다.
-
-`frontmatter` 는 의도적으로 쓰지 않으려 했습니다. 매 파일마다 선언해주는 게 귀찮았기 때문입니다.
 
 ## Setup
 
@@ -53,8 +37,4 @@ yarn deploy
 ## Issue reporting
 
 https://github.com/happy-nut/happy-nut.github.io/issues 에 제보 부탁드립니다.
-
-## Contibution
-
-`tils` 디렉토리를 건드리지 않는 선에서 Contribution 환영합니다.
 
