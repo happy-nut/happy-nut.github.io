@@ -74,7 +74,7 @@ const code: ThemeUICSSObject = {
     },
     'pre[class~="language-kotlin"]:before': {
       content: `"kotlin"`,
-      background: `#61dafb`,
+      background: `#a1aafb`,
       color: `black`,
     },
     'pre[class~="language-javascript"]:before, pre[class~="language-js"]:before': {
