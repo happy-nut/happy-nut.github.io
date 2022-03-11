@@ -3,8 +3,8 @@ title: 메시지 큐 - Job(Message) Queueing System
 date: 2022-03-10
 slug: "/job-queue"
 tags:
+  - 개발
   - messaging
-banner: ./job-queue.webp
 ---
 
 ## Overview
@@ -28,7 +28,7 @@ Job Queue 를 유용하게 사용할 수 있습니다.
 
 ## Job Queue
 
-![](./job-queue.webp)
+![](job-queue.webp)
 
 Job queue는 각 `Subject`에 대해 여러 `Topic`이 발행되고, 이 `Topic`을 각각 단 한 명의 `Consumer`가 소비하는 구조입니다.
 각 한 명의 소비자만 `Topic`을 소비하게 하기 위해, 각 `Topic`은 `Consumer`에 의해 소비되는 순간 삭제됩니다.
