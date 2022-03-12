@@ -5,6 +5,7 @@ slug: "/docker"
 tags:
   - 개발
   - devops
+  - docker
 ---
 
 ![Docker](./docker_1.png)
