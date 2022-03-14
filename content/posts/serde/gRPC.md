@@ -1,7 +1,7 @@
 ---
 title: gRPC란
 date: 2022-03-13
-slug: "/grpc"
+slug: "/serde/grpc"
 tags:
   - 개발
   - grpc

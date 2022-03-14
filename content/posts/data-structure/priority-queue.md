@@ -1,7 +1,7 @@
 ---
 title: "우선순위 큐 (Kotlin 구현 포함)"
 date: 2022-03-09
-slug: "/priority-queue"
+slug: "/data-structure/priority-queue"
 tags:
   - 개발
   - 자료구조

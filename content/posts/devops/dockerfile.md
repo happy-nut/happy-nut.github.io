@@ -1,11 +1,12 @@
 ---
 title: Dockerfile 사용법
 date: 2022-03-12
-slug: "/dockerfile"
+slug: "/devops/dockerfile"
 tags:
-- 개발
-- devops
-- docker
+  - 개발
+  - 데브옵스
+  - docker
+  - dockerfile
 ---
 
 Dockerfile에 대한 이해에 앞서, 먼저 예시부터 살펴볼까요? 다음은 간단한 Dockerfile 예시입니다.

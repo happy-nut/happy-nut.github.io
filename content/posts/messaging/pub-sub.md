@@ -1,10 +1,10 @@
 ---
 title: "Pub sub - Publish-Subscribe Messaging System"
 date: 2022-03-10
-slug: "/pub-sub"
+slug: "/messaging/pub-sub"
 tags:
   - 개발
-  - messaging
+  - 메시징
 ---
 
 ![](pub-sub.png)

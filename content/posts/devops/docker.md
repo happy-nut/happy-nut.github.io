@@ -1,10 +1,10 @@
 ---
 title: Docker 사용법
 date: 2022-03-11
-slug: "/docker"
+slug: "/devops/docker"
 tags:
   - 개발
-  - devops
+  - 데브옵스
   - docker
 ---
 

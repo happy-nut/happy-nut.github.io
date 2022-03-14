@@ -1,10 +1,10 @@
 ---
 title: 메시지 큐 - Job(Message) Queueing System
 date: 2022-03-10
-slug: "/job-queue"
+slug: "/messaging/job-queue"
 tags:
   - 개발
-  - messaging
+  - 메시징
 ---
 
 ## Overview
