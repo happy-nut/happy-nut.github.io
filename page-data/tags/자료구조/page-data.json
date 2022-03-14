@@ -1,0 +1,5 @@
+{
+    "componentChunkName": "component---node-modules-lekoarts-gatsby-theme-minimal-blog-core-src-templates-tag-query-tsx",
+    "path": "/tags/자료구조",
+    "result": {"data":{"allPost":{"nodes":[{"slug":"/data-structure/priority-queue","title":"우선순위 큐 (Kotlin 구현 포함)","date":"09.03.2022","excerpt":"개요 Priority Queue는 enqueue할 때는 아무거나 들어오지만 dequeue할 때는 가장 우선순위가 높은 것부터 빠져나갑니다.\n보통 Heap으로 구현합니다. 물론 Heap 외에도 여러가지 방법으로 구현할 수 있지만 Heap…","timeToRead":1,"description":null,"tags":[{"name":"개발","slug":"개발"},{"name":"자료구조","slug":"자료구조"}]}]}},"pageContext":{"slug":"자료구조","name":"자료구조","formatString":"DD.MM.YYYY"}},
+    "staticQueryHashes": ["2744905544","3090400250","318001574"]}

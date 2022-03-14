@@ -1,0 +1,5 @@
+{
+    "componentChunkName": "component---node-modules-lekoarts-gatsby-theme-minimal-blog-core-src-templates-tag-query-tsx",
+    "path": "/tags/메시징",
+    "result": {"data":{"allPost":{"nodes":[{"slug":"/messaging/job-queue","title":"메시지 큐 - Job(Message) Queueing System","date":"10.03.2022","excerpt":"Overview…","timeToRead":1,"description":null,"tags":[{"name":"개발","slug":"개발"},{"name":"메시징","slug":"메시징"}]},{"slug":"/messaging/pub-sub","title":"Pub sub - Publish-Subscribe Messaging System","date":"10.03.2022","excerpt":"Overview pub-sub 역시 마찬가지로 메시징 시스템이기 때문에,  job queue  에서 소개된 장점을\n그대로 가져갑니다. 그러나 job queue 와는 달리 여러  Consumer  가  Subject…","timeToRead":1,"description":null,"tags":[{"name":"개발","slug":"개발"},{"name":"메시징","slug":"메시징"}]}]}},"pageContext":{"slug":"메시징","name":"메시징","formatString":"DD.MM.YYYY"}},
+    "staticQueryHashes": ["2744905544","3090400250","318001574"]}
