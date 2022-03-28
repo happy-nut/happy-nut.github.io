@@ -1,5 +1,5 @@
 {
     "componentChunkName": "component---node-modules-lekoarts-gatsby-theme-minimal-blog-core-src-templates-tag-query-tsx",
     "path": "/tags/책",
-    "result": {"data":{"allPost":{"nodes":[{"slug":"/books/kluge","title":"클루지(Kluge) 요약","date":"24.03.2022","excerpt":"…","timeToRead":2,"description":null,"tags":[{"name":"책","slug":"책"},{"name":"뇌과학","slug":"뇌과학"}]},{"slug":"/books/lean-startup","title":"린 스타트업(The Lean Startup) 요약","date":"14.03.2022","excerpt":"…","timeToRead":6,"description":null,"tags":[{"name":"책","slug":"책"},{"name":"창업","slug":"창업"}]}]}},"pageContext":{"slug":"책","name":"책","formatString":"DD.MM.YYYY"}},
+    "result": {"data":{"allPost":{"nodes":[{"slug":"/books/kluge","title":"클루지(Kluge) 요약","date":"24.03.2022","excerpt":"…","timeToRead":4,"description":null,"tags":[{"name":"책","slug":"책"},{"name":"뇌과학","slug":"뇌과학"}]},{"slug":"/books/lean-startup","title":"린 스타트업(The Lean Startup) 요약","date":"14.03.2022","excerpt":"…","timeToRead":6,"description":null,"tags":[{"name":"책","slug":"책"},{"name":"창업","slug":"창업"}]}]}},"pageContext":{"slug":"책","name":"책","formatString":"DD.MM.YYYY"}},
     "staticQueryHashes": ["2744905544","3090400250","318001574"]}
