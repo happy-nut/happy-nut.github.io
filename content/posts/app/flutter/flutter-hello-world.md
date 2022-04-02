@@ -5,7 +5,15 @@ slug: "/app/flutter/hello-world"
 tags:
   - 개발
   - 앱
+  - flutter
 ---
+
+이 글은 시리즈 글입니다.
+
+1. [플러터(Flutter)로 앱개발 시작하기](./flutter-hello-world.md)
+2. [플러터(Flutter)로 캘린더 기반 메모앱 만들기](./flutter-calendar-memo.md)
+
+## 플러로 앱개발 시작하기
 
 새로운 앱 서비스를 만들어 보려고 하는데, iOS, Android 모두 한꺼번에 마켓에 출시하는 것이 목표라 [Flutter](https://flutter.dev/) 를 사용해보기로 마음 먹었습니다.
 예전에 잠깐 애니메이션 구현 튜토리얼 정도 따라해본 경험만 있어서 공부하면서 개발을 병행할 생각입니다. 개발하려는 서비스의 난이도도 그리 높지 않기도 하고요.   
@@ -54,4 +62,4 @@ Doctor summary (to see all details, run flutter doctor -v):
 
 ![](./flutter-hello-world-3.png)
 
-다음 포스팅에선 캘린더 기반의 메모 앱을 만들어 보겠습니다.
+[다음 포스팅](./flutter-calendar-memo.md)에선 캘린더 기반의 메모 앱을 만들어 보겠습니다.
