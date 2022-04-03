@@ -11,8 +11,10 @@ tags:
 
 이 글은 시리즈 글입니다.
 
-1. [플러터(Flutter)로 앱개발 시작하기](./flutter-hello-world.md)
-2. [플러터(Flutter)로 캘린더 기반 메모앱 만들기](./flutter-calendar-memo.md)
+1. [플러터(Flutter)로 앱개발 시작하기](../hello-world/)
+2. [플러터(Flutter)로 캘린더 기반 메모앱 만들기](.)
+3. [플러터(Flutter)의 상태와 영속성](../state-and-persistence/)
+4. [플러터(Flutter) Splash 화면 만들기](../splash/)
 
 ## 쓸만한 라이브러리를 찾아서
 
