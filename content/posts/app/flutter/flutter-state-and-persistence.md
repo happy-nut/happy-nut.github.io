@@ -1,6 +1,6 @@
 ---
 title: 플러터(Flutter)의 상태와 영속성
-date: 2022-03-29
+date: 2022-03-31
 slug: "/app/flutter/state-and-persistence"
 tags:
   - 개발
@@ -10,10 +10,10 @@ tags:
 
 이 글은 시리즈 글입니다.
 
-1. [플러터(Flutter)로 앱개발 시작하기](../hello-world/)
-2. [플러터(Flutter)로 캘린더 기반 메모앱 만들기](../calendar-memo/)
-3. [플러터(Flutter)의 상태와 영속성](.)
-4. [플러터(Flutter) Splash 화면 만들기](../splash/)
+1. [플러터(Flutter)로 앱개발 시작하기](./hello-world/)
+2. [플러터(Flutter)로 캘린더 기반 메모앱 만들기](./calendar-memo/)
+3. [플러터(Flutter)의 상태와 영속성](./state-and-persistence/)
+4. [플러터(Flutter) Splash 화면 만들기](./splash)
 
 ## 또 다시 쓸만한 라이브러리를 찾아서
 
