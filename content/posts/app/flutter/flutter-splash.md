@@ -10,9 +10,9 @@ tags:
 
 이 글은 시리즈 글입니다.
 
-1. [플러터(Flutter)로 앱개발 시작하기](./hello-world/)
-2. [플러터(Flutter)로 캘린더 기반 메모앱 만들기](./calendar-memo/)
-3. [플러터(Flutter)의 상태와 영속성](./state-and-persistence/)
+1. [플러터(Flutter)로 앱개발 시작하기](./hello-world)
+2. [플러터(Flutter)로 캘린더 기반 메모앱 만들기](./calendar-memo)
+3. [플러터(Flutter)의 상태와 영속성](./state-and-persistence)
 4. [플러터(Flutter) Splash 화면 만들기](./splash)
 
 ## 또 다시 쓸만한 라이브러리를 찾아서
@@ -48,6 +48,6 @@ Base template은 [여기서](https://github.com/jonbhanson/flutter_native_splash
 
 처음 실행시켜보면 다음과 같은 실행화면이 나옵니다.
 
-![](./flutter-splash.gif)
+![](../flutter-splash.gif)
 
 `flutter_native_splash.yaml` 에서 여러가지 설정을 바꿔보면서 Splash 화면을 만들어보면 되겠습니다. 
