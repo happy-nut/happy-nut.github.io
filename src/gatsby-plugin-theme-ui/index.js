@@ -117,9 +117,10 @@ const theme = merge(tailwind, {
       borderCollapse: `separate`,
       borderSpacing: 0,
       [[`th`, `td`]]: {
+        minWidth: `100px`,
         textAlign: `left`,
-        py: `4px`,
-        pr: `4px`,
+        py: `8px`,
+        pr: `16px`,
         pl: 0,
         borderColor: `muted`,
         borderBottomStyle: `solid`,
