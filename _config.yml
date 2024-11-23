@@ -15,7 +15,7 @@ timezone: Asia/Seoul
 
 title: Happynut
 
-tagline: QnA of life
+tagline: 피스타치오는 맛있어
 
 description: >-
   인생의 크고 작은 질문과 답
@@ -67,7 +67,7 @@ analytics:
 pageviews:
   provider: goatcounter
 
-theme_mode: light
+theme_mode:
 
 # The CDN endpoint for media resources.
 # Notice that once it is assigned, the CDN url
