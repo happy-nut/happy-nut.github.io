@@ -86,6 +86,7 @@ social_preview_image: Happynut
 toc: true
 
 comments:
+  active: true
   provider: giscus
   # The provider options are as follows:
   disqus:
