@@ -1,5 +1,5 @@
 ---
-title: humounous allocation 이란 무엇인가
+title: Humongous allocation 이란 무엇인가
 date: 2025-01-31 10:14:50 +0900
 categories: [JVM, Garbage Collection]
 tags: [java, jvm, gc, g1gc, cms]

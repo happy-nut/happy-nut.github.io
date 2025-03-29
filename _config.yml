@@ -15,7 +15,7 @@ timezone: Asia/Seoul
 
 title: Happynut
 
-tagline: 피스타치오는 맛있어
+tagline: 내일을 위하여
 
 description: >-
   인생의 크고 작은 질문과 답
@@ -50,7 +50,7 @@ webmaster_verifications:
 # Web Analytics Settings
 analytics:
   google:
-    id: # fill in your Google Analytics ID
+    id: G-0MT5SWB76H
   goatcounter:
     id: # fill in your GoatCounter ID
   umami:
