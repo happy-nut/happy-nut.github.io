@@ -15,7 +15,7 @@ timezone: Asia/Seoul
 
 title: Happynut
 
-tagline: 내일을 위하여
+tagline: 선물 같은 내일을 위해
 
 description: >-
   인생의 크고 작은 질문과 답
@@ -64,6 +64,7 @@ analytics:
   fathom:
     id: # fill in your Fathom Site ID
 
+# Page views settings
 pageviews:
   provider: goatcounter
 
@@ -83,10 +84,10 @@ avatar: /assets/profile.jpeg
 # It can be overridden by a customized `page.image` in front matter.
 social_preview_image: Happynut
 
+# boolean type, the global switch for TOC in posts.
 toc: true
 
 comments:
-  active: true
   provider: giscus
   # The provider options are as follows:
   disqus:
@@ -190,8 +191,9 @@ exclude:
   - tools
   - README.md
   - LICENSE
-  - "*.config.js"
-  - package*.json
+  - purgecss.js
+  - rollup.config.js
+  - "package*.json"
 
 jekyll-archives:
   enabled: [categories, tags]
