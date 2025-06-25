@@ -194,6 +194,8 @@ exclude:
   - purgecss.js
   - rollup.config.js
   - "package*.json"
+  - til
+  - koongya
 
 jekyll-archives:
   enabled: [categories, tags]
