@@ -1,6 +1,6 @@
 # Java
 
-대표적인 객체 지향 언어. JVM(Java Virtual Machine)에서 실행되며, 플랫폼 독립적인 특성을 가짐.
+대표적인 객체 지향 언어. [JVM(Java Virtual Machine)](jvm.md)에서 실행되며, 플랫폼 독립적인 특성을 가짐.
 
 
 ## java 프로그램 실행 과정

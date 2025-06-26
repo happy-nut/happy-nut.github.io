@@ -10,6 +10,9 @@ G1에서도 공통적으로 쓰이는 기본적인 원리만 알고 가면 좋�
 
 ![](.garbage-collector_images/432de9e7.png)
 
+위 그림에서 틀린 점이 있는데, Native Method Stack 이 아니라 Method Area(Metaspace) 이 맞다.
+
+
 ### CMS GC의 동작 원리
 
 CMS GC에서는 힙의 영역을 크게 2가지로 나눈다.
