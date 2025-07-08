@@ -38,12 +38,20 @@ Prepared statement 란 쿼리를 미리 컴파일하고 실행 계획을 캐싱�
 예를 들어 다음과 같은 쿼리가 있다고 하자.
 
 ```sql
-SELECT * FROM users WHERE id = ?;
+SELECT * FROM users WHERE id = 123;
+SELECT * FROM users WHERE id = 456;
+SELECT * FROM users WHERE id = 789;
 ```
 
-id 값이 바뀌는 많은 쿼리에서 
+id 값이 바뀌는 많은 쿼리에서 매번 쿼리를 파싱하고 인덱스가 걸리는 경우 쿼리 실행을 분석한다.
+그러나 Prepared statement 를 사용하면 쿼리를 미리 컴파일하고 실행 계획을 캐싱하여, 동일한 쿼리를 반복 실행할 때 성능을 크게 향상시킬 수 있다.
 
-메모리 사용량 증가 및 일회성 쿼리에서의 오버헤드와 반복실행되는 쿼리의 성능 향상 사이의 트레이드오프를 고려해야 한다.
+```sql
+SELECT * FROM users WHERE id = ?;
+[123, 456, 789] -> Prepared statement 실행
+```
+
+하지만 반복되는 쿼리가 많지 않다면 오히려 오버헤드를 증가시키기 때문에, 향상 그 사이의 트레이드오프를 고려해야 한다.
 
 
 ### 배치 처리 성능 관련
