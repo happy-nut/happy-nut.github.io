@@ -7,43 +7,42 @@ description: "포스트 이미지를 assets/img/posts로 이동 및 참조 업�
 
 ## 사용법
 ```
-/img [이미지파일] [새이름]
+/img @포스트파일#라인번호
+/img
 ```
 
 ## 기능
 `_posts/` 디렉토리에 임시로 저장된 이미지를 `assets/img/posts/`로 이동하고, 해당 포스트의 이미지 참조를 업데이트한다.
 
 ## 실행 흐름
-1. `_posts/` 디렉토리에서 지정된 이미지 파일 찾기
-2. 이미지를 `assets/img/posts/`로 이동
-3. 새 이름으로 rename (확장자 유지)
-4. 해당 이미지를 참조하는 포스트 파일 찾기
-5. 포스트의 이미지 참조를 새 경로로 업데이트
+1. `_posts/` 디렉토리에서 이미지 파일 찾기
+2. 포스트 제목과 맥락에서 이미지 이름 자동 생성 (영문 kebab-case)
+3. 이미지를 `assets/img/posts/`로 이동
+4. 포스트의 이미지 참조를 새 경로로 업데이트
+5. alt 텍스트도 맥락에 맞게 자동 생성
+
+## 이미지 이름 자동 생성 규칙
+- 포스트 제목과 이미지 주변 맥락을 분석
+- 영문 kebab-case로 변환 (예: `brain-system`, `login-flow`)
+- 사용자에게 묻지 않고 바로 적용
 
 ## 이미지 경로 규칙
 - **원본 위치**: `_posts/{이미지파일}`
-- **목표 위치**: `assets/img/posts/{새이름}.{확장자}`
-- **참조 형식**: `![alt text](/assets/img/posts/{새이름}.{확장자})`
+- **목표 위치**: `assets/img/posts/{자동생성이름}.{확장자}`
+- **참조 형식**: `![자동생성 alt](/assets/img/posts/{자동생성이름}.{확장자})`
 
 ## 예시
 ```
-/img img.png esbi-quadrant
-→ _posts/img.png → assets/img/posts/esbi-quadrant.png
-→ ![img.png](img.png) → ![이미지 설명](/assets/img/posts/esbi-quadrant.png)
-
-/img screenshot.jpg login-flow
-→ _posts/screenshot.jpg → assets/img/posts/login-flow.jpg
+/img @_posts/2025-01-01-뇌의-구조.md#L22
+→ 맥락 분석 후 자동 이름 생성
+→ _posts/img.png → assets/img/posts/brain-structure.png
+→ ![img.png](img.png) → ![뇌의 구조](/assets/img/posts/brain-structure.png)
 ```
 
 ## 자동 감지 모드
-이미지 파일명 없이 실행 시:
 ```
 /img
 ```
-1. `_posts/` 디렉토리에서 이미지 파일 자동 검색 (png, jpg, jpeg, gif, webp)
-2. 발견된 이미지와 참조하는 포스트 표시
-3. 새 이름 입력 요청
-
-## 주의사항
-- 이동 전 git에 커밋되지 않은 이미지는 백업 권장
-- 이미지 파일명에 한글이나 공백이 있으면 영문 kebab-case로 변환
+1. `_posts/` 디렉토리에서 이미지 파일 자동 검색
+2. 참조하는 포스트 찾아서 맥락 분석
+3. 이름 자동 생성 후 이동
