@@ -1,5 +1,6 @@
 ---
 title: graceful shutdown이 뭘까
+description: Graceful shutdown의 개념과 Java, Spring Boot에서의 구현 방법 및 주의사항을 다룹니다. Shutdown hook과 PreDestroy 활용법 포함.
 date: 2024-11-24 05:47:14 +0900
 categories: [engineering, operation]
 tags: [graceful-shutdown, spring]

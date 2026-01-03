@@ -6,7 +6,7 @@ theme: jekyll-theme-chirpy
 # The language of the webpage › http://www.lingoes.net/en/translator/langcode.htm
 # If it has the same name as one of the files in folder `_data/locales`, the layout language will also be changed,
 # otherwise, the layout language will use the default value of 'en'.
-lang: en
+lang: ko
 
 timezone: Asia/Seoul
 
@@ -18,7 +18,7 @@ title: Happynut
 tagline: 선물 같은 내일을 위해
 
 description: >-
-  인생의 크고 작은 질문과 답
+  AI 시대의 개발자가 기술, 투자, 자본주의에 대해 생각하고 기록하는 블로그
 
 url: "https://happy-nut.github.io"
 
@@ -33,11 +33,11 @@ social:
   email: happy-nut.dev@gmail.com
   links:
     - https://www.linkedin.com/in/happynut
-    - https://github.com/username
+    - https://github.com/happy-nut
 
 # Site Verification Settings
 webmaster_verifications:
-  google: # fill in your Google verification code
+  google: NRHCeKefTpXjn9bpgqG-69Od-FC515t0TQcQnEgXR8g
   bing: # fill in your Bing verification code
   alexa: # fill in your Alexa verification code
   yandex: # fill in your Yandex verification code
@@ -82,7 +82,7 @@ avatar: /assets/profile.jpeg
 
 # The URL of the site-wide social preview image used in SEO `og:image` meta tag.
 # It can be overridden by a customized `page.image` in front matter.
-social_preview_image: Happynut
+social_preview_image: /assets/profile.jpeg
 
 # boolean type, the global switch for TOC in posts.
 toc: true
