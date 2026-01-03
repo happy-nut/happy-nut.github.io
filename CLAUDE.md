@@ -1,82 +1,56 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
-
-## Project Overview
-
-Jekyll 기반 개인 블로그 (GitHub Pages). Chirpy 테마 사용.
+Jekyll 블로그 (GitHub Pages, Chirpy 테마)
 
 ## Commands
 
 ```bash
-# 의존성 설치
-bundle install
-
-# 로컬 개발 서버 실행
-bundle exec jekyll s
+bundle install          # 의존성 설치
+bundle exec jekyll s    # 로컬 서버 (localhost:4000)
 ```
 
 ## Content Structure
 
-| 디렉토리 | 용도 | 파일명 패턴 |
-|----------|------|-------------|
+| 디렉토리 | 용도 | 파일명 |
+|----------|------|--------|
 | `_posts/` | 블로그 포스트 | `YYYY-MM-DD-제목.md` |
-| `til/` | TIL 문서 (비공개) | `주제.md` 또는 `YYYY-MM-DD-주제.md` |
+| `til/` | TIL (비공개) | `주제.md` |
 | `koongya/` | 개인 일기 (비공개) | `YYYY-MM-DD-제목.md` |
-| `_tabs/` | 사이드바 탭 페이지 | `*.md` |
 
-`til/`과 `koongya/`는 `_config.yml`의 `exclude`에 포함되어 빌드에서 제외됨.
-
-## Post Front Matter
+## Front Matter
 
 ```yaml
----
 title: 제목
 date: YYYY-MM-DD HH:MM:SS +0900
-categories: [category1, category2]
+categories: [cat1, cat2]
 tags: [tag1, tag2]
-mermaid: false  # mermaid 다이어그램 사용 시 true
-math: false     # 수식 사용 시 true
----
+mermaid: false
+math: false
 ```
 
-## Custom Commands (/.claude/commands/)
+## Custom Commands
 
-- `/post [제목]` - 블로그 포스트 생성 (카테고리 자동 추론)
-- `/til [제목]` - TIL 문서 생성 (경로 자동 추론)
-- `/diary [제목]` - 개인 일기 생성 (koongya/)
-- `/commit [메시지]` - 커밋 (한글, 단촐하게)
-- `/img [파일] [새이름]` - 포스트 이미지를 assets/img/posts로 이동
+| 명령어 | 기능 |
+|--------|------|
+| `/new-post` | 포스트 초안 생성 (카테고리/태그 비움) |
+| `/refine` | 초안 다듬기 + 카테고리/태그 자동 추론 + 이미지 정리 |
+| `/til` | TIL 생성 |
+| `/diary` | 일기 생성 |
+| `/publish` | 커밋 & 푸시 |
+| `/reflect` | 실수 회고 → 교훈을 아래 섹션에 기록 |
 
-## Category Conventions
+## Category Examples
 
-| 유형 | 카테고리 예시 |
-|------|---------------|
-| 회고 | `[retrospect]` |
-| 기술 | `[engineering, kotlin]`, `[engineering, architecture]` |
-| 리더십 | `[Leadership, Psychology]` |
-| AI | `[AI, fine-tuning]` |
+회고: `[retrospect]` | 기술: `[engineering, kotlin]` | 리더십: `[Leadership, Psychology]` | AI: `[AI, fine-tuning]`
 
-## TIL Directory Structure
+## Commit Rules
 
-```
-til/
-├── coding/              # 클린 아키텍처, 디자인 패턴
-├── cs/
-│   ├── data-structure/  # HashMap, B-tree
-│   ├── language/java/   # JVM, GC, JDBC
-│   └── os/              # Linux, 스케줄링
-├── db/
-│   ├── rdbms/mysql/     # 락, 트랜잭션
-│   └── nosql/key-value/redis/
-├── infra/network/       # VRRP, TCP
-├── messaging/kafka/
-└── troubleshooting/     # 날짜 prefix 필수
-```
+한글, 단촐하게: `new post`, `new til`, `update {파일명}`
 
-## Commit Message Rules
+## Lessons Learned
 
-- 한글 작성
-- 단촐하게 핵심만
-- `new post`, `new til`, `update {파일명}` 형식
-- Co-Authored-By 등 부가 정보 제외
+실수에서 배운 교훈 기록 (재발 방지)
+
+- /refine 실행 후 로컬 서버(`bundle exec jekyll s`)를 띄워 결과 확인 필수
+- 블로그 문체: 단정적 표현 지양, "~고 본다", "~지 않을까 싶지만" 등 여운 있는 개인 견해 톤
+- 담백함 ≠ 짧은 문장. 자연스럽게 흐르면서 군더더기 없는 것
