@@ -1,6 +1,6 @@
 ---
 title: Humongous allocation 이란 무엇인가
-description: JVM G1GC의 Humongous Allocation 개념과 CMS GC의 한계점을 비교 분석합니다. Region 기반 GC와 대용량 객체 처리 전략.
+description: "큰 객체는 GC도 다르게 다룬다."
 date: 2025-01-31 10:14:50 +0900
 categories: [JVM, Garbage Collection]
 tags: [java, jvm, gc, g1gc, cms]

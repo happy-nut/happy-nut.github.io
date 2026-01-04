@@ -1,6 +1,6 @@
 ---
 title: 왜 graceful shutdown은 중요할까
-description: Graceful shutdown이 중요한 시스템 유형과 각각의 이유를 웹서버, 데이터베이스, 메시지 브로커 관점에서 설명합니다.
+description: "갑자기 꺼지면 안 되는 시스템들이 있다."
 date: 2024-11-24 05:43:38 +0900
 categories: [engineering, operation]
 tags: [graceful-shutdown, service-deployment]
