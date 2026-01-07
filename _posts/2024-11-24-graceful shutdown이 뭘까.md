@@ -1,6 +1,6 @@
 ---
 title: graceful shutdown이 뭘까
-description: "서버를 끄는 데도 예의가 있다."
+description: "graceful shutdown이 무엇인지, 그리고 왜 필요한지 알아본다. Java와 Spring Boot 환경에서 graceful shutdown을 구현하는 방법과, 메시지 큐나 비동기 작업 처리 시 주의해야 할 점들을 함께 살펴본다."
 date: 2024-11-24 05:47:14 +0900
 categories: [engineering, operation]
 tags: [graceful-shutdown, spring]

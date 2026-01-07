@@ -1,6 +1,6 @@
 ---
 title: 왜 graceful shutdown은 중요할까
-description: "갑자기 꺼지면 안 되는 시스템들이 있다."
+description: "graceful shutdown이 모든 시스템에 필요한 것은 아니다. 웹 서버, 데이터베이스, 메시지 브로커, 그리고 데이터 집계 시스템 등 데이터 무결성과 안정성이 특히 중요한 시스템에서 graceful shutdown이 왜 필수적인지 구체적인 사례를 통해 알아본다."
 date: 2024-11-24 05:43:38 +0900
 categories: [engineering, operation]
 tags: [graceful-shutdown, service-deployment]

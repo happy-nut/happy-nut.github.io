@@ -1,6 +1,6 @@
 ---
 title: Humongous allocation 이란 무엇인가
-description: "큰 객체는 GC도 다르게 다룬다."
+description: "Java의 G1 Garbage Collector가 어떻게 큰 객체를 특별하게 다루는지 알아본다. CMS GC의 한계를 짚어보고, G1 GC가 Region 단위로 힙을 관리하는 방식과 Region의 절반을 넘는 'Humongous 객체'가 왜 메모리 단편화와 성능 문제를 일으킬 수 있는지 설명한다."
 date: 2025-01-31 10:14:50 +0900
 categories: [JVM, Garbage Collection]
 tags: [java, jvm, gc, g1gc, cms]
