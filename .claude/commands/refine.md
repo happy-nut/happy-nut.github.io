@@ -222,7 +222,7 @@ description: AI가 일자리를 대체하는 시대, 회사에 의존하지 않�
 
 ## 카테고리/태그 자동 추론
 
-글 내용을 분석하여 가장 적절한 카테고리와 태그를 자동 선택한다. 사용자 확인 없이 바로 적용.
+글 내용을 분석하여 가장 적절한 카테고리와 태그를 자동 선택한다. **이때, 모든 영문은 소문자를 사용하고, 띄어쓰기는 하이픈(-)으로 연결하는 `kebab-case`를 엄격히 준수하여 빌드 오류를 방지한다.**
 
 ### 카테고리 매핑
 
@@ -236,20 +236,19 @@ description: AI가 일자리를 대체하는 시대, 회사에 의존하지 않�
 | 소스코드, 분석, 뜯어보기 | `[engineering, analysis]` |
 | Redis, 캐시, 분산 | `[engineering, redis]` |
 | Kafka, 메시징, 이벤트 | `[engineering, kafka]` |
-| AI, LLM, 파인튜닝, GPT | `[AI, LLM]` |
-| AI + 경제, 일자리, 자본 | `[AI, Economy]` |
+| AI, LLM, 파인튜닝, GPT | `[ai, llm]` |
+| AI + 경제, 일자리, 자본 | `[ai, economy]` |
 | 의사결정, 비즈니스, 전략 | `[business, decision]` |
-| 리더십, 조직, 권력, 팀 | `[Leadership, Psychology]` |
-| 사고, 문제해결, 구조적 | `[Thinking, Problem Solving]` |
-| 투자, 자본, 금융, 소득 | `[Finance, Investment]` |
-| 감정, 심리, 자기계발 | `[Psychology, Self-development]` |
-| 삶, 육아, 부모, 가족 | `[Life, Parenting]` |
+| 리더십, 조직, 권력, 팀 | `[leadership, psychology]` |
+| 사고, 문제해결, 구조적 | `[thinking, problem-solving]` |
+| 투자, 자본, 금융, 소득 | `[finance, investment]` |
+| 감정, 심리, 자기계발 | `[psychology, self-development]` |
+| 삶, 육아, 부모, 가족 | `[life, parenting]` |
 
 ### 태그 생성 규칙
-- 글 제목과 본문에서 핵심 키워드 3-7개 추출
-- 영문은 소문자, 한글은 그대로
-- 구체적인 기술명/개념명 우선 (예: `coroutine`, `graceful-shutdown`, `esbi`)
-- 추상적 태그는 최소화
+- 모든 태그는 **영문 소문자**와 **케밥-케이스(kebab-case)**를 사용한다.
+- 글 제목과 본문에서 핵심 키워드 3-7개 추출한다.
+- 구체적인 기술명/개념명을 우선으로 한다. (예: `coroutine`, `graceful-shutdown`, `esbi`)
 
 ### 태그 예시
 | 글 주제 | 태그 |
