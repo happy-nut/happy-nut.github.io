@@ -16,19 +16,28 @@ description: "Mac 원격 접속을 위한 Tailscale과 Termius 활용 가이드.
 
 가장 먼저 필요한 것은 안전한 네트워크 연결이다. Tailscale은 기존 VPN 설정의 복잡함을 획기적으로 줄여주는 서비스다. 마치 같은 네트워크에 있는 것처럼 기기들을 연결해주는 **메시(Mesh) VPN** 방식으로 작동한다. 이를 통해 별도의 복잡한 설정 없이도 Tailscale이 설치된 모든 기기 간에 암호화된 터널을 쉽고 빠르게 구축할 수 있다.
 
-![Tailscale을 이용한 VPN 터널링](/assets/img/posts/tailscale-vpn-tunnel.png)
-_Tailscale을 이용한 VPN 터널링_
+![Tailscale 네트워크 구성 화면](/assets/img/posts/tailscale-network-configuration.png)
+_Tailscale을 통해 구성된 네트워크 화면_
 
 Mac PC에 Tailscale을 설치하고 로그인하면, 자동으로 가상 IP가 할당되고 안전한 VPN 네트워크에 참여하게 된다. 이 과정을 통해 모바일 기기에서도 Tailscale VPN을 활성화하면, 마치 같은 와이파이에 연결된 것처럼 Mac PC의 내부 네트워크에 접근할 수 있는 기반이 마련된다.
 
 ## Termius로 스마트한 원격 관리
 
-안전한 터널이 구축되었다면, 이제 원격으로 Mac PC에 접속하여 명령어를 실행할 차례다. 나는 이 역할을 **Termius**를 통해 수행한다. Termius는 SSH 클라이언트이자 터미널 에뮬레이터로, 깔끔한 UI와 다양한 편의 기능을 제공한다. Tailscale을 통해 할당받은 Mac PC의 가상 IP 주소를 Termius에 등록하면, 언제 어디서든 안정적으로 Mac 터미널에 접속할 수 있다.
+안전한 터널이 구축되었다면, 이제 원격으로 Mac PC에 접속하여 명령어를 실행할 차례다. 나는 이 역할을 **Termius**를 통해 수행한다. Termius는 SSH 클라이언트이자 터미널 에뮬레이터로, 깔끔한 UI와 다양한 편의 기능을 제공한다. 
+
+![Termius 연결 설정 화면](/assets/img/posts/termius-connection-setup.png)
+_Termius에서 Tailscale로부터 할당받은 VPN 주소를 설정하여 연결할 수 있다._
+
+Tailscale을 통해 할당받은 Mac PC의 가상 IP 주소를 위와 같이 Termius에 등록하면, 언제 어디서든 안정적으로 Mac 터미널에 접속할 수 있다.
 
 ![Termius를 이용한 원격 접속 화면](/assets/img/posts/termius-remote-management.png)
 _Termius를 이용한 원격 접속 화면_
 
 Termius의 가장 유용한 기능 중 하나는 **스니펫(Snippet)**이다. 자주 사용하는 명령어 조합이나 스크립트를 스니펫으로 저장해두면, 필요할 때마다 손쉽게 불러와 실행할 수 있다. 예를 들어, 특정 개발 환경을 활성화하는 명령어 세트나, 자주 실행하는 백테스트 스크립트 등을 스니펫으로 만들어두면 작업 효율을 극대화할 수 있다. 일상적인 작업부터 복잡한 스크립트 실행까지, Termius는 모바일 환경에서의 원격 작업을 한층 더 편리하게 만들어 준다고 생각한다.
+
+![Termius 스니펫 활용 화면](/assets/img/posts/tailscale-vpn-tunnel.png)
+_Termius 스니펫 활용 예시_
+
 
 ## 원격 작업을 위한 Mac PC 설정: 잠들지 않는 Mac
 
