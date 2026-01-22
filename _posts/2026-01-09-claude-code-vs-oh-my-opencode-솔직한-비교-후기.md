@@ -2,8 +2,8 @@
 title: "Claude Code vs Oh My Opencode: 솔직한 비교 후기"
 date: 2026-01-09 00:22:20 +0900
 categories: [ai, llm]
-tags: [ai-agents, claude-code, oh-my-opencode, developer-tools, review]
-description: "최근 주목받는 AI 에이전트 팀 도구 'Oh My Opencode'를 직접 사용해 본 후기를 공유한다. Claude Code와 비교하며 과도한 토큰 사용량과 결과물 품질 측면에서 어떤 장단점이 있는지, 그리고 개발 생산성 향상에 정말 도움이 되는지 솔직하게 평가한다."
+tags: [claude-dev, oh-my-opencode, ai-coding, review]
+image: /assets/img/posts/oh-my-opencode-review.png
 mermaid: false
 math: false
 ---

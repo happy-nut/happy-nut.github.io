@@ -3,9 +3,9 @@ title: "Tailscale과 Termius로 Mac 원격 접속: 어디서든 내 Mac을 내 �
 date: 2026-01-17 09:00:00 +0900
 categories: [engineering, operation]
 tags: [mac, remote-access, tailscale, termius, vpn, ssh, caffeinate, productivity]
-mermaid: false
-math: false
 description: "Mac 원격 접속을 위한 Tailscale과 Termius 활용 가이드. 언제 어디서든 Mac PC에 접속하여 업무 효율을 높이는 방법을 소개한다."
+image: /assets/img/posts/tailscale-network-configuration.png
+mermaid: false
 ---
 
 언제 어디서든 내 Mac PC에 접속하고 싶은 니즈는 IT 업무를 하는 사람이라면 누구나 한 번쯤 느껴봤을 것이다. 특히 복잡한 개발 환경이나 특정 리소스에 접근해야 할 때, 혹은 장시간 걸리는 작업을 원격으로 관리해야 할 때 그 중요성은 더욱 커진다. 나 또한 외부 활동 중에 AI에게 PR을 올리도록 하거나, 복잡한 백테스트를 돌려야 하는 상황이 생기면서 Mac 원격 접속의 필요성을 절실히 느끼게 되었다.
