@@ -17,7 +17,7 @@ mermaid: false
 가장 먼저 필요한 것은 안전한 네트워크 연결이다. Tailscale은 기존 VPN 설정의 복잡함을 획기적으로 줄여주는 서비스다. 마치 같은 네트워크에 있는 것처럼 기기들을 연결해주는 **메시(Mesh) VPN** 방식으로 작동한다. 이를 통해 별도의 복잡한 설정 없이도 Tailscale이 설치된 모든 기기 간에 암호화된 터널을 쉽고 빠르게 구축할 수 있다.
 
 ![Tailscale 네트워크 구성 화면](/assets/img/posts/tailscale-network-configuration.png)
-_Tailscale을 통해 구성된 네트워크 화면_
+_Tailscale_
 
 Mac PC에 Tailscale을 설치하고 로그인하면, 자동으로 가상 IP가 할당되고 안전한 VPN 네트워크에 참여하게 된다. 이 과정을 통해 모바일 기기에서도 Tailscale VPN을 활성화하면, 마치 같은 와이파이에 연결된 것처럼 Mac PC의 내부 네트워크에 접근할 수 있는 기반이 마련된다.
 
