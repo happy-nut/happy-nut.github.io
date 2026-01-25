@@ -223,16 +223,17 @@ description: AI가 일자리를 대체하는 시대, 회사에 의존하지 않�
 
 ## 썸네일 이미지 자동 설정
 
-공유 시 표시되는 썸네일 이미지를 글의 첫 번째 이미지로 자동 설정한다.
+공유 시 표시되는 썸네일 이미지를 설정한다.
 
 ### 규칙
-- 글에 이미지가 포함된 경우, 첫 번째 이미지의 경로를 front matter에 `image` 키로 추가한다.
-- 이 `image` 속성은 `_config.yml`에 설정된 기본 `social_preview_image`를 덮어쓴다.
-- 글에 이미지가 없는 경우, `image` 속성을 추가하지 않으며 기본 아바타 이미지가 썸네일로 사용된다.
+- 초안 작성 시 썸네일로 사용하고 싶은 이미지의 alt 텍스트를 `thumbnail`로 지정한다.
+  - 예: `![thumbnail](image.png)`
+- 변환 과정에서 해당 이미지를 찾아 front matter의 `image` 속성으로 설정한다.
+- `thumbnail`로 지정된 이미지가 없는 경우, `image` 속성을 추가하지 않으며 기본 썸네일 이미지(`/assets/img/default-thumbnail.png`)가 사용된다.
 
 ### 예시
 ```yaml
-image: /assets/img/posts/my-first-image.png
+image: /assets/img/posts/my-thumbnail-image.png
 ```
 
 ## 카테고리/태그 자동 추론
