@@ -3,7 +3,9 @@ title: "Claude Code 효율을 극대화하는 컨텍스트 관리의 기술"
 date: 2026-02-01 00:00:00 +0900
 categories: [ai, llm]
 tags: [claude-code, prompt-engineering, context-management, llm, productivity]
-image: /assets/img/posts/claude-code-optimization.png
+image:
+  path: /assets/img/posts/claude-code-optimization.png
+  hide: true
 description: Claude Code를 효율적으로 활용하기 위한 컨텍스트 관리 전략. claude.md 작성법부터 메모리 관리, 스킬과 커맨드 활용법까지 상세히 다룬다.
 mermaid: false
 math: false
