@@ -5,7 +5,7 @@ categories: [engineering, analysis]
 tags: [claude-code, ai-agent, productivity, workflow, claudecode-mcp, oh-my-claudecode, viban]
 mermaid: true
 math: false
-image: /assets/img/posts/oh-my-claudecode-workflow.png
+image: /assets/img/posts/viban-tui-kanban.png
 description: MCP 온디맨드 로딩, CLAUDE.md 계층 설계, 자기 성찰 루프까지 — AI 에이전트에게 맥락을 심어가는 과정에 대한 기록.
 ---
 
@@ -45,7 +45,10 @@ graph TD
 
 ## 에이전트 오케스트레이션: 토큰을 지키는 법
 
-Claude Code를 오래 쓰다 보면 한 가지 피할 수 없는 벽에 부딪히게 된다. 바로 **컴팩션(Compaction)**이다. 세션이 길어지면 과거 맥락이 압축되고, 앞서 파악해둔 코드 구조나 결정 사항이 유실된다. 특히 복잡한 프로젝트에서 코드 구조를 훑는 것만으로 상당한 토큰이 소비되기에, 메인 세션이 직접 모든 걸 하려 하면 정작 중요한 작업을 시작하기도 전에 토큰이 바닥나는 경우가 있다.
+Claude Code를 오래 쓰다 보면 한 가지 피할 수 없는 벽에 부딪히게 된다. 바로 **컴팩션(Compaction)**이다. 세션이 길어지면 과거 맥락이 압축되고, 앞서 파악해둔 코드 구조나 결정 사항이 유실된다. 특히 복잡한 프로젝트에서 코드 구조를 훑으려 하면 순식간에 토큰이 소비되기에, 메인 세션이 직접 모든 걸 하려 하면 정작 중요한 작업을 시작하기도 전에 토큰이 바닥나는 경우가 있다.
+
+![oh-my-claudecode 에이전트 활용 화면](/assets/img/posts/oh-my-claudecode-agent-view.png)
+_oh-my-claudecode 플러그인을 통한 효율적인 에이전트 활용_
 
 이 문제를 해결하는 데 **oh-my-claudecode(OMC)** 플러그인이 꽤 효과적이었다. OMC는 코드 탐색이나 분석 같은 작업을 메인 세션이 아닌 별도의 서브 에이전트에게 위임한다. 서브 에이전트가 소비하는 토큰은 메인 세션의 컨텍스트에 영향을 주지 않으므로, 결과적으로 메인 세션은 핵심 작업에 집중할 수 있게 된다.
 
@@ -79,7 +82,7 @@ AI 에이전트에게 "이 버그 고쳐"라고만 하면, 십중팔구 증상�
 
 여기에 덧대어, 나는 최근 **VIBAN**이라는 이름의 로컬 태스크 관리 TUI를 만들어 워크플로우에 통합했다. `CLAUDE.md` 내에 이 칸반에서 이슈를 할당받고, 처리하고, 테스트하는 일련의 과정을 정의해두었다. 이슈가 해결됨에 따라 자동으로 칸반에 상태가 반영되는 식이다.
 
-![VIBAN TUI 화면](/assets/img/posts/viban-kanban-tui.png)
+![VIBAN TUI 화면](/assets/img/posts/viban-tui-kanban.png)
 _직접 개발한 로컬 칸반 TUI, VIBAN의 실제 구동 화면_
 
 흥미로운 점은 **워크트리(Worktree)** 방식에 대한 고민이다. 많은 AI 에이전트 기반 칸반 시스템들이 작업 간 간섭을 피하기 위해 워크트리를 하드하게 사용한다. 나 역시 이를 시도해보았으나, 여러 작업이 병렬로 완료되었을 때 수행하는 QA나 휴먼 리뷰(Human Review)의 피로도가 너무 높았다.
