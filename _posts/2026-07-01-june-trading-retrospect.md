@@ -4,7 +4,7 @@ date: 2026-07-01 09:00:00 +0900
 categories: [finance, investment]
 tags: [trading, investment, system, retrospect, turtle]
 description: "6월 Turtle 실전 투자 회고. 국내 계좌는 부진했고, 해외 계좌는 일부 추세 수익이 방어했다. 손익보다 중요한 건 가짜 돌파를 어떻게 줄이고 시스템을 더 정직하게 만드는가였다."
-image: /assets/img/posts/2026-06-turtle-backtest-setup.jpg
+image: /assets/img/posts/2026-06-turtle-performance-review.jpg
 mermaid: false
 math: false
 ---
@@ -25,6 +25,9 @@ math: false
 
 추세 추종 전략은 원래 낮은 승률을 감수한다. 문제는 낮은 승률 자체가 아니라, 그 손실들을 보상할 큰 승자가 있었느냐다. 6월에는 그 차이가 시장별로 뚜렷하게 갈렸다.
 
+![Turtle 6월 성과 요약](/assets/img/posts/2026-06-turtle-performance-review.jpg)
+_정확한 계좌 금액 대신 손익 구조와 운용 품질만 남긴 6월 요약_
+
 ---
 
 ## 원인 분석
@@ -39,23 +42,20 @@ math: false
 
 실전 계좌에서는 기회를 놓치는 것보다 검증되지 않은 신호에 계속 맞는 것이 더 위험하다.
 
+![Turtle 6월 진입 품질 점검](/assets/img/posts/2026-06-turtle-entry-quality-review.jpg)
+_가짜 돌파와 짧은 되돌림을 줄이기 위한 진입 품질 점검_
+
 ---
 
 ## 6월에 Turtle에서 바뀐 것들
 
 성과와 별개로, Turtle 자체는 꽤 많이 좋아졌다. 다만 여기서는 세부 구현보다 방향만 남긴다.
 
-![Turtle 백테스트 설정 화면](/assets/img/posts/2026-06-turtle-backtest-setup.jpg)
-_백테스트를 시작하기 전에 데이터 상태를 먼저 확인하는 흐름_
-
 첫째, 백테스트 데이터의 신뢰성을 높였다. 빠른 백테스트보다 중요한 건 틀린 백테스트를 믿지 않는 것이다.
 
 둘째, 실계좌 회계를 더 정직하게 보도록 다듬었다. 현금, 포지션, 미결제 금액이 섞이면 성과 판단이 흐려진다.
 
 셋째, 전략 실험과 운영 흐름이 조금 더 안정됐다. 더 많은 시장과 전략 조합을 검증할 수 있도록 백테스트 실행 경로와 결과 관리 흐름을 정리했다.
-
-![Turtle 파라미터 탐색기 화면](/assets/img/posts/2026-06-turtle-parameter-explorer-wide.jpg)
-_전략 조합을 실전 투입 전에 따로 비교하는 탐색 흐름_
 
 넷째, 화면도 조금 정리됐다. 지표 표현과 상태 표시를 더 일관되게 만들었다.
 
