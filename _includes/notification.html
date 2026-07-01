@@ -1,0 +1,108 @@
+{% assign notification = site.data.locales[include.lang].notification %}
+
+<aside
+  id="notification"
+  class="toast w-auto rounded-5 text-nowrap"
+  role="alert"
+  aria-live="assertive"
+  aria-atomic="true"
+  data-bs-animation="true"
+  data-bs-autohide="false"
+>
+  <div class="d-flex align-items-center">
+    <div class="toast-body ps-3 d-flex align-items-center gap-3">
+      <span>{{ notification.update_found | default: 'New content available' }}</span>
+      <button type="button" class="btn btn-primary btn-sm rounded-2 py-0" aria-label="Update">
+        {{ notification.update | default: 'Update' }}
+      </button>
+    </div>
+    <button type="button" class="btn-close mx-3 ms-2" data-bs-dismiss="toast" aria-label="Close"></button>
+  </div>
+</aside>
+
+<script>
+  (() => {
+    if (!('serviceWorker' in navigator)) {
+      return;
+    }
+
+    const updateSelector = '#notification [aria-label="Update"]';
+    let reloadRequested = false;
+
+    const reloadOnce = () => {
+      if (reloadRequested) {
+        return;
+      }
+
+      reloadRequested = true;
+      window.location.reload();
+    };
+
+    const waitForControllerChange = () =>
+      new Promise((resolve) => {
+        const timeoutId = window.setTimeout(resolve, 2000);
+
+        navigator.serviceWorker.addEventListener(
+          'controllerchange',
+          () => {
+            window.clearTimeout(timeoutId);
+            resolve();
+          },
+          { once: true }
+        );
+      });
+
+    const findRegistration = async () => {
+      const registrations = await navigator.serviceWorker.getRegistrations();
+
+      return (
+        registrations.find((registration) => window.location.href.startsWith(registration.scope)) ||
+        registrations[0]
+      );
+    };
+
+    const applyPendingUpdate = async () => {
+      const registration = await findRegistration();
+
+      if (!registration) {
+        reloadOnce();
+        return;
+      }
+
+      try {
+        await registration.update();
+      } catch (error) {
+        // A network failure should not leave the visible update button doing nothing.
+      }
+
+      if (registration.waiting) {
+        const controllerChange = waitForControllerChange();
+        registration.waiting.postMessage('SKIP_WAITING');
+        await controllerChange;
+      }
+
+      reloadOnce();
+    };
+
+    document.addEventListener(
+      'click',
+      (event) => {
+        if (!(event.target instanceof Element)) {
+          return;
+        }
+
+        const updateButton = event.target.closest(updateSelector);
+
+        if (!updateButton || updateButton.dataset.updateRequested === 'true') {
+          return;
+        }
+
+        updateButton.dataset.updateRequested = 'true';
+        updateButton.setAttribute('disabled', 'disabled');
+
+        applyPendingUpdate().catch(reloadOnce);
+      },
+      true
+    );
+  })();
+</script>
