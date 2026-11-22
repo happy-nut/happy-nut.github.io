@@ -1,5 +1,5 @@
-// Sidebar motion: a highlight that glides to the hovered nav item and settles back on the
-// current page, a soft light that follows the pointer, and a small Seoul clock.
+// Sidebar motion: a thin line that glides to the hovered nav item and settles back on the
+// current page.
 (() => {
   const sidebar = document.getElementById('sidebar');
   const list = sidebar?.querySelector('nav ul.nav');
@@ -43,32 +43,4 @@
   });
   addEventListener('resize', settle);
   document.fonts?.ready.then(settle);
-
-  if (matchMedia('(hover: hover)').matches) {
-    sidebar.addEventListener('pointermove', (e) => {
-      const r = sidebar.getBoundingClientRect();
-      sidebar.style.setProperty('--mx', `${e.clientX - r.left}px`);
-      sidebar.style.setProperty('--my', `${e.clientY - r.top}px`);
-    });
-  }
-
-  const bottom = sidebar.querySelector('.sidebar-bottom');
-  if (bottom) {
-    const now = document.createElement('p');
-    now.className = 'sidebar-now';
-    now.setAttribute('aria-label', '서울 현재 시각');
-    bottom.before(now);
-    const fmt = new Intl.DateTimeFormat('ko-KR', {
-      timeZone: 'Asia/Seoul',
-      hour: '2-digit',
-      minute: '2-digit',
-      hourCycle: 'h23',
-    });
-    const tick = () => {
-      const [h, m] = fmt.format(new Date()).split(':');
-      now.innerHTML = `<span class="now-dot"></span>Seoul <b>${h}<i>:</i>${m}</b>`;
-    };
-    tick();
-    setInterval(tick, 15000);
-  }
 })();
