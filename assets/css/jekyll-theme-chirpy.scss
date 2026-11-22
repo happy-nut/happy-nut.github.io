@@ -52,6 +52,9 @@ $ease: cubic-bezier(0.16, 1, 0.3, 1);
   --btn-paginator-hover-color: #f1f1ef;
   --img-ring: rgb(0 0 0 / 6%);
   --glow: rgb(25 25 24 / 5%);
+  --bg-dot: rgb(25 25 24 / 10%);
+  --bg-warm: rgb(222 210 186 / 45%);
+  --bg-cool: rgb(196 207 218 / 40%);
 }
 
 @mixin dark-palette {
@@ -86,6 +89,9 @@ $ease: cubic-bezier(0.16, 1, 0.3, 1);
   --btn-paginator-hover-color: #1c1c1b;
   --img-ring: rgb(255 255 255 / 8%);
   --glow: rgb(242 241 238 / 6%);
+  --bg-dot: rgb(242 241 238 / 7%);
+  --bg-warm: rgb(150 128 96 / 16%);
+  --bg-cool: rgb(96 112 140 / 16%);
   --img-dim: brightness(0.82);
 }
 
@@ -578,6 +584,44 @@ article {
   }
 }
 
+/* ---------- Ambient background ---------- */
+
+/* fixed layer behind the content column: drifting dot grid + two soft lights */
+#main-wrapper::before {
+  content: '';
+  position: fixed;
+  inset: -10%;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle, var(--bg-dot) 1px, transparent 1.3px) 0 0 / 26px 26px,
+    radial-gradient(38rem 30rem at 72% 18%, var(--bg-warm), transparent 70%),
+    radial-gradient(34rem 28rem at 22% 78%, var(--bg-cool), transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse 75% 65% at 55% 40%, #000 35%, transparent 100%);
+  mask-image: radial-gradient(ellipse 75% 65% at 55% 40%, #000 35%, transparent 100%);
+}
+
+@keyframes ambient {
+  0% {
+    background-position: 0 0, 0 0, 0 0;
+  }
+
+  50% {
+    background-position: 13px 26px, -6rem 4rem, 5rem -3rem;
+  }
+
+  100% {
+    background-position: 26px 52px, 0 0, 0 0;
+  }
+}
+
+@keyframes ambient-breathe {
+  50% {
+    opacity: 0.7;
+    transform: scale(1.04) rotate(0.6deg);
+  }
+}
+
 /* ---------- Motion ---------- */
 
 @view-transition {
@@ -641,6 +685,12 @@ article {
 }
 
 @media (prefers-reduced-motion: no-preference) {
+  #main-wrapper::before {
+    animation:
+      ambient 40s linear infinite,
+      ambient-breathe 18s ease-in-out infinite;
+  }
+
   .intro-label,
   .intro-desc,
   article > header {
@@ -699,6 +749,7 @@ article {
 
   @supports (animation-timeline: scroll()) {
     #topbar-wrapper {
+      background: transparent;
       animation: rule-in linear both;
       animation-timeline: scroll(root);
       animation-range: 0 120px;
