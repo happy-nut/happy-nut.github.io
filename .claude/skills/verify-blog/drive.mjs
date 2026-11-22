@@ -2,7 +2,7 @@
 // Drive the blog in headless Google Chrome over CDP (no npm deps) and save a screenshot.
 // Steps run in the order given:
 //   drive.mjs <url> <out.png> [--width 1280] [--click <css>] [--type <css> <text>]
-//                             [--wait <ms>] [--eval <js expr>] [--shot <out2.png>] [--full] [--scheme light|dark]
+//                             [--wait <ms>] [--eval <js expr>] [--shot <out2.png>] [--full] [--scheme light|dark] [--hover <css>]
 // --eval prints the JSON value to stdout. --shot saves a mid-journey screenshot; <out.png> is the final screen.
 // Exit 1 if a selector is missing or Chrome fails.
 import { spawn } from 'node:child_process';
@@ -26,6 +26,7 @@ for (let i = 0; i < rest.length; i++) {
   else if (f === '--wait') steps.push(['wait', +rest[++i]]);
   else if (f === '--eval') steps.push(['eval', rest[++i]]);
   else if (f === '--shot') steps.push(['shot', rest[++i]]);
+  else if (f === '--hover') steps.push(['hover', rest[++i]]);
   else { console.error(`unknown flag ${f}`); process.exit(1); }
 }
 
@@ -83,6 +84,12 @@ try {
   for (const [kind, a, b] of steps) {
     if (kind === 'wait') await sleep(a);
     else if (kind === 'shot') await capture(a);
+    else if (kind === 'hover') {
+      await need(a);
+      const { x, y } = await evaluate(`(() => { const r = document.querySelector(${JSON.stringify(a)}).getBoundingClientRect(); return { x: r.x + r.width / 2, y: r.y + r.height / 2 }; })()`);
+      await send('Input.dispatchMouseEvent', { type: 'mouseMoved', x, y });
+      await sleep(700);
+    }
     else if (kind === 'eval') console.log(JSON.stringify(await evaluate(a), null, 2));
     else if (kind === 'click') {
       await need(a);

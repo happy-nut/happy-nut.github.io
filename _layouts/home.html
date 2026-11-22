@@ -47,17 +47,9 @@ layout: default
 {% endif %}
 
 {% if paginator.page == 1 %}
-  {% assign first_year = site.posts.last.date | date: '%Y' %}
-  {% assign tag_count = site.tags | size %}
-  <section class="hero" aria-label="Intro">
-    <span class="hero-kicker">기술 · 투자 · 자본주의</span>
-    <h1 class="hero-title">{{ site.tagline }}</h1>
-    <p class="hero-desc">{{ site.description }}</p>
-    <div class="hero-stats">
-      <span><strong>{{ site.posts | size }}</strong>편의 글</span>
-      <span><strong>{{ tag_count }}</strong>개의 태그</span>
-      <span><strong>{{ first_year }}</strong>년부터 기록</span>
-    </div>
+  <section class="intro px-xl-1" aria-label="Intro">
+    <p class="intro-label">Happynut · Notes on engineering, investing, capitalism</p>
+    <h1 class="intro-title">{{ site.description }}</h1>
   </section>
 {% endif %}
 
@@ -109,7 +101,7 @@ layout: default
 
         <div class="col-md-{{ card_body_col }}">
           <div class="card-body d-flex flex-column">
-            <h1 class="card-title my-2 mt-md-0" style="view-transition-name: post-{{ post.date | date: '%s' }}">{{ post.title }}</h1>
+            <h1 class="card-title my-2 mt-md-0" style="view-transition-name: post-{{ post.date | date: '%s' }}"><span>{{ post.title }}</span></h1>
 
             <div class="card-text content mt-0 mb-3">
               <p>{% include post-summary.html %}</p>
