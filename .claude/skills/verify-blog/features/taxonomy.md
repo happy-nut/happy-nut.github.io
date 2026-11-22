@@ -27,12 +27,11 @@ Preconditions:
     --shot $E/TAX-cats.png \
     --click 'a.mx-2[href="/categories/finance/"]' --eval "document.querySelector('h1').innerText"
   ```
-  같은 href 가 두 번 나오면 대소문자 충돌이다(아래 Gotchas). 마지막 `h1` 에 `finance` 와 글 수(2026-11 기준 10).
-- **태그 목록.** `$D $U/ $E/TAX-tags.png --click '#sidebar nav a[href="/tags/"]' --eval "document.querySelectorAll('#tags a.tag').length"` (2026-11 기준 101).
+  같은 href 가 두 번 나오면 대소문자 충돌이다(아래 Gotchas). 마지막 `h1` 에 `finance` 와 글 수(2026-11 기준 7).
+- **태그 목록.** `$D $U/ $E/TAX-tags.png --click '#sidebar nav a[href="/tags/"]' --eval "document.querySelectorAll('#tags a.tag').length"` (2026-11 기준 99).
 - **태그 페이지.** 검증 대상 글의 태그 하나를 눌러 그 글 제목이 목록에 있다.
 - **증명.** `TAX-cats.png`, `TAX-tags.png`.
 
 ## Gotchas
 
-- 카테고리·태그 URL 은 소문자지만 표시 이름은 front matter 그대로다. `[Life, Parenting]` 과 `[life, parenting]` 이 섞여 있어 `/categories/` 에 `Life` 와 `life` 카드가 둘 다 뜨고 둘 다 `/categories/life/` 로 간다. 빌드 로그의 `Conflict: ... categories/life/index.html` 경고가 같은 원인이다. 새 글은 소문자를 쓴다.
-- CLAUDE.md 의 카테고리 예시(`[Leadership, Psychology]`)는 대문자라 같은 충돌을 만든다.
+- 카테고리·태그 URL 은 소문자지만 표시 이름은 front matter 그대로다. `Life` 와 `life` 처럼 대소문자만 다른 값이 섞이면 `/categories/` 에 카드가 둘 뜨고 같은 URL 을 다투며, 빌드 로그에 `Conflict: ... categories/<name>/index.html` 이 찍힌다 (2026-11 에 소문자로 통일해 해결). 새 글도 소문자 kebab-case.

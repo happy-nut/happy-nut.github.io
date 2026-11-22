@@ -97,7 +97,7 @@ Kills only the PID recorded at `start` (the jekyll process itself) and deletes `
 ## Known site-wide gotchas
 
 - The PWA service worker (`pwa.cache.enabled: true`) is registered on localhost too. After editing a page, a reload can serve the cached copy. Hard-reload, or in the page run `(await navigator.serviceWorker.getRegistrations()).forEach(r=>r.unregister())` and reload.
-- Build warns `Conflict: ... categories/life/index.html` and `categories/parenting/index.html`. `_posts/2025-12-27-부모가 될 준비.md` uses `[Life, Parenting]` while others use `[life, parenting]`; jekyll-archives writes both to one URL, and `/categories/` shows two cards. That is a content bug, not a harness bug.
+- Build warns `Conflict: ... categories/<name>/index.html` when two posts spell a category with different case (`Life` vs `life`). That is a content bug, not a harness bug; keep categories lowercase.
 
 ## Deeper layers (only if a need shows up)
 

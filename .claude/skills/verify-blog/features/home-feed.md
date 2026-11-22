@@ -28,7 +28,7 @@ Preconditions:
     --click '.pagination a[href="/page2"]' \
     --eval "({path: location.pathname, first: document.querySelector('#post-list article h1.card-title').textContent.trim()})"
   ```
-  첫 `--eval` 은 10개이고 첫 글이 `_posts/` 에서 가장 늦은 날짜의 `title` 이다. 둘째는 `/page2/` (링크 href 는 끝 슬래시 없는 `/page2`)이고 첫 제목이 1쪽 목록에 없다. 쪽 수는 `ceil(글 수 / 10)` (2026-11 기준 39개, 4쪽).
+  첫 `--eval` 은 10개이고 첫 글이 `_posts/` 에서 가장 늦은 날짜의 `title` 이다. 둘째는 `/page2/` (링크 href 는 끝 슬래시 없는 `/page2`)이고 첫 제목이 1쪽 목록에 없다. 쪽 수는 `ceil(글 수 / 10)` (2026-11 기준 36개, 4쪽).
 - **글 열기.** `$D $U/ $E/HOME-open.png --click '#post-list article a' --eval "document.querySelector('h1').textContent"` 의 `h1` 이 1쪽 첫 카드 제목과 같다.
 - **증명.** `HOME.png`, `HOME-page2.png`.
 
