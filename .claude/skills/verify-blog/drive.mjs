@@ -99,9 +99,10 @@ try {
     } else if (kind === 'type') {
       await need(a);
       await evaluate(`document.querySelector(${JSON.stringify(a)}).focus()`);
-      for (const ch of b) {                       // real key events so keydown/input/keyup handlers fire
-        await send('Input.dispatchKeyEvent', { type: 'keyDown', text: ch, key: ch });
-        await send('Input.dispatchKeyEvent', { type: 'keyUp', key: ch });
+      for (const ch of b) {                       // real key events so keydown/input/keyup handlers fire; \n presses Enter
+        const k = ch === '\n' ? { key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13, text: '\r' } : { key: ch, text: ch };
+        await send('Input.dispatchKeyEvent', { type: 'keyDown', ...k });
+        await send('Input.dispatchKeyEvent', { type: 'keyUp', key: k.key, code: k.code, windowsVirtualKeyCode: k.windowsVirtualKeyCode });
       }
       await sleep(800);
     }
