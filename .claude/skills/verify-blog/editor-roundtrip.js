@@ -1,7 +1,7 @@
 // Paste into drive.mjs --eval on /admin/ after fake-github.sh: loads every post into the editor and back,
 // and lists the ones whose rendered HTML changes. Those open in raw markdown mode in the app.
 (async () => {
-  await new Promise((r) => { const s = document.createElement('script'); s.src = '/admin/vendor/editor.js'; s.onload = r; document.head.append(s); });
+  await new Promise((r) => { const s = document.createElement('script'); s.src = '/admin/lib/editor.js'; s.onload = r; document.head.append(s); });
   const files = await (await fetch('/__fixture.json')).json();
   const div = document.createElement('div'); document.body.append(div);
   const ed = WriteEditor.create(div, '');
