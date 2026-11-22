@@ -177,176 +177,112 @@ h1, h2, h3, h4, .card-title {
   color: var(--heading-color);
 }
 
-/* ---------- Sidebar ---------- */
+/* ---------- Sidebar: quiet, typographic ---------- */
 
 #sidebar {
   border-right: 1px solid var(--line);
-  isolation: isolate;
-
-  /* soft light that follows the pointer (position set by sidebar.js) */
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    background: radial-gradient(
-      220px circle at var(--mx, 50%) var(--my, -300px),
-      color-mix(in srgb, var(--heading-color) 5%, transparent),
-      transparent 70%
-    );
-    opacity: 0;
-    transition: opacity 0.5s ease;
-  }
-
-  &:hover::before {
-    opacity: 1;
-  }
 
   .profile-wrapper {
     position: relative;
-  }
+    padding-bottom: 1.6rem;
 
-  #avatar {
-    position: relative;
-    width: 4.5rem;
-    height: 4.5rem;
-    overflow: visible;
-    box-shadow: none;
-
-    img {
-      border-radius: 50%;
-      box-shadow: 0 0 0 1px var(--line);
-      transition: transform 0.6s $ease;
-    }
-
-    /* thin dashed orbit around the photo */
-    &::before {
-      content: '';
-      position: absolute;
-      inset: -7px;
-      border-radius: 50%;
-      border: 1px dashed color-mix(in srgb, var(--heading-color) 28%, transparent);
-      transition: inset 0.6s $ease, border-color 0.4s ease;
-    }
-
-    /* "here" dot */
+    /* short editorial rule under the name */
     &::after {
       content: '';
       position: absolute;
-      right: 2px;
-      bottom: 2px;
-      width: 11px;
-      height: 11px;
-      border-radius: 50%;
-      background: #5b8a5f;
-      box-shadow: 0 0 0 2.5px var(--sidebar-bg);
+      left: 2.5rem;
+      bottom: 0;
+      width: 1.5rem;
+      height: 1px;
+      background: var(--heading-color);
+      opacity: 0.35;
+      transition: width 0.6s $ease, opacity 0.4s ease;
     }
 
-    &:hover {
-      img {
-        transform: scale(1.06);
-      }
+    &:hover::after {
+      width: 3rem;
+      opacity: 0.7;
+    }
+  }
 
-      &::before {
-        inset: -10px;
-        border-color: var(--heading-color);
-      }
+  #avatar {
+    width: 4.25rem;
+    height: 4.25rem;
+    box-shadow: 0 0 0 1px var(--line);
+
+    img {
+      filter: grayscale(1) contrast(1.05);
+      transition: filter 0.6s ease, transform 0.8s $ease;
+    }
+
+    &:hover img {
+      filter: none;
+      transform: scale(1.05);
     }
   }
 
   .site-title {
-    margin-top: 1.4rem;
+    margin-top: 1.3rem;
     font-family: $serif;
-    font-size: 1.5rem;
+    font-size: 1.45rem;
     font-weight: 600;
-    letter-spacing: -0.02em;
-    background: linear-gradient(currentcolor, currentcolor) 0 100% / 0 1px no-repeat;
-    transition: background-size 0.5s $ease;
-
-    &:hover {
-      background-size: 100% 1px;
-    }
+    letter-spacing: -0.025em;
   }
 
   .site-subtitle {
     display: block;
-    margin-top: 0.4rem;
+    margin-top: 0.3rem;
     font-style: normal !important;
-    font-size: 0.8rem;
+    font-size: 0.82rem;
     letter-spacing: -0.01em;
     color: var(--sidebar-muted-color);
+  }
 
-    &::after {
-      content: '_';
-      margin-left: 2px;
-      font-family: $mono;
-      animation: caret 1.1s steps(1) infinite;
-    }
+  nav {
+    margin-top: 1.1rem;
   }
 
   nav ul.nav {
     position: relative;
-    counter-reset: nav;
   }
 
+  /* one thin line that glides to the hovered item (moved by sidebar.js) */
   .nav-glide {
     position: absolute;
     top: 0;
-    left: 1.4rem;
-    right: 1.25rem;
+    left: 1.5rem;
+    width: 1.5px;
     height: 0;
-    border-radius: 6px;
-    background: var(--sidebar-hover-bg);
     opacity: 0;
     pointer-events: none;
 
     &::before {
       content: '';
       position: absolute;
-      left: 0;
-      top: 22%;
-      bottom: 22%;
-      width: 2px;
-      border-radius: 2px;
+      inset: 32% 0;
+      border-radius: 1px;
       background: var(--heading-color);
     }
   }
 
   &.glide-ready .nav-glide {
     transition:
-      transform 0.45s $ease,
-      height 0.45s $ease,
+      transform 0.55s $ease,
+      height 0.55s $ease,
       opacity 0.3s ease;
   }
 
   ul li.nav-item {
-    position: relative;
-    counter-increment: nav;
-
     a.nav-link {
-      position: relative;
-      display: flex;
-      align-items: baseline;
-      gap: 0.7rem;
-      padding-left: 0.9rem;
+      padding-left: 1.1rem;
       border-radius: 0;
       background: transparent !important;
       color: var(--sidebar-muted-color);
-      font-weight: 500;
-      transition: color 0.25s ease;
+      font-weight: 450;
+      transition: color 0.3s ease;
 
       i {
         display: none;
-      }
-
-      &::before {
-        content: counter(nav, decimal-leading-zero);
-        font-family: $mono;
-        font-size: 0.68rem;
-        letter-spacing: 0.02em;
-        opacity: 0.55;
-        transition: opacity 0.25s ease;
       }
 
       span {
@@ -354,7 +290,7 @@ h1, h2, h3, h4, .card-title {
         font-size: 0.95rem;
         letter-spacing: -0.01em;
         text-transform: lowercase;
-        transition: transform 0.4s $ease;
+        transition: transform 0.5s $ease;
       }
 
       span::first-letter {
@@ -364,167 +300,88 @@ h1, h2, h3, h4, .card-title {
       &:hover {
         color: var(--heading-color);
 
-        &::before {
-          opacity: 1;
-        }
-
         span {
-          transform: translateX(4px);
+          transform: translateX(3px);
         }
       }
     }
 
     &.active a.nav-link {
       color: var(--heading-color);
-
-      &::before {
-        opacity: 1;
-      }
-    }
-  }
-
-  .sidebar-now {
-    align-self: stretch;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin: 0 0 0.9rem;
-    padding-left: 2rem;
-    font-family: $mono;
-    font-size: 0.7rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--sidebar-muted-color);
-
-    b {
-      font-weight: 500;
-      color: var(--heading-color);
-    }
-
-    i {
-      font-style: normal;
-      animation: colon 2s ease-in-out infinite;
-    }
-
-    .now-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: #5b8a5f;
-      animation: now-pulse 2.4s ease-out infinite;
+      font-weight: 550;
     }
   }
 
   .sidebar-bottom {
     flex-wrap: nowrap !important;
-    gap: 0.15rem;
+    gap: 0.1rem;
 
     > a,
     #mode-toggle {
       margin: 0 !important;
       border: 0;
-      background: transparent;
+      background: transparent !important;
       box-shadow: none !important; /* theme draws the ring with a more specific selector */
-      transition: color 0.2s ease, transform 0.35s $ease, background-color 0.2s ease;
+      color: var(--sidebar-muted-color);
+      opacity: 0.75;
+      transition: color 0.25s ease, opacity 0.25s ease, transform 0.4s $ease;
 
       &:hover {
         color: var(--heading-color);
-        background: var(--sidebar-hover-bg);
+        opacity: 1;
         transform: translateY(-2px);
       }
     }
 
     .icon-border {
-      margin: 0 0.3rem !important;
+      margin: 0 0.35rem !important;
+      opacity: 0.5;
     }
-  }
-}
-
-@keyframes caret {
-  50% {
-    opacity: 0;
-  }
-}
-
-@keyframes colon {
-  50% {
-    opacity: 0.25;
-  }
-}
-
-@keyframes now-pulse {
-  0% {
-    box-shadow: 0 0 0 0 rgba(91, 138, 95, 0.45);
-  }
-
-  100% {
-    box-shadow: 0 0 0 7px rgba(91, 138, 95, 0);
   }
 }
 
 @keyframes sb-rise {
   from {
     opacity: 0;
-    transform: translateY(10px);
-  }
-}
-
-@keyframes orbit {
-  to {
-    transform: rotate(360deg);
+    transform: translateY(8px);
   }
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  #sidebar #avatar::before {
-    animation: orbit 40s linear infinite;
-  }
-
   #sidebar.sb-enter {
     .profile-wrapper > *,
     li.nav-item,
-    .sidebar-now,
     .sidebar-bottom {
-      animation: sb-rise 0.7s $ease both;
+      animation: sb-rise 0.8s $ease both;
     }
 
     .site-title {
-      animation-delay: 0.08s;
+      animation-delay: 0.06s;
     }
 
     .site-subtitle {
-      animation-delay: 0.14s;
+      animation-delay: 0.12s;
     }
 
     @for $i from 1 through 6 {
       li.nav-item:nth-of-type(#{$i}) {
-        animation-delay: #{0.18 + $i * 0.06}s;
+        animation-delay: #{0.16 + $i * 0.05}s;
       }
     }
 
-    .sidebar-now,
     .sidebar-bottom {
-      animation-delay: 0.6s;
+      animation-delay: 0.5s;
     }
   }
 
-  /* phone: replay the cascade each time the drawer opens */
   [sidebar-display] #sidebar li.nav-item {
     animation: sb-rise 0.6s $ease both;
 
     @for $i from 1 through 6 {
       &:nth-of-type(#{$i}) {
-        animation-delay: #{0.05 + $i * 0.05}s;
+        animation-delay: #{0.04 + $i * 0.04}s;
       }
     }
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  #sidebar .site-subtitle::after,
-  #sidebar .sidebar-now i,
-  #sidebar .sidebar-now .now-dot {
-    animation: none;
   }
 }
 
