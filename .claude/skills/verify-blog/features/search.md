@@ -20,7 +20,7 @@ Preconditions:
 
 - `serve.sh doctor` 의 `search index` 가 `ok`.
 
-- **검색과 결과 누르기.** SKILL.md Drive 절의 예시 명령 그대로다. `--type '#search-input' '손절'` 뒤 `#search-results a` 의 제목을 읽는다. 첫 결과가 `손실을 더 정직하게 보는 시스템 → /posts/june-trading-retrospect/` 같은 실제 글이다. 새 글을 검증하면 그 글 제목의 고유한 낱말로 친다.
+- **검색과 결과 누르기.** SKILL.md Drive 절의 예시 명령 그대로다. `--type '#search-input' '손절'` 뒤 `#search-results a` 의 제목을 읽는다. 첫 결과가 `손절가를 건드린 대가 → /posts/may-trading-retrospect/` 같은 실제 글이다. 새 글을 검증하면 그 글 제목의 고유한 낱말로 친다.
 - **결과 누르기.** 첫 결과를 눌러 그 글 페이지 `h1` 이 결과 제목과 같다.
 - **빈 결과.** `$D $U/ $E/SEARCH-empty.png --type '#search-input' 'zzzqqq' --eval "document.querySelectorAll('#search-results a').length"` 가 `0`.
 - **닫기.** 같은 명령에 `--click '#search-cancel' --eval "document.querySelector('#search-result-wrapper').classList.contains('d-none')"` 를 붙이면 `true`.

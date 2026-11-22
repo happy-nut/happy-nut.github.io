@@ -2,7 +2,7 @@
 title: "손절가를 건드린 대가"
 date: 2026-05-31 09:00:00 +0900
 categories: [finance, investment]
-tags: [trading, investment, system, retrospect, turtle]
+tags: [trading, investment, system, retrospect]
 description: "5월 국내외 주식 트레이딩 회고. KRW 실현손익 +701만원, USD +$1,682. 손절가를 수동으로 내린 대가로 약 2,000만원을 놓쳤고, 시장 수익률에도 한참 뒤처진 달이었다."
 image: /assets/img/posts/2026-05-summary.png
 mermaid: false
