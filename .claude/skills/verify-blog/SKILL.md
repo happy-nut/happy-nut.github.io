@@ -78,7 +78,7 @@ What counts as proof:
 - Reach the page through the UI (sidebar link, search result, post card), not only by typing the URL.
 - Read the value the user sees (title text, result list, count badge), not just HTTP 200.
 - For a content change, prove the new text is on the rendered page *and* in the build output: `grep -l '<text>' $TMPDIR/verify-blog-$PORT/site/posts/<slug>/index.html`.
-- For production-only behavior (compressed HTML, analytics, SEO tags) also run `bash tools/test.sh` (JEKYLL_ENV=production build + htmlproofer, same as CI). It writes `_site/` in the repo, which is gitignored.
+- For production-only behavior (compressed HTML, analytics, SEO tags) also run `LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 bash tools/test.sh`. Without a UTF-8 locale htmlproofer throws `Encoding::InvalidByteSequenceError` on Korean paths, skips those files (`Checking internal link hashes in 0 files`) and still prints "finished successfully" (JEKYLL_ENV=production build + htmlproofer, same as CI). It writes `_site/` in the repo, which is gitignored.
 
 ## Cleanup
 

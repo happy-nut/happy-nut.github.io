@@ -52,7 +52,6 @@ $ease: cubic-bezier(0.16, 1, 0.3, 1);
   --btn-paginator-hover-color: #f1f1ef;
   --img-ring: rgb(0 0 0 / 6%);
   --glow: rgb(25 25 24 / 5%);
-  --bg-dot: rgb(25 25 24 / 10%);
   --bg-warm: rgb(222 210 186 / 45%);
   --bg-cool: rgb(196 207 218 / 40%);
 }
@@ -89,7 +88,6 @@ $ease: cubic-bezier(0.16, 1, 0.3, 1);
   --btn-paginator-hover-color: #1c1c1b;
   --img-ring: rgb(255 255 255 / 8%);
   --glow: rgb(242 241 238 / 6%);
-  --bg-dot: rgb(242 241 238 / 7%);
   --bg-warm: rgb(150 128 96 / 16%);
   --bg-cool: rgb(96 112 140 / 16%);
   --img-dim: brightness(0.82);
@@ -103,6 +101,62 @@ $ease: cubic-bezier(0.16, 1, 0.3, 1);
   :root:not([data-bs-theme]) {
     @include dark-palette;
   }
+}
+
+/* ---------- Neutralize leftover blues (Bootstrap CDN + unset theme vars) ---------- */
+
+:root {
+  --bs-primary: var(--heading-color);
+  --bs-primary-rgb: 25, 25, 24;
+  --bs-link-color: var(--link-color);
+  --bs-link-color-rgb: 25, 25, 24;
+  --bs-link-hover-color: var(--heading-color);
+  --bs-link-hover-color-rgb: 25, 25, 24;
+  --bs-focus-ring-color: var(--line);
+  --btn-share-hover-color: var(--heading-color);
+  --checkbox-checked-color: var(--heading-color);
+  --footnote-target-bg: var(--sidebar-hover-bg);
+  --highlighter-rouge-color: var(--heading-color);
+}
+
+:root[data-bs-theme='dark'] {
+  --bs-primary-rgb: 242, 241, 238;
+  --bs-link-color-rgb: 242, 241, 238;
+  --bs-link-hover-color-rgb: 242, 241, 238;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-bs-theme]) {
+    --bs-primary-rgb: 242, 241, 238;
+    --bs-link-color-rgb: 242, 241, 238;
+    --bs-link-hover-color-rgb: 242, 241, 238;
+  }
+}
+
+.btn-outline-primary {
+  --bs-btn-color: var(--heading-color);
+  --bs-btn-border-color: var(--line);
+  --bs-btn-hover-color: var(--heading-color);
+  --bs-btn-hover-bg: var(--sidebar-hover-bg);
+  --bs-btn-hover-border-color: var(--line);
+  --bs-btn-active-color: var(--heading-color);
+  --bs-btn-active-bg: var(--sidebar-hover-bg);
+  --bs-btn-active-border-color: var(--line);
+  --bs-btn-focus-shadow-rgb: var(--bs-primary-rgb);
+}
+
+.btn.btn-outline-primary:not(.disabled):hover {
+  border-color: var(--line) !important; /* theme hard-codes #007bff !important */
+}
+
+:focus-visible {
+  outline: 2px solid var(--heading-color);
+  outline-offset: 2px;
+}
+
+.form-control:focus {
+  border-color: var(--text-muted-color);
+  box-shadow: none;
 }
 
 /* ---------- Typography ---------- */
@@ -586,7 +640,7 @@ article {
 
 /* ---------- Ambient background ---------- */
 
-/* fixed layer behind the content column: drifting dot grid + two soft lights */
+/* fixed layer behind the content: two soft drifting lights (the dots are drawn by constellation.js) */
 #main-wrapper::before {
   content: '';
   position: fixed;
@@ -594,24 +648,34 @@ article {
   z-index: -1;
   pointer-events: none;
   background:
-    radial-gradient(circle, var(--bg-dot) 1px, transparent 1.3px) 0 0 / 26px 26px,
     radial-gradient(38rem 30rem at 72% 18%, var(--bg-warm), transparent 70%),
     radial-gradient(34rem 28rem at 22% 78%, var(--bg-cool), transparent 70%);
   -webkit-mask-image: radial-gradient(ellipse 75% 65% at 55% 40%, #000 35%, transparent 100%);
   mask-image: radial-gradient(ellipse 75% 65% at 55% 40%, #000 35%, transparent 100%);
 }
 
+#constellation {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* dim the network where text sits so lines never compete with reading */
+#constellation {
+  -webkit-mask-image: radial-gradient(ellipse 34% 70% at 58% 50%, rgb(0 0 0 / 30%), #000 100%);
+  mask-image: radial-gradient(ellipse 34% 70% at 58% 50%, rgb(0 0 0 / 30%), #000 100%);
+}
+
+body:has(article[data-toc]) #constellation {
+  opacity: 0.45;
+}
+
 @keyframes ambient {
-  0% {
-    background-position: 0 0, 0 0, 0 0;
-  }
-
   50% {
-    background-position: 13px 26px, -6rem 4rem, 5rem -3rem;
-  }
-
-  100% {
-    background-position: 26px 52px, 0 0, 0 0;
+    background-position: -6rem 4rem, 5rem -3rem;
   }
 }
 
@@ -619,6 +683,42 @@ article {
   50% {
     opacity: 0.7;
     transform: scale(1.04) rotate(0.6deg);
+  }
+}
+
+/* ---------- Post footer: prev/next and related ---------- */
+
+.post-navigation .btn {
+  p {
+    font-family: $serif;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  &:hover:not(.disabled)::before {
+    color: var(--text-muted-color); /* theme turns the label whitesmoke for its blue hover */
+  }
+}
+
+#related-posts {
+  h3 {
+    font-family: $mono;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted-color);
+  }
+
+  h4 {
+    font-family: $serif;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  .card {
+    background: transparent;
+    box-shadow: none;
   }
 }
 
@@ -687,7 +787,7 @@ article {
 @media (prefers-reduced-motion: no-preference) {
   #main-wrapper::before {
     animation:
-      ambient 40s linear infinite,
+      ambient 40s ease-in-out infinite,
       ambient-breathe 18s ease-in-out infinite;
   }
 
