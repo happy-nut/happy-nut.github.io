@@ -119,7 +119,7 @@ assets:
 pwa:
   enabled: true # The option for PWA feature (installable)
   cache:
-    enabled: true # The option for PWA offline cache
+    enabled: false # 오프라인 캐시를 끈다: 켜 두면 휴대폰이 지운 글·옛 화면을 캐시에서 계속 보여 준다 (끄면 기존 캐시도 지운다)
     # Paths defined here will be excluded from the PWA cache.
     # Usually its value is the `baseurl` of another website that
     # shares the same domain name as the current website.

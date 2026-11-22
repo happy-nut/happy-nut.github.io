@@ -673,6 +673,22 @@ body:has(article[data-toc]) #constellation {
   opacity: 0.45;
 }
 
+/* phones: the dots read as dust on a small screen, and the oversized, masked, animated light layer
+   showed hard-edged bands on Android. Keep one still, full-bleed light and nothing else. */
+@media (max-width: 767.98px), (hover: none) {
+  #constellation {
+    display: none;
+  }
+
+  #main-wrapper::before {
+    inset: 0;
+    -webkit-mask-image: none;
+    mask-image: none;
+    animation: none !important;
+    background: radial-gradient(120% 60% at 80% 0%, var(--bg-warm), transparent 70%);
+  }
+}
+
 @keyframes ambient {
   50% {
     background-position: -6rem 4rem, 5rem -3rem;

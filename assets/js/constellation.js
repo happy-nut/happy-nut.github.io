@@ -5,6 +5,7 @@
   const REACH = 180; // px: pointer pulls and links nodes within this radius
   const SPEED = 0.18; // px per frame
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (matchMedia('(max-width: 767.98px), (hover: none)').matches) return; // phones: hidden in CSS, so skip the work too
 
   const canvas = document.createElement('canvas');
   canvas.id = 'constellation';
