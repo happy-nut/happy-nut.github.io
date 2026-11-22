@@ -51,7 +51,7 @@ $D $U/ $E/SEARCH-open.png \
   --eval "document.querySelector('h1').textContent"
 ```
 
-Flags: `--width <px>` (default 1280; under 768 emulates mobile), `--click <css>`, `--type <css> <text>` (real key events, so `keyup` handlers fire), `--wait <ms>`, `--eval <js>`, `--shot <png>`, `--full` (full-page capture). Exit 1 and `no element: <css>` when a selector is missing. Set `CHROME=` for a non-default Chrome path.
+Flags: `--width <px>` (default 1280; under 768 emulates mobile), `--click <css>`, `--type <css> <text>` (real key events, so `keyup` handlers fire), `--wait <ms>`, `--eval <js>`, `--shot <png>`, `--full` (full-page capture), `--scheme light|dark` (otherwise Chrome follows the macOS appearance). Exit 1 and `no element: <css>` when a selector is missing. Set `CHROME=` for a non-default Chrome path.
 
 Secondary: the built-in browser (`mcp__Claude_Browser__*`) or Claude in Chrome, when you want to look around interactively. Its screenshots are not saved to disk, so take the evidence shots with `drive.mjs`.
 

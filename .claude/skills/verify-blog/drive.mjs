@@ -2,7 +2,7 @@
 // Drive the blog in headless Google Chrome over CDP (no npm deps) and save a screenshot.
 // Steps run in the order given:
 //   drive.mjs <url> <out.png> [--width 1280] [--click <css>] [--type <css> <text>]
-//                             [--wait <ms>] [--eval <js expr>] [--shot <out2.png>] [--full]
+//                             [--wait <ms>] [--eval <js expr>] [--shot <out2.png>] [--full] [--scheme light|dark]
 // --eval prints the JSON value to stdout. --shot saves a mid-journey screenshot; <out.png> is the final screen.
 // Exit 1 if a selector is missing or Chrome fails.
 import { spawn } from 'node:child_process';
@@ -14,12 +14,13 @@ const CHROME = process.env.CHROME || '/Applications/Google Chrome.app/Contents/M
 const [url, out, ...rest] = process.argv.slice(2);
 if (!url || !out) { console.error(readFileSync(new URL(import.meta.url), 'utf8').split('\n').slice(1, 6).join('\n')); process.exit(1); }
 
-let width = 1280, full = false;
+let width = 1280, full = false, scheme = null;
 const steps = [];
 for (let i = 0; i < rest.length; i++) {
   const f = rest[i];
   if (f === '--width') width = +rest[++i];
   else if (f === '--full') full = true;
+  else if (f === '--scheme') scheme = rest[++i];
   else if (f === '--click') steps.push(['click', rest[++i]]);
   else if (f === '--type') steps.push(['type', rest[++i], rest[++i]]);
   else if (f === '--wait') steps.push(['wait', +rest[++i]]);
@@ -68,6 +69,7 @@ try {
 
   await send('Page.enable');
   await send('Emulation.setDeviceMetricsOverride', { width, height: 900, deviceScaleFactor: 1, mobile: width < 768 });
+  if (scheme) await send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-color-scheme', value: scheme }] });
   const loaded = once('Page.loadEventFired');
   await send('Page.navigate', { url });
   await loaded; await sleep(500);
