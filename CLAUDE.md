@@ -41,7 +41,9 @@ math: false
 
 ## Category Examples
 
-회고: `[retrospect]` | 기술: `[engineering, kotlin]` | 리더십: `[Leadership, Psychology]` | AI: `[AI, fine-tuning]`
+카테고리·태그는 영문 소문자 kebab-case (대소문자가 다르면 같은 URL 로 겹친다)
+
+회고: `[retrospect]` | 기술: `[engineering, kotlin]` | 리더십: `[leadership, psychology]` | AI: `[ai, fine-tuning]`
 
 ## Commit Rules
 
