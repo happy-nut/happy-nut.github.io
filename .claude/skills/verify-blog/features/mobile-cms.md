@@ -37,5 +37,5 @@ node $S/drive.mjs http://127.0.0.1:4100/admin/ $E/published.png --width 390 \
 - `fake-github.sh` 는 몰 때마다 다시 돌린다. 스크린숏을 저장소 안에 쓰면 Jekyll 이 다시 빌드하며 `__fixture.json` 을 지운다.
 - 가짜는 GitHub 경계만 바꾼다. 실제 토큰 권한·커밋·배포는 실제 사이트에서 한 번 해 봐야 증명된다.
 - `.screen` 의 등장 애니메이션은 `backwards` 여야 한다. `both` 면 남은 transform 이 고정된 툴바·새 글 버튼을 화면 밖으로 가둔다.
-- 편집기는 `admin/vendor/editor.js` 묶음 파일이다. 다시 만드는 법은 `admin/vendor/README.md`.
+- 편집기는 `admin/lib/editor.js` 묶음 파일이다. 다시 만드는 법은 `admin/lib/README.md`.
 - `/admin` 은 `pwa.cache.deny_paths` 에 있어 서비스 워커가 캐시하지 않는다.
