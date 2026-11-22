@@ -891,3 +891,24 @@ body:has(article[data-toc]) #constellation {
     navigation: none;
   }
 }
+
+/* ---------- Footer ---------- */
+
+footer .footer-write {
+  font-family: $mono;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  color: var(--text-muted-color);
+  text-decoration: none;
+  border-bottom: 0;
+  transition: color 0.2s;
+
+  i {
+    font-size: 0.72rem;
+    margin-right: 0.25rem;
+  }
+
+  &:hover {
+    color: var(--heading-color);
+  }
+}

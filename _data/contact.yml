@@ -13,6 +13,11 @@
 - type: rss
   icon: "fas fa-rss"
   noblank: true
+
+- type: 글쓰기 # 글쓰기 앱(/admin): GitHub 으로 로그인
+  icon: "fas fa-pen-nib"
+  url: "/admin/"
+  noblank: true
 # Uncomment and complete the url below to enable more contact options
 #
 # - type: mastodon
