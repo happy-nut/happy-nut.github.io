@@ -26,3 +26,6 @@ package-lock.json
 _sass/vendors
 assets/js/dist
 .omc
+
+# Verification evidence (verify-blog skill)
+.verify-evidence
