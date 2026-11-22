@@ -54,7 +54,6 @@
     link: '<path d="M10 14a4 4 0 005.7 0l3-3a4 4 0 00-5.7-5.7l-1 1M14 10a4 4 0 00-5.7 0l-3 3a4 4 0 005.7 5.7l1-1"/>',
     list: '<path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="4.5" cy="18" r="1"/>',
     code: '<path d="M8 7l-5 5 5 5M16 7l5 5-5 5"/>',
-    eye: '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
     check: '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
     out: '<path d="M15 4h4a1 1 0 011 1v14a1 1 0 01-1 1h-4M10 17l5-5-5-5M15 12H3"/>',
     refresh: '<path d="M20 11a8 8 0 10-2.3 5.7M20 4v7h-7"/>',
@@ -149,7 +148,7 @@
     window.scrollTo(0, 0);
     if (!token) return renderLogin();
     const [, view, c, name] = location.hash.match(/^#\/(edit|new)\/(\w+)\/(.+)$/) || [];
-    if (!view) { doc = null; return renderList(); }
+    if (!view) { doc = null; ed?.editor.destroy(); ed = null; return renderList(); }
     if (!files) { renderLoading(); await refresh(); }
     if (!doc || doc.coll !== c || (doc.name || doc.id) !== decodeURIComponent(name)) openDoc(view, c, decodeURIComponent(name));
     renderEditor();
@@ -262,7 +261,20 @@
   }
 
   // ---------- editor ----------
+  // 본문은 쓰는 대로 모양이 보이는 편집기(rich)로 쓴다. 넣었다 빼면 모양이 달라지는 글(표 정렬, 특수 문법)은 원문(raw)으로 연다.
   let saveTimer;
+  let ed = null;
+  let flush = () => {};
+  const shape = (md) => {
+    const d = document.createElement('div');
+    d.innerHTML = marked.parse(md || '');
+    return d.innerHTML.replace(/(<img[^>]*>)\s+(<em>)/g, '$1$2').replace(/\s+/g, ' ').replace(/\s*(<\/?(p|li|ul|ol|h\d|blockquote|tr|td|th|thead|tbody|table)\b[^>]*>)\s*/g, '$1').trim();
+  };
+  // Chirpy 캡션 관례: 이미지 바로 다음 줄의 *기울임* 은 캡션이다. 편집기가 한 줄로 붙인 것을 다시 나눈다.
+  const fromRich = (md) => md.replace(/(!\[[^\]\n]*\]\([^)\s]*\))[ \t]*(\*[^*\n]+\*|_[^_\n]+_)/g, '$1\n$2')
+    .replace(/(\n(> ?)*([-*+]|\d+\.)[ \t]*)+\s*$/, '').trimEnd();
+  const ACTIVE = { heading: ['heading', { level: 2 }], bold: ['bold'], quote: ['blockquote'], list: ['bulletList'], link: ['link'], code: ['codeBlock'] };
+
   function renderEditor() {
     if (!doc) return;
     const c = COLLS[doc.coll];
@@ -277,19 +289,19 @@
         <article class="doc" id="doc">
           <div class="meta-line" id="meta"></div>
           <textarea class="title" id="title" rows="1" placeholder="제목" aria-label="제목">${esc(doc.title)}</textarea>
-          <textarea class="body" id="body" placeholder="여기에 이야기를 시작하세요.&#10;&#10;마크다운을 쓸 수 있어요." aria-label="본문">${esc(doc.body)}</textarea>
+          <div id="rich" class="rich" aria-label="본문"></div>
+          <textarea class="body" id="body" placeholder="마크다운 원문" aria-label="본문 원문" hidden></textarea>
         </article>
-        <div class="preview" id="preview" hidden></div>
         <nav class="toolbar" id="tools" aria-label="서식">
           <button class="icon-btn" data-act="image" aria-label="사진 넣기">${icon('image')}</button>
-          <button class="icon-btn" data-act="heading" aria-label="소제목">${icon('heading')}</button>
-          <button class="icon-btn" data-act="bold" aria-label="굵게">${icon('bold')}</button>
-          <button class="icon-btn" data-act="quote" aria-label="인용">${icon('quote')}</button>
-          <button class="icon-btn" data-act="list" aria-label="목록">${icon('list')}</button>
-          <button class="icon-btn" data-act="link" aria-label="링크">${icon('link')}</button>
-          <button class="icon-btn" data-act="code" aria-label="코드">${icon('code')}</button>
+          <button class="icon-btn" data-act="heading" aria-label="소제목" aria-pressed="false">${icon('heading')}</button>
+          <button class="icon-btn" data-act="bold" aria-label="굵게" aria-pressed="false">${icon('bold')}</button>
+          <button class="icon-btn" data-act="quote" aria-label="인용" aria-pressed="false">${icon('quote')}</button>
+          <button class="icon-btn" data-act="list" aria-label="목록" aria-pressed="false">${icon('list')}</button>
+          <button class="icon-btn" data-act="link" aria-label="링크" aria-pressed="false">${icon('link')}</button>
+          <button class="icon-btn" data-act="code" aria-label="코드 블록" aria-pressed="false">${icon('code')}</button>
           <span class="sep"></span>
-          <button class="icon-btn" data-act="preview" aria-label="미리보기" aria-pressed="false">${icon('eye')}</button>
+          <button class="icon-btn md" data-act="raw" aria-label="마크다운 원문으로 보기" aria-pressed="false">MD</button>
           <span class="count" id="count"></span>
         </nav>
         <input type="file" id="file" accept="image/*" hidden>
@@ -298,38 +310,107 @@
     const $body = $app.querySelector('#body');
     const $status = $app.querySelector('#status');
     const grow = (el) => { el.style.height = 'auto'; el.style.height = `${el.scrollHeight}px`; };
-    const count = () => { $app.querySelector('#count').textContent = `${$body.value.replace(/\s/g, '').length.toLocaleString()}자`; };
-    const changed = () => {
+    const raw = () => doc.mode === 'raw';
+
+    ed?.editor.destroy();
+    ed = WriteEditor.create($app.querySelector('#rich'), doc.body, {
+      placeholder: '여기에 이야기를 시작하세요',
+      assetBase: RAW,
+      onChange: () => changed(),
+      onState: () => paintTools(),
+    });
+    if (!doc.mode) doc.mode = doc.isNew || shape(doc.body) === shape(fromRich(ed.markdown())) ? 'rich' : 'raw';
+
+    flush = () => {
+      if (raw()) doc.body = $body.value;
+      else if (ed) doc.body = fromRich(ed.markdown()); // 끝에 남은 빈 목록 항목도 버린다
       doc.title = $title.value.replace(/\n/g, ' ');
-      doc.body = $body.value;
+    };
+    const count = () => {
+      const n = (raw() ? $body.value : ed.text()).replace(/\s/g, '').length;
+      $app.querySelector('#count').textContent = `${n.toLocaleString()}자`;
+    };
+    function changed() {
       doc.dirty = true;
       count();
       $status.className = 'grow status';
       $status.textContent = '쓰는 중…';
       clearTimeout(saveTimer);
-      saveTimer = setTimeout(() => { saveLocal(); $status.className = 'grow status saved'; $status.textContent = '이 기기에 저장됨'; }, 600);
+      saveTimer = setTimeout(() => { flush(); saveLocal(); $status.className = 'grow status saved'; $status.textContent = '이 기기에 저장됨'; }, 600);
+    }
+    function paintTools() {
+      const r = raw();
+      $app.querySelectorAll('[data-act]').forEach((b) => {
+        const a = b.dataset.act;
+        if (a === 'raw') return b.setAttribute('aria-pressed', r);
+        if (ACTIVE[a]) b.setAttribute('aria-pressed', !r && ed.editor.isActive(...ACTIVE[a]));
+      });
+    }
+    const setMode = (mode, quiet) => {
+      if (mode === 'raw') {
+        $body.value = doc.body;
+        $body.hidden = false; $app.querySelector('#rich').hidden = true;
+        requestAnimationFrame(() => grow($body));
+      } else {
+        ed.editor.commands.setContent(doc.body);
+        $body.hidden = true; $app.querySelector('#rich').hidden = false;
+      }
+      doc.mode = mode;
+      paintTools(); count();
+      if (!quiet) toast(mode === 'raw' ? '마크다운 원문으로 보고 있어요' : '쓰는 대로 보이는 화면으로 돌아왔어요');
     };
+
     $title.oninput = () => { grow($title); changed(); };
-    $title.onkeydown = (e) => { if (e.key === 'Enter') { e.preventDefault(); $body.focus(); $body.setSelectionRange(0, 0); } };
+    $title.onkeydown = (e) => {
+      if (e.key !== 'Enter') return;
+      e.preventDefault();
+      if (raw()) { $body.focus(); $body.setSelectionRange(0, 0); } else ed.editor.commands.focus('start');
+    };
     $body.oninput = () => { grow($body); changed(); };
-    requestAnimationFrame(() => { grow($title); grow($body); });
-    count();
+    requestAnimationFrame(() => grow($title));
+    setMode(doc.mode, true);
+    if (raw() && !doc.isNew) toast('표·특수 문법이 있어 원문으로 열었어요. 원문을 고치면 그대로 저장돼요.', 4500);
     renderMeta();
     if (doc.stale) toast('블로그 쪽 글이 그 사이 바뀌었어요. 발행하면 이 기기 내용으로 덮어써요.', 5000);
     if (doc.isNew && !doc.title) setTimeout(() => $title.focus(), 350);
 
-    $app.querySelector('#back').onclick = () => { clearTimeout(saveTimer); if (doc.dirty) saveLocal(); go('#/'); };
-    $app.querySelector('#settings').onclick = () => openSettings();
-    $app.querySelector('#publish').onclick = () => publish();
+    $app.querySelector('#back').onclick = () => { clearTimeout(saveTimer); if (doc.dirty) { flush(); saveLocal(); } go('#/'); };
+    $app.querySelector('#settings').onclick = () => { flush(); openSettings(); };
+    $app.querySelector('#publish').onclick = () => { flush(); publish(); };
     $app.querySelector('#file').onchange = async (e) => {
       const f = e.target.files[0]; e.target.value = '';
       if (!f) return;
       const path = await uploadImage(f);
-      if (path) insert($body, `\n![사진 설명](/${path})\n`, '사진 설명');
+      if (!path) return;
+      if (raw()) insert($body, `\n![사진 설명](/${path})\n`, '사진 설명');
+      else ed.editor.chain().focus().setImage({ src: `/${path}`, alt: '' }).run();
     };
-    $app.querySelectorAll('[data-act]').forEach((b) => (b.onmousedown = (e) => e.preventDefault()));
-    $app.querySelectorAll('[data-act]').forEach((b) => (b.onclick = () => act(b.dataset.act, $body, b)));
+    $app.querySelectorAll('[data-act]').forEach((b) => {
+      b.onmousedown = (e) => e.preventDefault();
+      b.onclick = () => {
+        const a = b.dataset.act;
+        if (a === 'raw') { flush(); return setMode(raw() ? 'rich' : 'raw'); }
+        if (a === 'image') return $app.querySelector('#file').click();
+        return raw() ? actRaw(a, $body) : actRich(a);
+      };
+    });
     trackKeyboard();
+  }
+
+  function actRich(name) {
+    const c = ed.editor.chain().focus();
+    if (name === 'heading') return c.toggleHeading({ level: 2 }).run();
+    if (name === 'bold') return c.toggleBold().run();
+    if (name === 'quote') return c.toggleBlockquote().run();
+    if (name === 'list') return c.toggleBulletList().run();
+    if (name === 'code') return c.toggleCodeBlock().run();
+    if (name === 'link') {
+      if (ed.editor.isActive('link')) return c.extendMarkRange('link').unsetLink().run();
+      const url = prompt('링크 주소', 'https://');
+      if (!url || url === 'https://') return;
+      if (ed.editor.state.selection.empty) return c.insertContent({ type: 'text', text: url, marks: [{ type: 'link', attrs: { href: url } }] }).run();
+      return c.extendMarkRange('link').setLink({ href: url }).run();
+    }
   }
 
   function renderMeta() {
@@ -338,7 +419,7 @@
     const cats = doc.fm.categories || [];
     $m.innerHTML = `<button id="metaDate">${dotDate(doc.fm.date)}</button>${cats.map((x) => `<span class="chip">${esc(x)}</span>`).join('')}
       ${doc.coll === 'posts' && !cats.length ? '<button id="metaCat">+ 카테고리</button>' : ''}${doc.fm.published === false ? '<span class="badge draft">초안</span>' : ''}`;
-    $m.querySelectorAll('button').forEach((b) => (b.onclick = () => openSettings()));
+    $m.querySelectorAll('button').forEach((b) => (b.onclick = () => { flush(); openSettings(); }));
   }
 
   function insert(ta, text, select) {
@@ -364,29 +445,13 @@
     else ta.setRangeText(prefix, ls, ls, 'end');
     ta.dispatchEvent(new Event('input'));
   }
-  function act(name, ta, btn) {
-    if (name === 'preview') return togglePreview(btn);
-    if (name === 'image') return $app.querySelector('#file').click();
+  function actRaw(name, ta) {
     if (name === 'heading') return prefixLine(ta, '## ');
     if (name === 'quote') return prefixLine(ta, '> ');
     if (name === 'list') return prefixLine(ta, '- ');
     if (name === 'bold') return wrap(ta, '**', '**', '굵은 글씨');
     if (name === 'link') return wrap(ta, '[', '](https://)', '링크 글자');
-    if (name === 'code') return ta.selectionStart !== ta.selectionEnd && !ta.value.slice(ta.selectionStart, ta.selectionEnd).includes('\n') ? wrap(ta, '`', '`', '') : wrap(ta, '\n```\n', '\n```\n', '코드');
-  }
-
-  function togglePreview(btn) {
-    const on = btn.getAttribute('aria-pressed') !== 'true';
-    btn.setAttribute('aria-pressed', on);
-    const $doc = $app.querySelector('#doc'), $p = $app.querySelector('#preview');
-    $doc.hidden = on; $p.hidden = !on;
-    $app.querySelectorAll('[data-act]:not([data-act=preview])').forEach((b) => (b.disabled = on));
-    if (on) {
-      const html = marked.parse(doc.body.replace(/\]\(\/(assets\/[^)\s]+)/g, `](${RAW}/$1`), { breaks: false });
-      $p.innerHTML = `<p class="label" style="margin:20px 0 10px">${dotDate(doc.fm.date)} · 미리보기</p><h1 class="ptitle">${esc(doc.title || '제목 없음')}</h1>${html}`;
-      $p.querySelectorAll('script').forEach((s) => s.remove());
-    }
-    window.scrollTo(0, 0);
+    if (name === 'code') return wrap(ta, '\n```\n', '\n```\n', '코드');
   }
 
   function trackKeyboard() {
@@ -545,9 +610,10 @@
   // ---------- publish ----------
   async function publish() {
     clearTimeout(saveTimer);
+    flush();
     const c = COLLS[doc.coll];
     if (!doc.title.trim()) { toast('제목을 먼저 써 주세요'); return $app.querySelector('#title').focus(); }
-    if (!doc.body.trim()) { toast('본문이 비어 있어요'); return $app.querySelector('#body').focus(); }
+    if (!doc.body.trim()) { toast('본문이 비어 있어요'); return doc.mode === 'raw' ? $app.querySelector('#body').focus() : ed?.editor.commands.focus(); }
     if (doc.coll === 'posts' && !(doc.fm.categories || []).length) return openSettings('카테고리를 하나 이상 골라 주세요.');
     saveLocal();
     doc.fm.title = doc.title.trim();
