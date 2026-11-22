@@ -3,6 +3,7 @@
   const OWNER = 'happy-nut';
   const REPO = 'happy-nut.github.io';
   const SITE = location.origin;
+  const AUTH = 'https://oob6etozk3hg7k2mk2bcqgohmq0uxgre.lambda-url.ap-northeast-2.on.aws'; // tools/blog-auth
   const RAW = `https://raw.githubusercontent.com/${OWNER}/${REPO}/main`;
   const IMG_DIR = 'assets/img/posts';
   const COLLS = {
@@ -56,6 +57,7 @@
     code: '<path d="M8 7l-5 5 5 5M16 7l5 5-5 5"/>',
     check: '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
     out: '<path d="M15 4h4a1 1 0 011 1v14a1 1 0 01-1 1h-4M10 17l5-5-5-5M15 12H3"/>',
+    github: '<path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 00-1.3-3.2 4.2 4.2 0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 00-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 00-.1 3.2A4.6 4.6 0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/>',
     refresh: '<path d="M20 11a8 8 0 10-2.3 5.7M20 4v7h-7"/>',
   }[name]}</svg>`;
 
@@ -69,11 +71,26 @@
 
   // ---------- GitHub ----------
   class GhError extends Error { constructor(status, msg) { super(msg); this.status = status; } }
-  const gh = async (path, opts = {}) => {
+  // GitHub 앱으로 로그인한 토큰은 8시간이면 끝난다. 끝났으면 중계 서버의 /refresh 로 새로 받는다.
+  let refreshing = null;
+  const refreshToken = () => (refreshing ||= (async () => {
+    const rt = store.get('gh-refresh');
+    if (!rt) return false;
+    try {
+      const r = await fetch(`${AUTH}/refresh`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ refresh_token: rt }) });
+      if (!r.ok) return false;
+      const t = await r.json();
+      token = t.gh; store.set('gh-token', t.gh); store.set('gh-refresh', t.rt); store.set('gh-exp', t.exp);
+      return true;
+    } catch { return false; } finally { refreshing = null; }
+  })());
+  const gh = async (path, opts = {}, retried = false) => {
+    if (!retried && store.get('gh-exp') && Date.now() > store.get('gh-exp') - 60000) await refreshToken();
     const res = await fetch(path.startsWith('http') ? path : `https://api.github.com${path}`, {
       ...opts,
       headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28', ...(opts.headers || {}) },
     });
+    if (res.status === 401 && !retried && (await refreshToken())) return gh(path, opts, true);
     if (!res.ok) throw new GhError(res.status, (await res.json().catch(() => ({}))).message || res.statusText);
     return res.status === 204 ? null : res.json();
   };
@@ -190,37 +207,62 @@
           <span class="label">happy-nut.github.io</span>
           <h1>오늘은<br>무엇을 쓸까요</h1>
         </div>
-        <p>GitHub 토큰으로 들어가면 여기서 쓴 글이 바로 블로그에 올라갑니다.</p>
-        <form id="login" style="display:grid;gap:12px">
-          <input class="field" id="tok" type="password" placeholder="github_pat_…" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="GitHub 토큰">
+        <p>GitHub 으로 들어가면 여기서 쓴 글이 바로 블로그에 올라갑니다.</p>
+        <div style="display:grid;gap:12px">
+          <a class="btn btn-primary" id="ghlogin" href="${AUTH}/login?return=${encodeURIComponent(`${location.origin}/admin/`)}">${icon('github')} GitHub 으로 계속하기</a>
           <p class="error" id="err">${esc(err)}</p>
-          <button class="btn btn-primary" type="submit">GitHub 토큰으로 시작하기</button>
-        </form>
-        <p class="hint">처음이면 <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">GitHub에서 토큰 만들기 ↗</a><br>
-        저장소는 <b>${REPO}</b> 하나만, 권한은 <b>Contents</b> 읽기·쓰기와 <b>Actions</b> 읽기를 주세요. 토큰은 이 기기에만 저장됩니다.</p>
+        </div>
+        <details class="alt">
+          <summary>토큰으로 들어가기</summary>
+          <form id="login" style="display:grid;gap:12px;margin-top:14px">
+            <input class="field" id="tok" type="password" placeholder="github_pat_…" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="GitHub 토큰">
+            <button class="btn btn-ghost" type="submit">토큰으로 시작하기</button>
+            <p class="hint">저장소는 <b>${REPO}</b> 하나만, 권한은 <b>Contents</b> 읽기·쓰기와 <b>Actions</b> 읽기. <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">토큰 만들기 ↗</a></p>
+          </form>
+        </details>
       </section>`;
+    $app.querySelector('#ghlogin').onclick = (e) => { e.currentTarget.textContent = 'GitHub 으로 가는 중…'; };
     $app.querySelector('#login').onsubmit = async (e) => {
       e.preventDefault();
       const btn = e.target.querySelector('button');
       const $err = $app.querySelector('#err');
-      token = $app.querySelector('#tok').value.trim();
-      if (!token) return;
+      const t = $app.querySelector('#tok').value.trim();
+      if (!t) return;
       btn.disabled = true; btn.textContent = '확인하는 중…'; $err.textContent = '';
-      try {
-        const repo = await gh(`/repos/${OWNER}/${REPO}`);
-        if (!repo.permissions?.push) throw new GhError(403, '이 토큰은 저장소에 쓸 권한이 없어요. Contents 를 Read and write 로 주세요.');
-        store.set('gh-token', token);
-        go('#/');
-      } catch (e2) {
-        token = null;
-        $err.textContent = e2.status === 401 ? '토큰이 맞지 않아요. 다시 확인해 주세요.' : e2.message;
-        btn.disabled = false; btn.textContent = 'GitHub 토큰으로 시작하기';
-      }
+      const msg = await signIn(t);
+      if (msg) { $err.textContent = msg; btn.disabled = false; btn.textContent = '토큰으로 시작하기'; }
     };
   }
 
+  async function signIn(t, refresh) {
+    token = t;
+    try {
+      const repo = await gh(`/repos/${OWNER}/${REPO}`, {}, true);
+      if (!repo.permissions?.push) throw new GhError(403, '이 계정은 블로그 저장소에 쓸 권한이 없어요.');
+      store.set('gh-token', t);
+      if (refresh) { store.set('gh-refresh', refresh.rt); store.set('gh-exp', refresh.exp); } else { store.del('gh-refresh'); store.del('gh-exp'); }
+      go('#/');
+      return '';
+    } catch (e) {
+      token = null;
+      return e.status === 401 ? '로그인이 맞지 않아요. 다시 시도해 주세요.' : e.status === 404 ? 'GitHub 앱이 블로그 저장소에 설치돼 있지 않아요.' : e.message;
+    }
+  }
+
+  // GitHub 로그인에서 돌아오면 주소 끝(#gh=…)에 토큰이 온다. 읽자마자 주소에서 지운다.
+  async function takeLoginFromUrl() {
+    const p = new URLSearchParams(location.hash.slice(1));
+    if (!p.has('gh') && !p.has('gh_error')) return false;
+    history.replaceState(null, '', location.pathname);
+    if (p.has('gh_error')) { renderLogin(`GitHub 로그인이 안 됐어요: ${p.get('gh_error')}`); return true; }
+    $app.innerHTML = '<section class="screen login"><div><span class="label">GitHub</span><h1>들어가는 중…</h1></div></section>';
+    const msg = await signIn(p.get('gh'), p.has('rt') ? { rt: p.get('rt'), exp: Number(p.get('exp')) } : null);
+    if (msg) renderLogin(msg);
+    return true;
+  }
+
   function logout(msg) {
-    store.del('gh-token'); token = null; files = null; doc = null;
+    store.del('gh-token'); store.del('gh-refresh'); store.del('gh-exp'); token = null; files = null; doc = null;
     location.hash = '';
     renderLogin(msg || '');
   }
@@ -682,5 +724,5 @@
       draft ? [{ label: '목록으로', run: () => { close(); go('#/'); } }, { label: '닫기', run: close }] : [{ label: '글 보기', href: postUrl(name) }, { label: '목록으로', run: () => { close(); go('#/'); } }]);
   }
 
-  route();
+  takeLoginFromUrl().then((handled) => handled || route());
 })();
