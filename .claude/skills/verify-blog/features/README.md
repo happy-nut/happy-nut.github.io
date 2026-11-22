@@ -29,4 +29,4 @@
 - [Archives](./archives.md): 연도별 전체 글 목록.
 - [Search](./search.md): 상단 검색창 실시간 검색.
 - [PWA update toast](./pwa-update.md): 새 버전이 배포되면 뜨는 업데이트 알림.
-- [Mobile editor](./mobile-cms.md): `/admin` 에서 휴대폰으로 글·일기 쓰고 고쳐 바로 배포.
+- [Mobile editor](./mobile-cms.md): `/admin` 글쓰기 앱. 휴대폰으로 글·일기 쓰고 고쳐 바로 배포.
