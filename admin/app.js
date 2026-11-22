@@ -56,6 +56,8 @@
     list: '<path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="4.5" cy="18" r="1"/>',
     code: '<path d="M8 7l-5 5 5 5M16 7l5 5-5 5"/>',
     check: '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
+    x: '<path d="M6 6l12 12M18 6L6 18"/>',
+    alert: '<path d="M12 8v5M12 16.5v.5"/>',
     out: '<path d="M15 4h4a1 1 0 011 1v14a1 1 0 01-1 1h-4M10 17l5-5-5-5M15 12H3"/>',
     github: '<path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 00-1.3-3.2 4.2 4.2 0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 00-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 00-.1 3.2A4.6 4.6 0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/>',
     refresh: '<path d="M20 11a8 8 0 10-2.3 5.7M20 4v7h-7"/>',
@@ -669,9 +671,10 @@
     const path = `${c.dir}/${name}`;
     const draft = doc.fm.published === false;
     const steps = c.public ? ['GitHub에 저장', '블로그 빌드·배포', draft ? '초안으로 보관됨' : '블로그에 올라감'] : ['GitHub에 저장'];
+    sheetOff?.(); sheetOff = null;
     const { el, close } = sheet(`<h2>${c.public ? (draft ? '초안 저장' : doc.isNew ? '발행하는 중' : '업데이트하는 중') : '일기 저장'}</h2>
       <p class="sub">${esc(doc.title)}</p><ol class="steps">${steps.map((s) => `<li><span class="dot"></span>${s}</li>`).join('')}</ol>
-      <p class="sub" id="pmsg"></p><div class="sheet-actions" id="pact" hidden></div>`);
+      <p class="sub" id="pmsg"></p><div class="sheet-actions" id="pact" hidden></div>`, () => { sheetOff?.(); sheetOff = null; });
     const $li = el.querySelectorAll('.steps li');
     const mark = (i, state) => { $li[i].className = state; $li[i].querySelector('.dot').innerHTML = state === 'done' ? icon('check') : ''; };
     const finish = (msg, actions) => {
@@ -702,27 +705,118 @@
     renderEditor();
     if (!c.public) return finish('사이트에는 올라가지 않아요.', [{ label: '목록으로', run: () => { close(); go('#/'); } }, { label: '계속 쓰기', run: close }]);
 
+    // Saved. GitHub builds and deploys on its own from here, so the sheet only mirrors the
+    // background tracker and can be closed (or the app left) at any time.
     mark(1, 'active');
-    const until = Date.now() + 8 * 60 * 1000;
-    let run = null;
-    while (Date.now() < until) {
-      await sleep(run ? 5000 : 3000);
-      try {
-        const r = await gh(`/repos/${OWNER}/${REPO}/actions/runs?head_sha=${commit}&per_page=5`);
-        run = r.workflow_runs.find((w) => /pages|deploy/i.test(`${w.name} ${w.path}`)) || r.workflow_runs[0] || null;
-      } catch (e) {
-        if (e.status === 403 || e.status === 404) { mark(1, 'done'); return finish('배포 상태를 볼 권한이 없어 확인은 못 했어요. 보통 1~2분 뒤 올라가요.', [{ label: '글 보기', href: postUrl(name) }, { label: '닫기', run: close }]); }
+    deploy.sheetOpen = true;
+    trackDeploy({ commit, name, title: doc.title, draft });
+    finish('GitHub 에 저장됐어요. 배포는 GitHub 에서 알아서 진행되니, 이 화면을 닫거나 앱을 나가도 괜찮아요. 끝나면 위에 알려 드릴게요.',
+      [{ label: '목록으로', run: () => { close(); go('#/'); } }, { label: '계속 쓰기', run: close }]);
+    const apply = (d) => {
+      if (d.commit !== commit || d.state === 'running') return;
+      if (d.state === 'done') {
+        mark(1, 'done'); mark(2, 'done');
+        el.querySelector('h2').textContent = draft ? '초안을 저장했어요' : '블로그에 올라갔어요';
+        finish(draft ? '블로그에는 보이지 않아요. 공개로 바꾸고 다시 발행하면 올라가요.' : '1분쯤 지나면 모든 곳에서 새 글이 보여요.',
+          draft ? [{ label: '목록으로', run: () => { close(); go('#/'); } }, { label: '닫기', run: close }] : [{ label: '글 보기', href: postUrl(name) }, { label: '목록으로', run: () => { close(); go('#/'); } }]);
+      } else if (d.state === 'unknown') {
+        mark(1, 'done');
+        finish('배포 상태를 볼 권한이 없어 확인은 못 했어요. 보통 1~2분 뒤 올라가요.', [{ label: '글 보기', href: postUrl(name) }, { label: '닫기', run: close }]);
+      } else {
+        mark(1, 'fail');
+        finish(d.state === 'slow' ? '배포가 오래 걸려요. 잠시 뒤 블로그에서 확인해 주세요.' : '배포가 실패했어요. 글은 저장돼 있어요.',
+          [{ label: d.state === 'slow' ? '배포 보기' : '실패 이유 보기', href: d.url || `https://github.com/${OWNER}/${REPO}/actions` }, { label: '닫기', run: close }]);
       }
-      if (run?.status === 'completed') break;
-    }
-    if (run?.status !== 'completed') { mark(1, 'fail'); return finish('배포가 오래 걸려요. 잠시 뒤 블로그에서 확인해 주세요.', [{ label: '배포 보기', href: run?.html_url || `https://github.com/${OWNER}/${REPO}/actions` }, { label: '닫기', run: close }]); }
-    if (run.conclusion !== 'success') { mark(1, 'fail'); return finish('배포가 실패했어요. 글은 저장돼 있어요.', [{ label: '실패 이유 보기', href: run.html_url }, { label: '닫기', run: close }]); }
-    mark(1, 'done'); mark(2, 'done');
-    el.querySelector('h2').textContent = draft ? '초안을 저장했어요' : '블로그에 올라갔어요';
-    if (navigator.vibrate) navigator.vibrate(30);
-    finish(draft ? '블로그에는 보이지 않아요. 공개로 바꾸고 다시 발행하면 올라가요.' : '1분쯤 지나면 모든 곳에서 새 글이 보여요.',
-      draft ? [{ label: '목록으로', run: () => { close(); go('#/'); } }, { label: '닫기', run: close }] : [{ label: '글 보기', href: postUrl(name) }, { label: '목록으로', run: () => { close(); go('#/'); } }]);
+    };
+    deploy.subs.add(apply);
+    sheetOff = () => { deploy.subs.delete(apply); deploy.sheetOpen = false; renderPill(); };
   }
 
-  takeLoginFromUrl().then((handled) => handled || route());
+  // ---------- background deploy ----------
+  // One deploy at a time, kept in localStorage so a reopened app picks the watch back up.
+  const deploy = { cur: store.get('deploy'), subs: new Set(), sheetOpen: false, polling: false, hideTimer: null };
+  let sheetOff = null;
+
+  function setDeploy(patch) {
+    deploy.cur = { ...deploy.cur, ...patch };
+    store.set('deploy', deploy.cur);
+    deploy.subs.forEach((f) => f(deploy.cur));
+    renderPill();
+  }
+
+  function clearDeploy() {
+    deploy.cur = null;
+    store.del('deploy');
+    renderPill();
+  }
+
+  function trackDeploy(d) {
+    deploy.cur = { ...d, state: 'running', at: Date.now() };
+    store.set('deploy', deploy.cur);
+    renderPill();
+    pollDeploy();
+  }
+
+  async function pollDeploy() {
+    if (deploy.polling) return;
+    deploy.polling = true;
+    try {
+      while (deploy.cur?.state === 'running') {
+        const { commit, at } = deploy.cur;
+        if (Date.now() - at > 12 * 60 * 1000) { setDeploy({ state: 'slow' }); break; }
+        await sleep(4000);
+        if (deploy.cur?.commit !== commit) continue;
+        let run = null;
+        try {
+          const r = await gh(`/repos/${OWNER}/${REPO}/actions/runs?head_sha=${commit}&per_page=5`);
+          run = r.workflow_runs.find((w) => /pages|deploy/i.test(`${w.name} ${w.path}`)) || r.workflow_runs[0] || null;
+        } catch (e) {
+          if (e.status === 403 || e.status === 404) { setDeploy({ state: 'unknown' }); break; }
+          continue;
+        }
+        if (deploy.cur?.commit !== commit || !run) continue;
+        if (run.status !== 'completed') { if (!deploy.cur.url) setDeploy({ url: run.html_url }); continue; }
+        setDeploy({ state: run.conclusion === 'success' ? 'done' : 'fail', url: run.html_url });
+        if (navigator.vibrate) navigator.vibrate(30);
+      }
+    } finally {
+      deploy.polling = false;
+    }
+  }
+
+  function renderPill() {
+    let p = document.getElementById('deploy');
+    const d = deploy.cur;
+    clearTimeout(deploy.hideTimer);
+    if (!d || deploy.sheetOpen) { p?.remove(); return; }
+    if (!p) {
+      p = document.createElement('div');
+      p.id = 'deploy';
+      p.setAttribute('role', 'status');
+      document.body.append(p);
+    }
+    const title = {
+      running: '블로그에 올리는 중',
+      done: d.draft ? '초안을 저장했어요' : '블로그에 올라갔어요',
+      fail: '배포가 실패했어요',
+      slow: '배포가 오래 걸려요',
+      unknown: '저장했어요 · 1~2분 뒤 올라가요',
+    }[d.state];
+    const action = d.state === 'done' && !d.draft ? `<a href="${postUrl(d.name)}" target="_blank" rel="noopener">글 보기</a>`
+      : (d.state === 'fail' || d.state === 'slow') && d.url ? `<a href="${esc(d.url)}" target="_blank" rel="noopener">자세히</a>` : '';
+    p.dataset.state = d.state;
+    p.innerHTML = `<span class="pd">${d.state === 'running' ? '' : icon(d.state === 'fail' || d.state === 'slow' ? 'alert' : 'check')}</span>
+      <span class="pt"><b>${title}</b><span>${d.state === 'running' ? '나가도 괜찮아요 · ' : ''}${esc(d.title)}</span></span>${action}
+      <button class="px" aria-label="알림 닫기">${icon('x')}</button>`;
+    p.querySelector('.px').onclick = clearDeploy;
+    if (d.state === 'done' || d.state === 'unknown') deploy.hideTimer = setTimeout(clearDeploy, 12000);
+  }
+
+  takeLoginFromUrl().then((handled) => handled || route()).then(() => {
+    const d = deploy.cur;
+    if (!d) return;
+    if (Date.now() - d.at > 30 * 60 * 1000) return clearDeploy();
+    renderPill();
+    if (d.state === 'running' && token) pollDeploy();
+  });
 })();
