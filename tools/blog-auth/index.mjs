@@ -49,7 +49,7 @@ export const handler = async (event) => {
   if (path === '/setup') {
     if (await app()) return html(409, '이미 설정돼 있어요.');
     const manifest = {
-      name: 'happynut 블로그 글쓰기',
+      name: 'happynut-blog-writer',
       url: 'https://happy-nut.github.io/admin/',
       redirect_url: `${self}/setup/done`,
       callback_urls: [`${self}/callback`],
