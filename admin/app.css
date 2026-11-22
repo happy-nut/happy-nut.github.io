@@ -108,6 +108,10 @@ svg { width: 20px; height: 20px; flex: none; }
 .login .btn { height: 52px; width: 100%; font-size: 16px; }
 .login .hint { font-size: 14px; line-height: 1.7; }
 .login .hint a { color: var(--ink); text-underline-offset: 3px; }
+.alt summary { cursor: pointer; color: var(--muted); font-size: 14px; list-style: none; }
+.alt summary::-webkit-details-marker { display: none; }
+.alt summary::after { content: ' ↓'; }
+.alt[open] summary::after { content: ' ↑'; }
 .error { color: var(--warn); font-size: 14px; min-height: 1.4em; margin: -12px 0 0; }
 
 /* top bar */

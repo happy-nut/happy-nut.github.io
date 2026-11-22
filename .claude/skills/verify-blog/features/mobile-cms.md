@@ -4,6 +4,7 @@
 
 ## Sub-features
 
+- `#ghlogin` **GitHub login**: 중계 `/login` → GitHub → `/callback` → `/admin/#gh=<token>&rt=…&exp=…`. 앱이 주소에서 바로 지우고, 8시간 뒤에는 `/refresh` 로 갱신한다.
 - `#/` **List**: 「글」/「일기」 탭, 검색, 이 기기에만 있는 초안과 고친 내용 표시, 새 글 버튼.
 - `#/new/<coll>/<id>` **New**: 제목·본문만 보이는 화면. 0.6초마다 이 기기(localStorage `draft:*`)에 저장.
 - `#/edit/<coll>/<file>` **Edit**: 기존 글. 이 기기에 고친 내용이 있으면 이어서 연다.
@@ -14,7 +15,7 @@
 
 ## How to get to it (user POV)
 
-`https://happy-nut.github.io/admin/` → 토큰 붙여 넣기 (저장소 하나, Contents 읽기·쓰기 + Actions 읽기). 홈 화면에 추가하면 `/admin/manifest.webmanifest` 로 앱처럼 열린다.
+`https://happy-nut.github.io/admin/` → 「GitHub 으로 계속하기」 → (처음 한 번) Authorize → 목록. GitHub 앱 `happynut-blog-writer` 가 이 저장소에만 설치돼 있고, 로그인 중계는 `tools/blog-auth` (Lambda). 「토큰으로 들어가기」 도 남아 있다. 홈 화면에 추가하면 `/admin/manifest.webmanifest` 로 앱처럼 열린다.
 
 ## Driving it with drive.mjs
 
@@ -35,6 +36,7 @@ node $S/drive.mjs http://127.0.0.1:4100/admin/ $E/published.png --width 390 \
 ## Gotchas
 
 - `fake-github.sh` 는 몰 때마다 다시 돌린다. 스크린숏을 저장소 안에 쓰면 Jekyll 이 다시 빌드하며 `__fixture.json` 을 지운다.
+- 실제 GitHub 로그인은 Aside(사용자 브라우저)로 `http://127.0.0.1:4100/admin/` 을 열어 `#ghlogin` 을 누르면 된다. 중계가 이 주소로도 돌려보낸다.
 - 가짜는 GitHub 경계만 바꾼다. 실제 토큰 권한·커밋·배포는 실제 사이트에서 한 번 해 봐야 증명된다.
 - `.screen` 의 등장 애니메이션은 `backwards` 여야 한다. `both` 면 남은 transform 이 고정된 툴바·새 글 버튼을 화면 밖으로 가둔다.
 - 편집기는 `admin/lib/editor.js` 묶음 파일이다. 다시 만드는 법은 `admin/lib/README.md`.
