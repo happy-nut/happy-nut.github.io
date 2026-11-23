@@ -1,7 +1,7 @@
 {
   "name": "Happynut",
   "short_name": "Happynut",
-  "description": "AI 시대의 개발자가 기술, 투자, 자본주의에 대해 생각하고 기록하는 블로그",
+  "description": "다음 세대에게 물려줄 세상에 관하여",
   "icons": [
     { "src": "/assets/img/favicons/web-app-manifest-192x192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
     { "src": "/assets/img/favicons/android-chrome-512x512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
