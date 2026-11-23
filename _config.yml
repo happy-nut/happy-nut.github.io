@@ -117,7 +117,7 @@ assets:
     env: # [development | production]
 
 pwa:
-  enabled: true # The option for PWA feature (installable)
+  enabled: false # 끈다: 테마가 register=false 를 문자열로 받아 서비스 워커를 계속 등록한다. assets/js/dist/sw.min.js 가 남은 워커를 지운다
   cache:
     enabled: false # 오프라인 캐시를 끈다: 켜 두면 휴대폰이 지운 글·옛 화면을 캐시에서 계속 보여 준다 (끄면 기존 캐시도 지운다)
     # Paths defined here will be excluded from the PWA cache.

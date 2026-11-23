@@ -14,7 +14,7 @@ const CHROME = process.env.CHROME || '/Applications/Google Chrome.app/Contents/M
 const [url, out, ...rest] = process.argv.slice(2);
 if (!url || !out) { console.error(readFileSync(new URL(import.meta.url), 'utf8').split('\n').slice(1, 6).join('\n')); process.exit(1); }
 
-let width = 1280, full = false, scheme = null;
+let width = 1280, full = false, scheme = null, keep = null;
 const steps = [];
 for (let i = 0; i < rest.length; i++) {
   const f = rest[i];
@@ -27,16 +27,18 @@ for (let i = 0; i < rest.length; i++) {
   else if (f === '--eval') steps.push(['eval', rest[++i]]);
   else if (f === '--shot') steps.push(['shot', rest[++i]]);
   else if (f === '--hover') steps.push(['hover', rest[++i]]);
+  else if (f === '--profile') keep = rest[++i]; // reuse a Chrome profile across runs (service worker, caches, storage survive)
   else { console.error(`unknown flag ${f}`); process.exit(1); }
 }
 
-const profile = mkdtempSync(join(tmpdir(), 'verify-blog-chrome-')); // fresh profile: no stale service worker
+const profile = keep || mkdtempSync(join(tmpdir(), 'verify-blog-chrome-')); // fresh profile by default: no stale service worker
+if (keep) rmSync(join(profile, 'DevToolsActivePort'), { force: true }); // a reused profile still holds the last run's port
 const chrome = spawn(CHROME, ['--headless=new', '--remote-debugging-port=0', `--user-data-dir=${profile}`,
   '--no-first-run', '--no-default-browser-check', `--window-size=${width},900`, 'about:blank'], { stdio: 'ignore' });
 const done = async (code) => {
   const exited = new Promise((r) => chrome.once('exit', r));
   chrome.kill(); await Promise.race([exited, new Promise((r) => setTimeout(r, 3000))]);
-  rmSync(profile, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 });
+  if (!keep) rmSync(profile, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 });
   process.exit(code);
 };
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
