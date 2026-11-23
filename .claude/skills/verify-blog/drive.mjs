@@ -70,6 +70,7 @@ try {
 
   await send('Page.enable');
   await send('Emulation.setDeviceMetricsOverride', { width, height: 900, deviceScaleFactor: 1, mobile: width < 768 });
+  if (width < 768) await send('Emulation.setTouchEmulationEnabled', { enabled: true, maxTouchPoints: 5 }); // (hover: none) and (pointer: coarse), like a phone
   if (scheme) await send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-color-scheme', value: scheme }] });
   const loaded = once('Page.loadEventFired');
   await send('Page.navigate', { url });
