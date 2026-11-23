@@ -1,5 +1,6 @@
-// When this browser is signed in to the writing app (/admin, same origin), show a small shortcut
-// back to it: "이 글 고치기" on a post, "글쓰기" everywhere else. Visitors never see it.
+// When this browser is signed in to the writing app (/admin, same origin), the existing pen
+// links (sidebar icon, footer) open the editor for the post being read, and a "고치기" button
+// sits next to "공유하기" under the post header. Visitors see the plain links only.
 (() => {
   let signedIn = false;
   try {
@@ -8,10 +9,22 @@
   if (!signedIn) return;
 
   const path = document.querySelector('meta[name="post-path"]')?.content || '';
-  const onPost = path.startsWith('_posts/');
-  const a = document.createElement('a');
-  a.className = 'write-bar';
-  a.href = onPost ? `/admin/#/edit/posts/${encodeURIComponent(path.slice('_posts/'.length))}` : '/admin/';
-  a.innerHTML = `<i class="fas ${onPost ? 'fa-pen' : 'fa-pen-nib'}" aria-hidden="true"></i><span>${onPost ? '이 글 고치기' : '글쓰기'}</span>`;
-  document.body.append(a);
+  if (!path.startsWith('_posts/')) return;
+  const edit = `/admin/#/edit/posts/${encodeURIComponent(path.slice('_posts/'.length))}`;
+
+  // runs after every deferred script, so share.js has already built the header bar
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('a[href="/admin/"]').forEach((a) => {
+      a.href = edit;
+      a.setAttribute('aria-label', '이 글 고치기');
+      a.title = '이 글 고치기';
+      const label = a.querySelector('.footer-write-label');
+      if (label) label.textContent = '이 글 고치기';
+    });
+
+    const bar = document.querySelector('.share-bar--top');
+    if (bar) {
+      bar.insertAdjacentHTML('beforeend', `<a class="share-edit" href="${edit}"><i class="fas fa-pen"></i><span>고치기</span></a>`);
+    }
+  });
 })();

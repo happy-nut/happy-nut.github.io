@@ -1,0 +1,45 @@
+---
+layout: null
+permalink: /reset/
+sitemap: false
+---
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Happynut · 새로 불러오는 중</title>
+<style>
+  body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #fbfbfa; color: #191918;
+         font: 16px/1.6 -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', sans-serif; }
+  @media (prefers-color-scheme: dark) { body { background: #121211; color: #f2f1ee; } }
+  p { margin: 0; text-align: center; }
+  small { display: block; margin-top: 0.4rem; opacity: 0.6; }
+</style>
+</head>
+<body>
+<p id="msg">휴대폰에 남은 옛 블로그 사본을 지우는 중이에요<small>잠시 뒤 블로그로 넘어가요</small></p>
+<script>
+  // A URL no old service worker has ever cached, so this always comes from the network.
+  // Remove every worker and cache for this site, then go home fresh.
+  (async () => {
+    let n = 0;
+    try {
+      if ('serviceWorker' in navigator) {
+        const regs = await navigator.serviceWorker.getRegistrations();
+        n += regs.length;
+        await Promise.all(regs.map((r) => r.unregister()));
+      }
+      if (window.caches) {
+        const keys = await caches.keys();
+        n += keys.length;
+        await Promise.all(keys.map((k) => caches.delete(k)));
+      }
+    } catch (e) {}
+    document.getElementById('msg').firstChild.textContent = n ? '옛 사본을 지웠어요' : '지울 사본이 없었어요';
+    setTimeout(() => location.replace('/?fresh=' + Date.now()), 900);
+  })();
+</script>
+</body>
+</html>
