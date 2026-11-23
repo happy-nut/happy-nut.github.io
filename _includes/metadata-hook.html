@@ -7,3 +7,24 @@
 <script defer src="{{ '/assets/js/toc-inline.js' | relative_url }}"></script>
 <script defer src="{{ '/assets/js/share.js' | relative_url }}"></script>
 {% if page.layout == 'post' %}<meta name="post-path" content="{{ page.path }}">{% endif %}
+{%- comment -%} pwa.enabled is off (it kept re-registering the service worker), so link our manifest here: home-screen name, icons, and the light app bars. {%- endcomment -%}
+<link rel="manifest" href="{{ '/assets/img/favicons/site.webmanifest' | relative_url }}">
+{%- comment -%}
+  Second way out of an old cache-first service worker, for browsers that never pick up the
+  self-removing /sw.min.js: any page that comes from the network removes every worker and
+  cache, then reloads once. Inline on purpose, so no cached copy of it can exist.
+{%- endcomment -%}
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then(async (regs) => {
+      if (!regs.length) return;
+      await Promise.all(regs.map((r) => r.unregister()));
+      if (window.caches) await Promise.all((await caches.keys()).map((k) => caches.delete(k)));
+      try {
+        if (sessionStorage.getItem('sw-cleared')) return;
+        sessionStorage.setItem('sw-cleared', '1');
+      } catch (e) {}
+      location.reload();
+    });
+  }
+</script>
