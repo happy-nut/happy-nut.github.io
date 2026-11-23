@@ -1681,3 +1681,178 @@ footer .footer-write {
     color: var(--heading-color);
   }
 }
+
+/* ---------- Signed-in shortcut to the writing app (assets/js/write-bar.js) ---------- */
+
+.write-bar {
+  @extend %card;
+  position: fixed;
+  z-index: 1040;
+  right: 7.25rem; /* clears #back-to-top (40px wide, 64px from the edge) */
+  bottom: 2rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: 2.5rem;
+  padding: 0 0.95rem;
+  background: var(--main-bg) !important;
+  color: var(--heading-color);
+  font-size: 0.82rem;
+  font-weight: 500;
+  text-decoration: none;
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 4px 16px rgb(0 0 0 / 5%);
+  animation: enter 0.6s $ease 0.4s both;
+
+  i {
+    font-size: 0.75rem;
+  }
+
+  &:hover {
+    color: var(--heading-color);
+  }
+}
+
+@media (max-width: 767.98px) {
+  .write-bar {
+    right: auto;
+    left: 1rem;
+    bottom: 1.25rem;
+  }
+}
+
+/* ---------- Inline table of contents (assets/js/toc-inline.js) ---------- */
+
+.toc-inline {
+  display: none;
+  margin: 1.75rem 0 2.25rem;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+
+  summary {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.9rem 0;
+    cursor: pointer;
+    list-style: none;
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+
+    > span:first-child {
+      @extend %label;
+    }
+
+    .n {
+      @extend %meta;
+      font-size: 0.7rem;
+    }
+
+    &::after {
+      content: '';
+      width: 0.45rem;
+      height: 0.45rem;
+      margin-left: auto;
+      border-right: 1.5px solid var(--text-muted-color);
+      border-bottom: 1.5px solid var(--text-muted-color);
+      transform: translateY(-2px) rotate(45deg);
+      transition: transform 0.3s $ease;
+    }
+  }
+
+  details[open] summary::after {
+    transform: translateY(2px) rotate(-135deg);
+  }
+
+  ol {
+    margin: 0;
+    padding: 0 0 1rem;
+    list-style: none;
+    counter-reset: toc;
+  }
+
+  li {
+    line-height: 1.5;
+
+    a {
+      display: block;
+      padding: 0.4rem 0;
+      color: var(--text-color);
+      font-size: 0.95rem;
+      text-decoration: none;
+      border-bottom: 0;
+    }
+
+    &.h3 a {
+      padding-left: 1rem;
+      color: var(--text-muted-color);
+      font-size: 0.88rem;
+    }
+  }
+}
+
+/* ---------- Phones & tablets: the panel is gone below 1200px ---------- */
+
+@media (max-width: 1199.98px) {
+  .toc-inline {
+    display: block;
+  }
+
+  #toc-solo-trigger,
+  #toc-bar,
+  #toc-popup {
+    display: none !important;
+  }
+}
+
+/* the theme hides page titles below 850px and shows a small one in the top bar; keep the real title */
+@media (max-width: 849.98px) {
+  h1.dynamic-title {
+    display: block !important;
+    margin-top: 1.5rem;
+  }
+
+  #topbar-title {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* drawer: dim the page instead of leaving it half-visible and live */
+  #mask {
+    display: block !important;
+    z-index: 1029 !important;
+    background: rgb(20 20 19 / 0%);
+    pointer-events: none;
+    transition: background-color 0.35s ease;
+  }
+
+  [sidebar-display] #mask {
+    background: rgb(20 20 19 / 28%);
+    pointer-events: auto;
+  }
+
+  #sidebar {
+    z-index: 1035 !important; /* theme pins it with a more specific selector */
+  }
+
+  #tags {
+    justify-content: flex-start !important;
+  }
+
+  .categories .card-header .text-muted {
+    display: block;
+    margin: 0.15rem 0 0 0 !important;
+  }
+}
+
+/* touch screens: a tap leaves :hover stuck, so lift and darken only where a pointer hovers */
+@media (hover: none) {
+  #sidebar .sidebar-bottom > a:hover,
+  #sidebar .sidebar-bottom #mode-toggle:hover {
+    color: var(--sidebar-muted-color);
+    opacity: 0.75;
+    transform: none;
+  }
+}

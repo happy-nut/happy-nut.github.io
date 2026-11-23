@@ -61,6 +61,7 @@
     out: '<path d="M15 4h4a1 1 0 011 1v14a1 1 0 01-1 1h-4M10 17l5-5-5-5M15 12H3"/>',
     github: '<path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 00-1.3-3.2 4.2 4.2 0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 00-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 00-.1 3.2A4.6 4.6 0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/>',
     refresh: '<path d="M20 11a8 8 0 10-2.3 5.7M20 4v7h-7"/>',
+    globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 010 18M12 3a14 14 0 000 18"/>',
   }[name]}</svg>`;
 
   let toastTimer;
@@ -280,6 +281,7 @@
     $app.innerHTML = `
       <section class="screen">
         <div class="bar"><div class="tabs" role="tablist">${Object.entries(COLLS).map(([k, v]) => `<button role="tab" data-coll="${k}" aria-selected="${k === coll}">${v.label}</button>`).join('')}</div><span class="grow"></span>
+          <a class="icon-btn" href="/" aria-label="블로그 보기">${icon('globe')}</a>
           <button class="icon-btn" id="reload" aria-label="새로 불러오기">${icon('refresh')}</button>
           <button class="icon-btn" id="logout" aria-label="로그아웃">${icon('out')}</button></div>
         <div class="home-head"><div><span class="label">${c.public ? 'happy-nut.github.io' : '비공개 · 사이트에 올라가지 않음'}</span><h1>${c.label} ${files[coll].length}${c.public ? '편' : '개'}</h1></div></div>
