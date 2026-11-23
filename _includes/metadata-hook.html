@@ -3,3 +3,6 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;600;700&display=swap">
 <script defer src="{{ '/assets/js/constellation.js' | relative_url }}"></script>
 <script defer src="{{ '/assets/js/sidebar.js' | relative_url }}"></script>
+<script defer src="{{ '/assets/js/write-bar.js' | relative_url }}"></script>
+<script defer src="{{ '/assets/js/toc-inline.js' | relative_url }}"></script>
+{% if page.layout == 'post' %}<meta name="post-path" content="{{ page.path }}">{% endif %}
