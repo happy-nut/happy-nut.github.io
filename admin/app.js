@@ -585,7 +585,7 @@
         <div class="switch-row"><div><b>다이어그램</b><span>mermaid 코드 블록을 그림으로</span></div><button class="switch" type="button" role="switch" data-sw="mermaid" aria-checked="${!!fm.mermaid}"></button></div>
       </div>
       ${doc.isNew ? '' : `<div class="group"><button class="danger" id="del" type="button">이 ${COLLS[doc.coll].unit} 삭제</button></div>`}
-      <div class="sheet-actions"><button class="btn btn-primary" id="done" type="button">완료</button></div>`, () => { saveLocal(); renderMeta(); });
+      <div class="sheet-actions"><button class="btn btn-primary" id="done" type="button">완료</button></div>`, () => { if (!doc) return; saveLocal(); renderMeta(); });
 
     const touch = () => { doc.dirty = true; };
     el.querySelectorAll('.chips').forEach(($c) => {
@@ -643,12 +643,19 @@
     const $del = el.querySelector('#del');
     if ($del) $del.onclick = async () => {
       if (!confirm(`「${doc.title}」을(를) 삭제할까요? 블로그에서도 사라져요.`)) return;
+      const gone = doc;
       try {
-        await gh(contentPath(doc.path), { method: 'DELETE', body: JSON.stringify({ message: `delete ${doc.name}`, sha: doc.sha, branch: 'main' }) });
-        store.del(draftKey(doc));
-        files[doc.coll] = files[doc.coll].filter((f) => f.name !== doc.name);
-        doc = null; close(); toast('삭제했어요'); go('#/');
-      } catch (e) { toast(`삭제하지 못했어요: ${e.message}`, 4000); }
+        await gh(contentPath(gone.path), { method: 'DELETE', body: JSON.stringify({ message: `delete ${gone.name}`, sha: gone.sha, branch: 'main' }) });
+      } catch (e) {
+        return toast(`삭제하지 못했어요: ${e.message}`, 4000);
+      }
+      // deleted on GitHub: from here on only local bookkeeping, which must not report a failure
+      store.del(draftKey(gone));
+      files[gone.coll] = files[gone.coll].filter((f) => f.name !== gone.name);
+      doc = null;
+      close();
+      toast(COLLS[gone.coll].public ? '삭제했어요. 1~2분 뒤 블로그에서도 사라져요.' : '삭제했어요');
+      go('#/');
     };
     el.querySelector('#done').onclick = close;
   }
