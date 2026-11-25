@@ -17,7 +17,8 @@
 /* ---------- Palette: warm monochrome ---------- */
 
 $serif: 'Noto Serif KR', 'Nanum Myeongjo', serif;
-$mono: 'SF Mono', ui-monospace, 'JetBrains Mono', monospace;
+$sans: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', sans-serif;
+$mono: 'SF Mono', ui-monospace, 'JetBrains Mono', monospace; /* code only */
 $ease: cubic-bezier(0.16, 1, 0.3, 1);
 
 :root:not([data-bs-theme='dark']) {
@@ -339,6 +340,19 @@ h1, h2, h3, h4, .card-title {
       margin: 0 0.35rem !important;
       opacity: 0.5;
     }
+
+    /* the theme's small sun read as a settings gear beside the pen; one half-filled circle
+       says light/dark instead (the writing app follows the same choice) */
+    #mode-toggle {
+      i {
+        display: none !important; /* the theme shows the icon of the active mode with its own rule */
+      }
+
+      &::before {
+        font: var(--fa-font-solid);
+        content: '\f042'; /* circle-half-stroke */
+      }
+    }
   }
 }
 
@@ -471,12 +485,17 @@ body:has(#post-list) {
 
 #post-list {
   .card-wrapper,
-  .card-wrapper.card,
-  .card-wrapper.card:hover {
+  .card-wrapper.card {
     position: relative;
     margin: 0 -1.25rem;
-    border: 0;
     border-radius: 14px;
+  }
+
+  /* the theme gives a hovered card a border and shadow; layout stays out of :hover, because a
+     phone keeps the tapped card in :hover after you come back and anything here would stick */
+  .card-wrapper.card,
+  .card-wrapper.card:hover {
+    border: 0;
     background: transparent;
     box-shadow: none;
   }
@@ -504,8 +523,26 @@ body:has(#post-list) {
     pointer-events: none;
   }
 
-  .card-wrapper:hover::before {
-    opacity: 1;
+  @media (hover: hover) {
+    .card-wrapper:hover::before {
+      opacity: 1;
+    }
+
+    .post-preview:hover img {
+      transform: scale(1.04);
+    }
+
+    .post-preview:hover .no {
+      color: var(--heading-color);
+    }
+
+    .post-preview:hover .card-title {
+      transform: translateX(4px);
+
+      span {
+        background-size: 100% 1px;
+      }
+    }
   }
 
   .post-preview {
@@ -541,10 +578,6 @@ body:has(#post-list) {
     }
   }
 
-  .post-preview:hover img {
-    transform: scale(1.04);
-  }
-
   .card .card-body {
     padding: 0;
   }
@@ -555,7 +588,8 @@ body:has(#post-list) {
     align-items: baseline;
     margin-bottom: 0.7rem;
     color: var(--text-muted-color);
-    font-family: $mono;
+    font-family: $sans;
+  font-variant-numeric: tabular-nums;
     font-size: 0.72rem;
     letter-spacing: 0.02em;
 
@@ -575,10 +609,6 @@ body:has(#post-list) {
     }
   }
 
-  .post-preview:hover .no {
-    color: var(--heading-color);
-  }
-
   .card-title {
     margin: 0 0 0.55rem;
     color: var(--heading-color);
@@ -592,14 +622,6 @@ body:has(#post-list) {
     span {
       background: linear-gradient(currentcolor, currentcolor) 0 100% / 0 1px no-repeat;
       transition: background-size 0.55s $ease;
-    }
-  }
-
-  .post-preview:hover .card-title {
-    transform: translateX(4px);
-
-    span {
-      background-size: 100% 1px;
     }
   }
 
@@ -652,7 +674,8 @@ body:has(#post-list) {
 
 .pagination .page-item .page-link {
   border-radius: 6px;
-  font-family: $mono;
+  font-family: $sans;
+  font-variant-numeric: tabular-nums;
   font-size: 0.8rem;
 }
 
@@ -720,14 +743,15 @@ article {
 /* ==========================================================================
    Components: one system for every page.
    - label: mono, 0.7rem, uppercase, muted  (section headings, small captions)
-   - meta:  mono, 0.75rem, muted            (dates, counts, reading time)
+   - meta:  body sans, tabular figures, 0.75rem, muted            (dates, counts, reading time)
    - chip:  1px line, 6px radius            (tags, categories as pills)
    - card:  1px line, 8px radius, no fill   (related posts, prev/next, category groups)
    - sunk:  warm recessed surface           (code, inline code, prompts)
    ========================================================================== */
 
 %label {
-  font-family: $mono;
+  font-family: $sans;
+  font-variant-numeric: tabular-nums;
   font-size: 0.7rem;
   font-weight: 500;
   letter-spacing: 0.08em;
@@ -736,7 +760,8 @@ article {
 }
 
 %meta {
-  font-family: $mono;
+  font-family: $sans;
+  font-variant-numeric: tabular-nums;
   font-size: 0.75rem;
   letter-spacing: 0.01em;
   color: var(--text-muted-color);
@@ -1487,7 +1512,8 @@ body:has(article[data-toc]) #constellation {
 
 #related-posts {
   h3 {
-    font-family: $mono;
+    font-family: $sans;
+  font-variant-numeric: tabular-nums;
     font-size: 0.72rem;
     font-weight: 500;
     letter-spacing: 0.08em;
@@ -1682,7 +1708,8 @@ body:has(article[data-toc]) #constellation {
 /* ---------- Footer ---------- */
 
 footer .footer-write {
-  font-family: $mono;
+  font-family: $sans;
+  font-variant-numeric: tabular-nums;
   font-size: 0.78rem;
   letter-spacing: 0.04em;
   color: var(--text-muted-color);
@@ -1700,14 +1727,34 @@ footer .footer-write {
   }
 }
 
-/* ---------- Signed-in edit button (assets/js/write-bar.js), sits in the share bar ---------- */
+/* ---------- Signed-in edit button (assets/js/write-bar.js), in the top bar by the breadcrumb ---------- */
 
-.share-bar .share-edit {
-  margin-left: auto;
+#topbar .topbar-edit {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0 1rem 0 auto;
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
   color: var(--heading-color);
+  font-size: 0.85rem;
+  text-decoration: none;
+  transition: border-color 0.2s ease, background 0.2s ease;
 
   i {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
+  }
+
+  &:hover {
+    border-color: var(--line-strong);
+    background: var(--sunk);
+  }
+}
+
+@media (max-width: 849.98px) {
+  #topbar .topbar-edit {
+    margin-right: 0.25rem;
   }
 }
 
@@ -1912,10 +1959,6 @@ footer .footer-write {
     color: var(--heading-color);
     font-weight: 500;
   }
-}
-
-.share-bar--top {
-  margin-top: 1.25rem;
 }
 
 /* end of post: one wide, obvious button on phones */

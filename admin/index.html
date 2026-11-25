@@ -10,6 +10,16 @@ sitemap: false
   <meta name="robots" content="noindex">
   <meta name="theme-color" content="#fbfbfa" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#121211" media="(prefers-color-scheme: dark)">
+  <script>
+    // same light/dark as the blog: its toggle keeps the choice in localStorage.theme
+    try {
+      const t = localStorage.getItem('theme');
+      if (t === 'light' || t === 'dark') {
+        document.documentElement.dataset.theme = t;
+        document.querySelectorAll('meta[name="theme-color"]').forEach((m) => { m.content = t === 'dark' ? '#121211' : '#fbfbfa'; });
+      }
+    } catch {}
+  </script>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="글쓰기">
   <title>글쓰기 · Happynut</title>
