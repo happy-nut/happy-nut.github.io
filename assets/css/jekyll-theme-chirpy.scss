@@ -1661,6 +1661,24 @@ body:has(article[data-toc]) #constellation {
   }
 }
 
+/* phones and touch screens: the system back gesture animates on its own, and a cross-page
+   morph on top of it froze half-way (washed-out page, shifted card title, hidden text).
+   The load-in fades also replay on every back navigation and leave the text blank for a
+   second, so show the page as it is. */
+@media (max-width: 767.98px), (hover: none) {
+  @view-transition {
+    navigation: none;
+  }
+
+  .intro-label,
+  .intro-desc,
+  .intro-title .w,
+  article > header,
+  #post-list .post-preview {
+    animation: none !important;
+  }
+}
+
 /* ---------- Footer ---------- */
 
 footer .footer-write {
