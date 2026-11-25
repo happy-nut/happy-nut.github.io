@@ -3,8 +3,8 @@
 
 @use 'abstracts/variables' with (
   $theme: '{{ site.theme_mode }}',
-  $font-family-base: ('Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', sans-serif),
-  $font-family-heading: ('Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', sans-serif)
+  $font-family-base: ('Gowun Batang', 'Noto Serif KR', serif),
+  $font-family-heading: ('Gowun Batang', 'Noto Serif KR', serif)
 );
 
 /* prettier-ignore */
@@ -16,7 +16,7 @@
 
 /* ---------- Palette: warm monochrome ---------- */
 
-$sans: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', sans-serif;
+$text: 'Gowun Batang', 'Noto Serif KR', serif; /* one face for everything but code */
 $mono: 'SF Mono', ui-monospace, 'JetBrains Mono', monospace; /* code only */
 $ease: cubic-bezier(0.16, 1, 0.3, 1);
 
@@ -225,7 +225,7 @@ h1, h2, h3, h4, .card-title {
 
   .site-title {
     margin-top: 1.3rem;
-    font-family: $sans;
+    font-family: $text;
     font-size: 1.45rem;
     font-weight: 600;
     letter-spacing: -0.025em;
@@ -456,7 +456,7 @@ body:has(#post-list) {
   .intro-title {
     margin: 0 0 1.25rem;
     color: var(--heading-color);
-    font-family: $sans;
+    font-family: $text;
     font-size: clamp(2.6rem, 6.5vw, 4.25rem);
     font-weight: 700;
     line-height: 1.15;
@@ -587,7 +587,7 @@ body:has(#post-list) {
     align-items: baseline;
     margin-bottom: 0.7rem;
     color: var(--text-muted-color);
-    font-family: $sans;
+    font-family: $text;
   font-variant-numeric: tabular-nums;
     font-size: 0.72rem;
     letter-spacing: 0.02em;
@@ -611,7 +611,7 @@ body:has(#post-list) {
   .card-title {
     margin: 0 0 0.55rem;
     color: var(--heading-color);
-    font-family: $sans;
+    font-family: $text;
     font-size: 1.4rem;
     font-weight: 600;
     line-height: 1.45;
@@ -673,7 +673,7 @@ body:has(#post-list) {
 
 .pagination .page-item .page-link {
   border-radius: 6px;
-  font-family: $sans;
+  font-family: $text;
   font-variant-numeric: tabular-nums;
   font-size: 0.8rem;
 }
@@ -688,7 +688,7 @@ body:has(#post-list) {
 article {
   header h1 {
     margin-top: 2.5rem;
-    font-family: $sans;
+    font-family: $text;
     font-size: clamp(2rem, 4.2vw, 2.9rem);
     font-weight: 700;
     line-height: 1.3;
@@ -706,7 +706,7 @@ article {
 
     h2 {
       margin-top: 2.75em;
-      font-family: $sans;
+      font-family: $text;
       font-weight: 600;
       letter-spacing: -0.025em;
     }
@@ -729,7 +729,7 @@ article {
       padding: 0.1rem 0 0.1rem 1.25rem;
       border-left: 2px solid var(--blockquote-border-color);
       color: var(--blockquote-text-color);
-      font-family: $sans;
+      font-family: $text;
       font-size: 1.05em;
     }
 
@@ -749,7 +749,7 @@ article {
    ========================================================================== */
 
 %label {
-  font-family: $sans;
+  font-family: $text;
   font-variant-numeric: tabular-nums;
   font-size: 0.7rem;
   font-weight: 500;
@@ -759,7 +759,7 @@ article {
 }
 
 %meta {
-  font-family: $sans;
+  font-family: $text;
   font-variant-numeric: tabular-nums;
   font-size: 0.75rem;
   letter-spacing: 0.01em;
@@ -837,7 +837,7 @@ h1.dynamic-title,
 #page-tag h1 {
   margin: 2.5rem 0 2rem;
   color: var(--heading-color);
-  font-family: $sans;
+  font-family: $text;
   font-size: clamp(2rem, 4vw, 2.6rem);
   font-weight: 600;
   letter-spacing: -0.04em;
@@ -1185,7 +1185,7 @@ div.highlighter-rouge:has(.code-header) {
   h4 {
     margin: 0.5rem 0 0.4rem !important;
     color: var(--heading-color);
-    font-family: $sans;
+    font-family: $text;
     font-size: 1.02rem;
     font-weight: 600;
     line-height: 1.45;
@@ -1218,7 +1218,7 @@ div.highlighter-rouge:has(.code-header) {
     p {
       margin-top: 0.35rem;
       color: var(--heading-color);
-      font-family: $sans;
+      font-family: $text;
       font-size: 1rem;
       font-weight: 600;
       line-height: 1.5;
@@ -1258,7 +1258,7 @@ div.highlighter-rouge:has(.code-header) {
 
     .mx-2 {
       color: var(--heading-color);
-      font-family: $sans;
+      font-family: $text;
       font-size: 1.15rem;
       font-weight: 600;
       letter-spacing: -0.02em;
@@ -1339,7 +1339,7 @@ div.highlighter-rouge:has(.code-header) {
   .year {
     margin: 2.25rem 0 0.75rem;
     color: var(--heading-color);
-    font-family: $sans;
+    font-family: $text;
     font-size: 1.6rem;
     font-weight: 600;
     letter-spacing: -0.03em;
@@ -1377,7 +1377,7 @@ div.highlighter-rouge:has(.code-header) {
 
     header h2 {
       margin-bottom: 0.4rem;
-      font-family: $sans;
+      font-family: $text;
       font-size: 1.12rem;
       font-weight: 600;
       line-height: 1.5;
@@ -1385,7 +1385,7 @@ div.highlighter-rouge:has(.code-header) {
 
       a {
         color: var(--heading-color);
-        font-family: $sans;
+        font-family: $text;
         text-decoration: none;
         border-bottom: 0;
       }
@@ -1499,7 +1499,7 @@ body:has(article[data-toc]) #constellation {
 
 .post-navigation .btn {
   p {
-    font-family: $sans;
+    font-family: $text;
     font-weight: 600;
     letter-spacing: -0.02em;
   }
@@ -1511,7 +1511,7 @@ body:has(article[data-toc]) #constellation {
 
 #related-posts {
   h3 {
-    font-family: $sans;
+    font-family: $text;
   font-variant-numeric: tabular-nums;
     font-size: 0.72rem;
     font-weight: 500;
@@ -1521,7 +1521,7 @@ body:has(article[data-toc]) #constellation {
   }
 
   h4 {
-    font-family: $sans;
+    font-family: $text;
     font-weight: 600;
     letter-spacing: -0.02em;
   }
@@ -1707,7 +1707,7 @@ body:has(article[data-toc]) #constellation {
 /* ---------- Footer ---------- */
 
 footer .footer-write {
-  font-family: $sans;
+  font-family: $text;
   font-variant-numeric: tabular-nums;
   font-size: 0.78rem;
   letter-spacing: 0.04em;
@@ -1978,4 +1978,9 @@ footer .footer-write {
   .license-wrapper {
     margin-top: 1rem;
   }
+}
+
+/* the theme names its own face for the top-bar title */
+#topbar-title {
+  font-family: $text;
 }
