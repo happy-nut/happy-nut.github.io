@@ -163,6 +163,12 @@
   // ---------- routing ----------
   const go = (hash) => { if (location.hash !== hash) location.hash = hash; else route(); };
   addEventListener('hashchange', () => route());
+  // ⌘/Ctrl + Enter publishes from the editor (the publish button's title says so)
+  addEventListener('keydown', (e) => {
+    if (!(e.metaKey || e.ctrlKey) || e.key !== 'Enter' || document.querySelector('.sheet')) return;
+    const b = document.getElementById('publish');
+    if (b) { e.preventDefault(); b.click(); }
+  });
 
   async function route() {
     window.scrollTo(0, 0);
@@ -330,7 +336,7 @@
           <button class="icon-btn" id="back" aria-label="목록으로">${icon('back')}</button>
           <span class="grow status" id="status">${doc.restored ? '이 기기에 저장된 내용을 이어서 써요' : doc.isNew ? `새 ${c.unit}` : '고친 내용은 이 기기에 바로 저장돼요'}</span>
           <button class="icon-btn" id="settings" aria-label="글 설정">${icon('sliders')}</button>
-          <button class="btn btn-primary" id="publish">${c.public ? (doc.isNew ? '발행' : '업데이트') : '저장'}</button>
+          <button class="btn btn-primary" id="publish" title="⌘/Ctrl + Enter">${c.public ? (doc.isNew ? '발행' : '업데이트') : '저장'}</button>
         </div>
         <article class="doc" id="doc">
           <div class="meta-line" id="meta"></div>
@@ -423,6 +429,7 @@
     $app.querySelector('#back').onclick = () => { clearTimeout(saveTimer); if (doc.dirty) { flush(); saveLocal(); } go('#/'); };
     $app.querySelector('#settings').onclick = () => { flush(); openSettings(); };
     $app.querySelector('#publish').onclick = () => { flush(); publish(); };
+    $app.querySelectorAll('.icon-btn[aria-label]').forEach((b) => { b.title = b.getAttribute('aria-label'); });
     $app.querySelector('#file').onchange = async (e) => {
       const f = e.target.files[0]; e.target.value = '';
       if (!f) return;
@@ -544,8 +551,10 @@
     const el = document.createElement('div');
     el.className = 'sheet'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-modal', 'true');
     el.innerHTML = `<div class="grip"></div>${html}`;
-    const close = () => { scrim.remove(); el.remove(); onClose?.(); };
+    const esc = (e) => { if (e.key === 'Escape') close(); };
+    const close = () => { removeEventListener('keydown', esc); scrim.remove(); el.remove(); onClose?.(); };
     scrim.onclick = close;
+    addEventListener('keydown', esc);
     document.body.append(scrim, el);
     return { el, close };
   }

@@ -1,6 +1,6 @@
 // When this browser is signed in to the writing app (/admin, same origin), the existing pen
 // links (sidebar icon, footer) open the editor for the post being read, and a "고치기" button
-// sits next to "공유하기" under the post header. Visitors see the plain links only.
+// sits in the top bar, level with the breadcrumb. Visitors see the plain links only.
 (() => {
   let signedIn = false;
   try {
@@ -12,7 +12,6 @@
   if (!path.startsWith('_posts/')) return;
   const edit = `/admin/#/edit/posts/${encodeURIComponent(path.slice('_posts/'.length))}`;
 
-  // runs after every deferred script, so share.js has already built the header bar
   document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('a[href="/admin/"]').forEach((a) => {
       a.href = edit;
@@ -22,9 +21,7 @@
       if (label) label.textContent = '이 글 고치기';
     });
 
-    const bar = document.querySelector('.share-bar--top');
-    if (bar) {
-      bar.insertAdjacentHTML('beforeend', `<a class="share-edit" href="${edit}"><i class="fas fa-pen"></i><span>고치기</span></a>`);
-    }
+    document.getElementById('search-trigger')?.insertAdjacentHTML('beforebegin',
+      `<a class="topbar-edit" href="${edit}" aria-label="이 글 고치기"><i class="fas fa-pen"></i><span>고치기</span></a>`);
   });
 })();

@@ -1,4 +1,4 @@
-// Share where people look for it: right under the post header, and again at the end.
+// Share at the end of the post, where a reader decides to pass it on.
 // Phones get one button that opens the OS share sheet (KakaoTalk, messages, ...);
 // desktops get "copy link" plus the social links the theme renders from _data/share.yml.
 (() => {
@@ -50,9 +50,7 @@
     return el;
   };
 
-  header.append(bar('top'));
-
-  // end of post: replace the theme's small icon row with the same control
+  // replace the theme's small icon row
   const tail = document.querySelector('.post-tail-bottom .share-wrapper');
   if (tail) tail.replaceWith(bar('end'));
 })();

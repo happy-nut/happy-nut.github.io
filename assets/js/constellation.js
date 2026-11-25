@@ -1,8 +1,10 @@
-// Ambient "connecting the dots" background: drifting nodes, edges between near neighbours,
-// and a few links to the pointer. Sits behind content; colors follow the site theme.
+// Ambient "connecting the dots" background: drifting nodes and edges between near neighbours.
+// Nodes scatter away from the pointer and drift back to their own pace once it passes.
+// Sits behind content; colors follow the site theme.
 (() => {
   const LINK = 140; // px: nodes closer than this get an edge
-  const REACH = 180; // px: pointer pulls and links nodes within this radius
+  const REACH = 160; // px: nodes inside this radius flee the pointer
+  const PUSH = 0.9; // px per frame of extra speed, at the pointer itself
   const SPEED = 0.18; // px per frame
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (matchMedia('(max-width: 767.98px), (hover: none)').matches) return; // phones: hidden in CSS, so skip the work too
@@ -35,18 +37,21 @@
     const count = Math.min(90, Math.round((w * h) / 15000));
     while (nodes.length < count) {
       const a = Math.random() * Math.PI * 2;
-      nodes.push({ x: Math.random() * w, y: Math.random() * h, vx: Math.cos(a) * SPEED, vy: Math.sin(a) * SPEED, r: 0.8 + Math.random() * 1.2 });
+      nodes.push({ x: Math.random() * w, y: Math.random() * h, vx: Math.cos(a) * SPEED, vy: Math.sin(a) * SPEED, bx: Math.cos(a) * SPEED, by: Math.sin(a) * SPEED, r: 0.8 + Math.random() * 1.2 });
     }
     nodes.length = count;
   };
 
   const step = () => {
     for (const n of nodes) {
-      const dx = pointer.x - n.x, dy = pointer.y - n.y, d = Math.hypot(dx, dy);
+      const dx = n.x - pointer.x, dy = n.y - pointer.y, d = Math.hypot(dx, dy);
       if (d < REACH && d > 1) {
-        n.x += (dx / d) * 0.25;
-        n.y += (dy / d) * 0.25;
+        const f = PUSH * (1 - d / REACH) ** 2;
+        n.vx += (dx / d) * f;
+        n.vy += (dy / d) * f;
       }
+      n.vx += (n.bx - n.vx) * 0.05; // ease back to its own drift
+      n.vy += (n.by - n.vy) * 0.05;
       n.x += n.vx;
       n.y += n.vy;
       if (n.x < -20) n.x = w + 20;
@@ -70,14 +75,6 @@
           ctx.lineTo(b.x, b.y);
           ctx.stroke();
         }
-      }
-      const pd = Math.hypot(a.x - pointer.x, a.y - pointer.y);
-      if (pd < REACH) {
-        ctx.strokeStyle = `rgba(${rgb},${(1 - pd / REACH) * 0.35})`;
-        ctx.beginPath();
-        ctx.moveTo(a.x, a.y);
-        ctx.lineTo(pointer.x, pointer.y);
-        ctx.stroke();
       }
       ctx.fillStyle = `rgba(${rgb},0.45)`;
       ctx.beginPath();
